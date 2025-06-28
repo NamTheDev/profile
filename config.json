@@ -60,7 +60,7 @@
         {
             "icon": "fab fa-discord",
             "title": "Discord",
-            "link": "Your_Discord_Server_Invite_Link"
+            "link": "./discord.html"
         },
         {
             "icon": "fab fa-youtube",
@@ -68,14 +68,9 @@
             "link": "https://www.youtube.com/@nguyen_thien_nam"
         },
         {
-            "icon": "fab fa-facebook",
-            "title": "Facebook",
-            "link": "Your_Facebook_Profile_Link"
-        },
-        {
             "icon": "fab fa-instagram",
             "title": "Instagram",
-            "link": "Your_Instagram_Profile_Link"
+            "link": "https://instagram.com/namchill235"
         },
         {
             "icon": "fab fa-reddit",
@@ -85,7 +80,7 @@
         {
             "icon": "fab fa-github",
             "title": "GitHub",
-            "link": "Your_Github_Profile_Link"
+            "link": "https://github.com/namthedev"
         }
     ],
     "contactInfo": {
