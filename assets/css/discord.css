@@ -1,0 +1,311 @@
+@import url("../font/style.css");
+@import url("https://sybraxdesign.fr/api/github/version.css");
+
+@keyframes popAnim {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  font-family: "Whitney", sans-serif;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e1e1e;
+  overflow: hidden;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  color: #eeeeee;
+  background: #232323;
+  padding: 0.32rem 0.4rem;
+  border-radius: 3px;
+  max-width: 150px;
+  width: max-content;
+  font-size: 0.82rem;
+  animation: popAnim 0.045s linear;
+  z-index: 10;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.35);
+}
+
+.tooltip-up {
+  bottom: 35px;
+}
+
+.tooltip-up::before {
+  left: 50%;
+  transform: translateX(-50%);
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #232323;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* Center cards horizontally */
+  align-items: center;
+  /* Center cards vertically */
+  width: 100vw;
+  /* Use full viewport width for flexibility */
+  min-height: 100vh;
+  /* Ensure vertical centering */
+  gap: 40px;
+  /* Optional: space between cards */
+  transform: scale(1.5);
+  transform-origin: center center;
+}
+
+/* Optional: Prevent unwanted scrollbars due to scaling */
+html,
+body {
+  overflow: hidden;
+}
+
+.card {
+  box-sizing: border-box;
+  background: #171717;
+  min-width: 300px;
+  max-width: 300px;
+  height: max-content;
+  max-height: 95%;
+  border-radius: 9px;
+  -webkit-box-shadow: 0px 0px 16px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(0, 0, 0, 0.2);
+  scrollbar-width: none;
+}
+
+.card::-webkit-scrollbar {
+  display: none;
+}
+
+.card-header .banner {
+  width: 100%;
+  height: 60px;
+  background: #ff8527;
+  border-radius: 9px 9px 0 0;
+  overflow: hidden;
+}
+
+.card-header .banner-image {
+  width: 100%;
+  height: 120px;
+  background-position: center !important;
+  background-size: 100% auto !important;
+  border-radius: 9px 9px 0 0;
+  overflow: hidden;
+}
+
+.card-header .infos {
+  padding: 0 15px;
+  position: relative;
+}
+
+.card-header .infos .profil-logo {
+  position: absolute;
+  top: -280%;
+  border: 6px solid #171717;
+  border-radius: 50%;
+}
+
+.card-header .infos .profil-logo img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+}
+
+.card-header .infos .profil-logo::before {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: "See Profile";
+  color: #eeeeee;
+  background: #0000007e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition-duration: 0.15s;
+}
+
+.card-header .infos .profil-logo:hover::before {
+  opacity: 1;
+}
+
+.card-header .infos .badges-container {
+  position: absolute;
+  top: -120%;
+  right: 0;
+  padding: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: 150px;
+}
+
+.card-header .infos .badges-container .badge-item {
+  position: relative;
+  margin-left: 8px;
+  margin-bottom: 5px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-header .infos .badges-container .badge-item img {
+  height: 100%;
+}
+
+.card-header .infos .badges-container .badge-item:hover>.tooltip {
+  display: block;
+}
+
+.card-header .infos .username {
+  color: #eeeeee;
+  margin-top: 55px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.card-header .infos .username span {
+  font-weight: 500;
+  color: #8f8f8f;
+}
+
+.card-header .infos hr {
+  border: 1px solid #212121;
+}
+
+.card-content {
+  padding: 0 15px;
+}
+
+.card-content .category-title {
+  color: #c2c2c2;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.card-content .about-me {
+  margin-bottom: 12px;
+  margin-top: 10px;
+}
+
+.card-content .about-me p {
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.card-content .roles {
+  margin-bottom: 12px;
+}
+
+.card-content .roles .roles-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-content .roles .roles-list .role {
+  background: #353535;
+  color: #f5f5f5;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  padding: 3px 6px;
+  margin-right: 4px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.card-content .roles .roles-list .role .color {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.card-content .note {
+  margin-bottom: 15px;
+}
+
+.card-content .note textarea {
+  border: none;
+  outline: none;
+  background: #171717;
+  width: 100%;
+  min-height: 30px;
+  color: #e0e0e0;
+  resize: none;
+  font-size: 0.7rem;
+  border-radius: 3px;
+  padding: 5px;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  font-family: "Whitney", sans-serif;
+}
+
+.card-content .note textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.card-content .note textarea::placeholder {
+  font-size: 0.7rem;
+}
+
+.card-content .note textarea:focus {
+  background: #1f1f1f;
+}
+
+.card-footer {
+  padding: 0 15px 15px 15px;
+}
+
+.card-footer input {
+  background: #353535;
+  outline: none;
+  border: 1.2px solid #333333;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 3px;
+  color: #eeeeee;
+  transition-duration: 0.3s;
+}
+
+.card-footer input:focus {
+  border-color: orange;
+}
