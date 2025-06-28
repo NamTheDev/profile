@@ -1,6 +1,6 @@
 {
     "personalInfo": {
-        "name": "Nguyen Thien Nam",
+        "name": "Nam",
         "title": "A Multi-Talented Individual in Art, Music, Development, Content Creation, and Story Writing",
         "biography": "assets/markdown/biography.md"
     },
@@ -44,15 +44,9 @@
         "contentCreation": [
             {
                 "platform": "YouTube",
-                "channelName": "@nguyen_thien_nam",
+                "channelName": "@a_chill_nam",
                 "link": "https://www.youtube.com/@nguyen_thien_nam",
                 "description": "A collection of vlogs, films, and music videos that I have created."
-            },
-            {
-                "platform": "Tiktok",
-                "channelName": "@nguyen_thien_nam",
-                "link": "https://www.tiktok.com/@nguyen_thien_nam",
-                "description": "A collection of short videos for brainrot and slideshows that consist images of Hanoi, Vietnam."
             }
         ]
     },
@@ -81,6 +75,11 @@
             "icon": "fab fa-github",
             "title": "GitHub",
             "link": "https://github.com/namthedev"
+        },
+        {
+            "icon": "fab fa-twitter",
+            "title": "Twitter",
+            "link": "https://x.com/namchill235"
         }
     ],
     "contactInfo": {
