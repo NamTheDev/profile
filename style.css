@@ -1,0 +1,50 @@
+body {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    border: 2px solid #8B0000;
+    padding: 2rem;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    color: #8B0000;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.links {
+    margin: 2rem 0;
+}
+
+.links a {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0 1rem;
+    border: 1px solid #8B0000;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.links a:hover {
+    background-color: #8B0000;
+    color: #000000;
+}
+
+.notice {
+    font-style: italic;
+    color: #A9A9A9;
+}

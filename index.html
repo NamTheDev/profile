@@ -1,117 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Character Encoding -->
     <meta charset="UTF-8">
-    <!-- Page Title -->
-    <title>Nam's Portfolio</title>
-    <!-- Link to External CSS Stylesheet -->
-    <link rel="stylesheet" href="./assets/css/homepage.css">
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./assets/favicon.png">
-    <!-- Font Awesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Responsive Viewport Meta Tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Meta Tags -->
-    <meta name="description"
-        content="Nam's personal portfolio showcasing art, music, development projects, and more.">
-    <meta name="keywords" content="Nam, Portfolio, Art, Music, Development, Story Writing">
-    <meta name="author" content="Nam">
-    
-    <!-- Open Graph Meta Tags for Social Media Sharing -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Nam's Portfolio">
-    <meta property="og:description"
-        content="Nam's personal portfolio showcasing art, music, development projects, and more.">
-    <meta property="og:image" content="assets/favicon.png">
-    <meta property="og:image:alt" content="Thumbnail of Nam's Portfolio">
-    <meta property="og:url" content="https://namthedev.github.io/profile/">
+    <title>namchill235</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <!-- Light Mode Overlay (for Theme Toggle) -->
-    <div id="light-mode"></div>
-
-    <!-- Cover Section (Hero Section) -->
-    <section id="cover">
-        <!-- Cover Content Container -->
-        <div class="cover-content invisible">
-            <!-- Portfolio Title (Will be populated dynamically) -->
-            <h1 id="portfolio-title"></h1>
-            <!-- Subtitle with Name Introduction -->
-            <p id="portfolio-subtitle">My name is <span id="info-name"></span>.</p>
+    <div class="container">
+        <h1>namchill235</h1>
+        <p>a homeschooled guy who's goal to become a musician, with aim to have an sound designer and sound engineer degree, following with other art forms or technology science projects.</p>
+        <div class="links">
+            <a href="https://github.com/NamTheDev" target="_blank">GitHub</a>
+            <a href="https://x.com/namchill235" target="_blank">X (Twitter)</a>
+            <a href="https://www.youtube.com/@namchill235" target="_blank">YouTube</a>
+            <a href="https://www.instagram.com/namchill235" target="_blank">Instagram</a>
+            <a href="https://discord.com/users/1099931955535020053" target="_blank">Discord</a>
         </div>
-    </section>
-
-    <!-- Main Navigation Bar -->
-    <nav id="main-nav">
-        <!-- Navigation Toggle Button (for Mobile View) -->
-        <button id="nav-toggle">
-            <!-- Icon for Navigation Toggle -->
-            <i class="fa-solid fa-bars"></i>
-            <!-- Dropdown Menu for Mobile Navigation -->
-            <div id="nav-dropdown">
-                <!-- Navigation Links -->
-                <a href="#about"><i class="fa-solid fa-user"></i> About</a>
-                <a href="#works"><i class="fa-solid fa-briefcase"></i> Works</a>
-                <a href="#social"><i class="fa-solid fa-share"></i> Socials</a>
-            </div>
-        </button>
-        <!-- Navigation Links for Desktop View -->
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#works">Works</a></li>
-            <li><a href="#social">Socials</a></li>
-        </ul>
-        <!-- Theme Toggle Button (Light/Dark Mode) -->
-        <button id="theme-toggle" aria-label="Toggle Light/Dark Mode">
-            <!-- Icon for Theme Toggle -->
-            <i class="fa-solid fa-moon"></i>
-        </button>
-    </nav>
-    <!-- Sections Wrapper -->
-    <main id="sections-wrapper">
-        <!-- About Me Section -->
-        <section id="about">
-            <!-- Section Heading -->
-            <h2>About Me</h2>
-            <!-- Biography Paragraph (Will be populated dynamically) -->
-            <p id="biography"></p>
-        </section>
-
-        <!-- Works Section -->
-        <section id="works">
-            <!-- Section Heading -->
-            <h2>Works</h2>
-            <!-- Works Content Container (Will be populated dynamically) -->
-            <div id="works-content"></div>
-        </section>
-
-        <!-- Social Media Section -->
-        <section id="social">
-            <!-- Section Heading -->
-            <h2>Social Media</h2>
-            <!-- Social Links Container (Will be populated dynamically) -->
-            <div id="social-links"></div>
-        </section>
-
-    </main>
-
-    <!-- Footer Section -->
-    <footer id="contact">
-        <!-- Contact Information -->
-        <p id="contact-text">Contact me at <a href="#" id="email-link"></a></p>
-        <!-- Footer Text (e.g., Copyright) -->
-        <p id="footer-text"></p>
-    </footer>
-
-    <!-- JavaScript Libraries and Scripts -->
-    <!-- FIGlet Library for ASCII Art Titles -->
-    <script src="https://cdn.jsdelivr.net/npm/figlet@latest"></script>
-    <!-- Main JavaScript File -->
-    <script src="./assets/js/script.js"></script>
+        <p class="notice">artworks and projects are usually posted and mentioned in youtube, github, and X (formerly Twitter).</p>
+    </div>
 </body>
-
 </html>
