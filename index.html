@@ -1,56 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>namchill235 // Portfolio</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>namchill235 // Portfolio</title>
 
-    <!-- Main Desktop Wrapper -->
-    <main class="main-wrapper">
-        
-        <!-- Sticky Header (Profile & Search) -->
-        <header class="global-header">
-            <div class="profile-container">
-                <img src="assets/profile.png" alt="Profile" class="avatar">
-                <div class="identity">
-                    <h1 class="name">namchill235</h1>
-                    <span class="status">~/workspace/creative</span>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <link rel="stylesheet" href="style.css" />
+
+        <!-- --- METADATA & ICONS --- -->
+        <!-- Favicon (Browser Tab Icon) -->
+        <link rel="icon" type="image/png" href="assets/profile.png" />
+
+        <!-- Open Graph / Discord Embeds -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="namchill235 // Portfolio" />
+        <meta
+            property="og:description"
+            content="Creative Developer, Musician, and Visual Artist. Hub for digital gardens and experimental interfaces."
+        />
+        <meta
+            property="og:image"
+            content="https://namthedev.github.io/profile/assets/profile.png"
+        />
+        <meta
+            property="og:url"
+            content="https://namthedev.github.io/profile/"
+        />
+
+        <!-- Theme Color (Discord Side Bar Color - Mauve) -->
+        <meta name="theme-color" content="#cba6f7" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="namchill235 // Portfolio" />
+        <meta
+            name="twitter:description"
+            content="Creative Developer, Musician, and Visual Artist."
+        />
+        <meta
+            name="twitter:image"
+            content="https://namthedev.github.io/profile/assets/profile.png"
+        />
+    </head>
+    <body>
+        <!-- Main Desktop Wrapper -->
+        <main class="main-wrapper">
+            <!-- Sticky Header (Profile & Search) -->
+            <header class="global-header">
+                <div class="profile-container">
+                    <img
+                        src="assets/profile.png"
+                        alt="Profile"
+                        class="avatar"
+                    />
+                    <div class="identity">
+                        <h1 class="name">namchill235</h1>
+                        <span class="status">~/workspace/creative</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Terminal Search -->
-            <div class="terminal-search">
-                <span class="prompt">$ search </span>
-                <input type="text" id="searchInput" placeholder="*" autocomplete="off">
-                <span class="prompt-end"></span>
-            </div>
-        </header>
+                <!-- Terminal Search -->
+                <div class="terminal-search">
+                    <span class="prompt">$ search </span>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="*"
+                        autocomplete="off"
+                    />
+                    <span class="prompt-end"></span>
+                </div>
+            </header>
 
-        <!-- Dynamic Content Area (Windows Load Here) -->
-        <div id="desktop-area" class="desktop-scroll">
-            <div class="loading-text">Booting system...</div>
+            <!-- Dynamic Content Area (Windows Load Here) -->
+            <div id="desktop-area" class="desktop-scroll">
+                <div class="loading-text">Booting system...</div>
+            </div>
+        </main>
+
+        <!-- Gallery Modal (Hidden by default) -->
+        <div id="gallery-modal" class="modal hidden">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modal-img" />
+            <div id="caption"></div>
         </div>
 
-    </main>
-
-    <!-- Gallery Modal (Hidden by default) -->
-    <div id="gallery-modal" class="modal hidden">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modal-img">
-        <div id="caption"></div>
-    </div>
-
-    <!-- Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js"></script>
-</body>
+        <!-- Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
