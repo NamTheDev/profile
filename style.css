@@ -25,7 +25,7 @@ body {
     color: var(--text-primary);
     font-family: "Inter", sans-serif;
     height: 100vh;
-    height: 100dvh; 
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -37,7 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    padding-bottom: 20px; 
+    padding-bottom: 20px;
 }
 
 .global-header {
@@ -100,15 +100,33 @@ body {
     margin: 0 5px;
     outline: none;
     width: auto;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .desktop-scroll {
     flex-grow: 1;
     overflow-y: auto;
-    padding-bottom: 0; 
+    padding-bottom: 20px;
     scrollbar-width: thin;
     scrollbar-color: var(--glass-border) transparent;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.layout-col {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.col-left {
+    flex: 5;
+}
+
+.col-right {
+    flex: 4;
 }
 
 .file-window {
@@ -116,7 +134,7 @@ body {
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    margin-bottom: 25px;
+    margin-bottom: 0;
     overflow: hidden;
     animation: fadeIn 0.4s ease-out;
 }
@@ -145,7 +163,7 @@ body {
 .window-content h2 {
     color: var(--text-primary);
     margin-bottom: 15px;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 }
 
 .window-content p {
@@ -260,7 +278,7 @@ body {
 @media (max-width: 768px) {
     .main-wrapper {
         padding: 10px;
-        padding-bottom: 10px; 
+        padding-bottom: 10px;
     }
 
     .global-header {
@@ -273,13 +291,14 @@ body {
     .terminal-search {
         width: 100%;
     }
-    
+
     .window-content {
         padding: 15px;
     }
 
     .desktop-scroll {
         padding-bottom: 0;
+        flex-direction: column;
     }
 
     .gallery-grid {
