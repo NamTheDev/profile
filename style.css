@@ -29,9 +29,10 @@ body {
     overflow: hidden;
 }
 
+/* --- UPDATE .main-wrapper --- */
 .main-wrapper {
-    max-width: 1000px;
-    width: 100%;
+    max-width: 1600px; /* Increased from 1000px to fill the screen */
+    width: 95%; /* Ensures small gap on very wide screens */
     margin: 0 auto;
     height: 100%;
     display: flex;
@@ -103,22 +104,32 @@ body {
     flex-grow: 1;
 }
 
+/* --- UPDATE .desktop-scroll --- */
 .desktop-scroll {
     flex-grow: 1;
     overflow-y: auto;
     padding-bottom: 20px;
     scrollbar-width: thin;
     scrollbar-color: var(--glass-border) transparent;
+
+    /* REVERT to column for the main flow */
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px; /* Reduced gap from 20px */
 }
 
 .layout-col {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px; /* Reduced gap */
     width: 100%;
+}
+
+.top-grid {
+    display: flex;
+    gap: 15px; /* Reduced gap */
+    width: 100%;
+    flex-shrink: 0; /* PREVENTS SQUASHING */
 }
 
 .col-left {
@@ -127,6 +138,8 @@ body {
 
 .col-right {
     flex: 4;
+    /* This ensures the Socials window expands to fill the height */
+    height: 100%;
 }
 
 .file-window {
@@ -134,9 +147,22 @@ body {
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
+
+    /* Ensure the window itself is a flex column so the header + content
+       can be laid out and the content can grow to fill available space */
+    display: flex;
+    flex-direction: column;
+
     margin-bottom: 0;
     overflow: hidden;
     animation: fadeIn 0.4s ease-out;
+    flex-shrink: 0; /* Prevents bottom rows from collapsing */
+}
+
+/* --- ADD this specific rule for the Socials window --- */
+.col-right .file-window {
+    flex-grow: 1; /* Forces the Socials box to stretch vertically */
+    height: 100%;
 }
 
 .file-window:last-child {
@@ -214,6 +240,37 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
     margin-top: 15px;
+}
+
+/* --- ADD .bottom-grid --- */
+/* This handles the 50/50 split for Music, Film, etc. */
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* --- OVERRIDE styles for Socials Window ONLY --- */
+/* Target the specific window using the data attribute */
+.file-window[data-name="02_socials.md"] .window-content {
+    /* Allow the socials content to expand and be centered inside the tall window */
+    flex-grow: 1; /* Fill the remaining height of the window */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the Title, Text, and Buttons */
+    align-items: center; /* Horizontally center everything */
+    gap: 20px; /* Increased gap for better breathing room */
+    text-align: center; /* Ensure text describes center alignment */
+}
+
+.file-window[data-name="02_socials.md"] .window-content a {
+    width: 100%;  /*  Make buttons fill the centered column */
+    max-width: 300px; /* Cap the width so they look like buttons, not bars */
+    justify-content: center; /* Center the text/icon inside the button */
+    margin: 0; /* Remove default margins */
+    margin-bottom: 5px;
 }
 
 .window-content img {
@@ -301,7 +358,15 @@ body {
         flex-direction: column;
     }
 
+    .top-grid {
+        flex-direction: column;
+    }
+
     .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
     }
 }

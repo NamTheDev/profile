@@ -37,22 +37,40 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
-const LEFT_COL_FILES = ["01_about.md", "02_socials.md", "03_music.md"];
+/* --- REPLACE column layout with top-grid configuration --- */
+// Configuration for where files go
+const TOP_LEFT_FILES = ["01_about.md", "06_gallery.md"]; // Stacked on Left
+const TOP_RIGHT_FILES = ["02_socials.md"]; // Tall on Right
+// All other files (Music, Film, Tech) will go to the Bottom Full-Width area
 
-let leftColumnContainer, rightColumnContainer;
+let topGrid, bottomGrid;
+let topLeftContainer, topRightContainer;
 
 async function init() {
-  desktopArea.innerHTML = "";
+  desktopArea.innerHTML = ""; // Clear loading
 
-  leftColumnContainer = document.createElement("div");
-  leftColumnContainer.className = "layout-col col-left";
+  // 1. Setup Top Grid (About, Gallery, Socials)
+  topGrid = document.createElement("div");
+  topGrid.className = "top-grid";
 
-  rightColumnContainer = document.createElement("div");
-  rightColumnContainer.className = "layout-col col-right";
+  topLeftContainer = document.createElement("div");
+  topLeftContainer.className = "layout-col col-left";
 
-  desktopArea.appendChild(leftColumnContainer);
-  desktopArea.appendChild(rightColumnContainer);
+  topRightContainer = document.createElement("div");
+  topRightContainer.className = "layout-col col-right";
 
+  topGrid.appendChild(topLeftContainer);
+  topGrid.appendChild(topRightContainer);
+
+  // 2. Setup Bottom Grid (Music, Film, Tech)
+  bottomGrid = document.createElement("div");
+  bottomGrid.className = "bottom-grid";
+
+  // 3. Append both major sections to Desktop Area
+  desktopArea.appendChild(topGrid);
+  desktopArea.appendChild(bottomGrid);
+
+  // Load files
   for (const file of FILES) {
     await loadFile(file);
   }
@@ -80,8 +98,9 @@ function createWindow(path, html) {
 
   const windowDiv = document.createElement("div");
   windowDiv.className = "file-window";
-  windowDiv.dataset.name = filename;
+  windowDiv.dataset.name = filename; // Critical for CSS targeting
 
+  // Create Header
   const header = document.createElement("div");
   header.className = "window-bar";
   header.innerHTML = `
@@ -89,6 +108,7 @@ function createWindow(path, html) {
         <span>/documents/markdown/${filename}</span>
     `;
 
+  // Create Content
   const content = document.createElement("div");
   content.className = "window-content";
   content.innerHTML = html;
@@ -98,10 +118,16 @@ function createWindow(path, html) {
   windowDiv.appendChild(header);
   windowDiv.appendChild(content);
 
-  if (LEFT_COL_FILES.includes(filename)) {
-    leftColumnContainer.appendChild(windowDiv);
+  // --- PLACEMENT LOGIC ---
+  if (TOP_LEFT_FILES.includes(filename)) {
+    // Goes to Top Left (About, Gallery)
+    topLeftContainer.appendChild(windowDiv);
+  } else if (TOP_RIGHT_FILES.includes(filename)) {
+    // Goes to Top Right (Socials)
+    topRightContainer.appendChild(windowDiv);
   } else {
-    rightColumnContainer.appendChild(windowDiv);
+    // Everything else goes to the 50/50 Bottom Grid
+    bottomGrid.appendChild(windowDiv);
   }
 }
 
