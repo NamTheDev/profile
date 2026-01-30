@@ -37,19 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
-/* --- REPLACE column layout with top-grid configuration --- */
-// Configuration for where files go
-const TOP_LEFT_FILES = ["01_about.md", "06_gallery.md"]; // Stacked on Left
-const TOP_RIGHT_FILES = ["02_socials.md"]; // Tall on Right
-// All other files (Music, Film, Tech) will go to the Bottom Full-Width area
+const TOP_LEFT_FILES = ["01_about.md", "06_gallery.md"];
+const TOP_RIGHT_FILES = ["02_socials.md"];
 
 let topGrid, bottomGrid;
 let topLeftContainer, topRightContainer;
 
 async function init() {
-  desktopArea.innerHTML = ""; // Clear loading
+  desktopArea.innerHTML = "";
 
-  // 1. Setup Top Grid (About, Gallery, Socials)
   topGrid = document.createElement("div");
   topGrid.className = "top-grid";
 
@@ -62,15 +58,12 @@ async function init() {
   topGrid.appendChild(topLeftContainer);
   topGrid.appendChild(topRightContainer);
 
-  // 2. Setup Bottom Grid (Music, Film, Tech)
   bottomGrid = document.createElement("div");
   bottomGrid.className = "bottom-grid";
 
-  // 3. Append both major sections to Desktop Area
   desktopArea.appendChild(topGrid);
   desktopArea.appendChild(bottomGrid);
 
-  // Load files
   for (const file of FILES) {
     await loadFile(file);
   }
@@ -98,9 +91,8 @@ function createWindow(path, html) {
 
   const windowDiv = document.createElement("div");
   windowDiv.className = "file-window";
-  windowDiv.dataset.name = filename; // Critical for CSS targeting
+  windowDiv.dataset.name = filename;
 
-  // Create Header
   const header = document.createElement("div");
   header.className = "window-bar";
   header.innerHTML = `
@@ -108,7 +100,6 @@ function createWindow(path, html) {
         <span>/documents/markdown/${filename}</span>
     `;
 
-  // Create Content
   const content = document.createElement("div");
   content.className = "window-content";
   content.innerHTML = html;
@@ -120,13 +111,10 @@ function createWindow(path, html) {
 
   // --- PLACEMENT LOGIC ---
   if (TOP_LEFT_FILES.includes(filename)) {
-    // Goes to Top Left (About, Gallery)
     topLeftContainer.appendChild(windowDiv);
   } else if (TOP_RIGHT_FILES.includes(filename)) {
-    // Goes to Top Right (Socials)
     topRightContainer.appendChild(windowDiv);
   } else {
-    // Everything else goes to the 50/50 Bottom Grid
     bottomGrid.appendChild(windowDiv);
   }
 }

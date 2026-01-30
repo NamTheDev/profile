@@ -29,10 +29,9 @@ body {
     overflow: hidden;
 }
 
-/* --- UPDATE .main-wrapper --- */
 .main-wrapper {
-    max-width: 1600px; /* Increased from 1000px to fill the screen */
-    width: 95%; /* Ensures small gap on very wide screens */
+    max-width: 1600px;
+    width: 95%;
     margin: 0 auto;
     height: 100%;
     display: flex;
@@ -111,25 +110,23 @@ body {
     padding-bottom: 20px;
     scrollbar-width: thin;
     scrollbar-color: var(--glass-border) transparent;
-
-    /* REVERT to column for the main flow */
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Reduced gap from 20px */
+    gap: 15px;
 }
 
 .layout-col {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Reduced gap */
+    gap: 15px;
     width: 100%;
 }
 
 .top-grid {
     display: flex;
-    gap: 15px; /* Reduced gap */
+    gap: 15px;
     width: 100%;
-    flex-shrink: 0; /* PREVENTS SQUASHING */
+    flex-shrink: 0;
 }
 
 .col-left {
@@ -138,7 +135,6 @@ body {
 
 .col-right {
     flex: 4;
-    /* This ensures the Socials window expands to fill the height */
     height: 100%;
 }
 
@@ -147,21 +143,16 @@ body {
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-
-    /* Ensure the window itself is a flex column so the header + content
-       can be laid out and the content can grow to fill available space */
     display: flex;
     flex-direction: column;
-
     margin-bottom: 0;
     overflow: hidden;
     animation: fadeIn 0.4s ease-out;
-    flex-shrink: 0; /* Prevents bottom rows from collapsing */
+    flex-shrink: 0;
 }
 
-/* --- ADD this specific rule for the Socials window --- */
 .col-right .file-window {
-    flex-grow: 1; /* Forces the Socials box to stretch vertically */
+    flex-grow: 1;
     height: 100%;
 }
 
@@ -242,8 +233,6 @@ body {
     margin-top: 15px;
 }
 
-/* --- ADD .bottom-grid --- */
-/* This handles the 50/50 split for Music, Film, etc. */
 .bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -252,25 +241,26 @@ body {
     flex-shrink: 0;
 }
 
-/* --- OVERRIDE styles for Socials Window ONLY --- */
-/* Target the specific window using the data attribute */
 .file-window[data-name="02_socials.md"] .window-content {
-    /* Allow the socials content to expand and be centered inside the tall window */
-    flex-grow: 1; /* Fill the remaining height of the window */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center the Title, Text, and Buttons */
-    align-items: center; /* Horizontally center everything */
-    gap: 20px; /* Increased gap for better breathing room */
-    text-align: center; /* Ensure text describes center alignment */
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
 }
 
 .file-window[data-name="02_socials.md"] .window-content a {
-    width: 100%;  /*  Make buttons fill the centered column */
-    max-width: 300px; /* Cap the width so they look like buttons, not bars */
-    justify-content: center; /* Center the text/icon inside the button */
-    margin: 0; /* Remove default margins */
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    margin: 0;
     margin-bottom: 5px;
+    padding: 12px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .window-content img {
