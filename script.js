@@ -1,5 +1,6 @@
 const grid = document.getElementById("grid");
 const search = document.getElementById("searchInput");
+const loader = document.getElementById("loader");
 
 async function init() {
   try {
@@ -22,6 +23,8 @@ async function init() {
       grid.appendChild(div);
     }
 
+    loader.classList.add("hidden");
+
     search.addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase();
       document.querySelectorAll(".tile").forEach((t) => {
@@ -30,6 +33,7 @@ async function init() {
     });
   } catch (err) {
     console.error("Boot failed:", err);
+    loader.innerText = "Boot failed.";
   }
 }
 
