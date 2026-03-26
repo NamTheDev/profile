@@ -5,22 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>namchill235 // Portfolio</title>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap"
-            rel="stylesheet"
-        />
-
-        <link rel="stylesheet" href="style.css" />
-
         <link rel="icon" type="image/png" href="assets/profile.png" />
+        <link rel="stylesheet" href="style.css" />
 
         <meta property="og:type" content="website" />
         <meta property="og:title" content="namchill235 // Portfolio" />
         <meta
             property="og:description"
-            content="Creative Developer, Musician, and Visual Artist. Hub for digital gardens and experimental interfaces."
+            content="Creative Developer, Musician, and Visual Artist."
         />
         <meta
             property="og:image"
@@ -30,8 +22,7 @@
             property="og:url"
             content="https://namthedev.github.io/profile/"
         />
-
-        <meta name="theme-color" content="#cdd6f4" />
+        <meta name="theme-color" content="#000000" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="namchill235 // Portfolio" />
@@ -45,42 +36,24 @@
         />
     </head>
     <body>
-        <main class="main-wrapper">
-            <header class="global-header">
-                <div class="profile-container">
-                    <img
-                        src="assets/profile.png"
-                        alt="Profile"
-                        class="avatar"
-                    />
-                    <div class="identity">
-                        <h1 class="name">namchill235</h1>
-                        <span class="status">~/workspace/creative</span>
-                    </div>
+        <header class="top-bar">
+            <div class="user">
+                <img src="assets/profile.png" alt="Profile" />
+                <div class="id">
+                    <h1>namchill235</h1>
+                    <span>~/workspace</span>
                 </div>
-
-                <div class="terminal-search">
-                    <span class="prompt">$ search </span>
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="*"
-                        autocomplete="off"
-                    />
-                    <span class="prompt-end"></span>
-                </div>
-            </header>
-
-            <div id="desktop-area" class="desktop-scroll">
-                <div class="loading-text">Booting system...</div>
             </div>
-        </main>
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="$ search"
+                />
+            </div>
+        </header>
 
-        <div id="gallery-modal" class="modal hidden">
-            <span class="close-modal">&times;</span>
-            <img class="modal-content" id="modal-img" />
-            <div id="caption"></div>
-        </div>
+        <main id="grid" class="card-grid"></main>
 
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="script.js"></script>
