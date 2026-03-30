@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./assets/Avatar.png" alt="Avatar">
+    <img src="./assets/Avatar.png" width="300" alt="Avatar">
 </p>
 
 # namchill235
