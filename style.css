@@ -18,8 +18,14 @@ body {
     color: var(--text);
     margin: 0;
     padding: 20px;
-    background: url("./assets/Background.jpg") no-repeat center center fixed;
+    background-color: black;
+    background-image: url("./assets/Background.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-origin: border-box;
+    background-clip: border-box;
     background-size: cover;
+    background-attachment: fixed;
 }
 #loader {
     position: fixed;
