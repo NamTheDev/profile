@@ -6,6 +6,12 @@
 Hi. My name is Nam, and I am a musician; I write, compose, and produce my own music.
 My side hobbies include drawing, venturing in the nature, and explore the tech world.
 
+## Socials
+- [Cara](https://cara.app/namchill235 "Cara profile")
+- [Reddit](https://reddit.com/user/namchill235 "Reddit profile")
+- [Twitter](https://x.com/namchill235 "Twitter profile")
+- [Discord](https://discord.com/users/1099931955535020053 "Discord profile")
+
 ## Projects
 
 ### Music
