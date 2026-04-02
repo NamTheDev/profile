@@ -1,5 +1,5 @@
 <p>
-    <img src="./assets/Avatar.webp" width="300" alt="Avatar">
+    <img src="assets/Avatar.webp" width="300" alt="Avatar">
 </p>
 
 # namchill235
@@ -50,7 +50,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Cara Portfolio
 <p>
   <a href="https://cara.app/namchill235/portfolio">
-    <img src="./assets/CaraProfileCard.webp" alt="My Cara Portfolio">
+    <img src="assets/CaraProfileCard.webp" alt="My Cara Portfolio">
   </a>
 </p>
 
@@ -81,7 +81,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Whale's Archive
 <p>
   <a href="https://discord.gg/7FWmpwKhq4">
-    <img src="./assets/Whale.webp" alt="Join Whale's Archive Discord server">
+    <img src="assets/Whale.webp" alt="Join Whale's Archive Discord server">
   </a>
 </p>
 
@@ -90,7 +90,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Namcap's Greenland (NCGL)
 <p>
   <a href="https://discord.gg/Z6GNTh7W5c">
-    <img src="./assets/NCGL.webp" alt="Join NCGL's Discord Server">
+    <img src="assets/NCGL.webp" alt="Join NCGL's Discord Server">
   </a>
 </p>
 

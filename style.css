@@ -20,7 +20,7 @@ body {
     margin: 0;
     padding: 20px;
     background-color: black;
-    background-image: url("./assets/Background.webp");
+    background-image: url("assets/Background.webp");
     background-repeat: no-repeat;
     background-position: center center;
     background-origin: border-box;
