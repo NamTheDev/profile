@@ -1,20 +1,7 @@
 async function fetchData(file) {
     const response = await fetch(file);
-    if (!response.ok) throw new Error(`Failed: ${file}`);
-    return file.endsWith(".json")
-        ? await response.json()
-        : await response.text();
-}
-
-function renderMusic(data) {
-    const container = document.getElementById("lastfm-container");
-    container.innerHTML = `
-        <h3>${data.nowPlaying ? "Now Playing" : "Recently Played"}</h3>
-        <img src="${data.image}" alt="Album Art" style="margin-bottom: 10px;">
-        <p><strong>${data.name}</strong></p>
-        <p>${data.artist}</p>
-        <a href="${data.url}" target="_blank">View on Last.fm</a>
-    `;
+    if (!response.ok) throw new Error(`Failed to load ${file}`);
+    return await response.text();
 }
 
 async function init() {
@@ -23,17 +10,15 @@ async function init() {
     const blogDiv = document.getElementById("blog-content");
 
     try {
-        const [readme, blog, music] = await Promise.all([
+        const [readmeText, blogText] = await Promise.all([
             fetchData("README.md"),
-            fetchData("Blog.md"),
-            fetchData("lastfm.json").catch(() => null),
+            fetchData("BLOG.md"),
         ]);
 
-        contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(readme));
-        blogDiv.innerHTML = DOMPurify.sanitize(marked.parse(blog));
-        if (music) renderMusic(music);
+        contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(readmeText));
+        blogDiv.innerHTML = DOMPurify.sanitize(marked.parse(blogText));
     } catch (error) {
-        contentDiv.innerHTML = `<p class="error">${error.message}</p>`;
+        contentDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
     } finally {
         loader.classList.add("hidden");
     }
