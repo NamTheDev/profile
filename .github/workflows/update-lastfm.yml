@@ -1,0 +1,23 @@
+name: Update Lastfm
+on:
+    schedule:
+        - cron: "*/5 * * * *"
+    workflow_dispatch:
+permissions:
+    contents: write
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@latest
+            - uses: oven-sh/setup-bun@latest
+            - run: bun scripts/update-music.ts
+              env:
+                  LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+            - name: Commit changes
+              run: |
+                  git config --global user.name "GitHub Action"
+                  git config --global user.email "action@github.com"
+                  git add lastfm.json
+                  git diff --quiet && git diff --staged --quiet || git commit -m "Update music data"
+                  git push
