@@ -1,77 +1,80 @@
 :root {
     --text: #cdd6f4;
+
     --link: #89b4fa;
+
     --link-hover: #b4befe;
+
     --quote-text: #bac2de;
+
     --quote-bg: rgba(0, 0, 0, 0.6);
+
     --error: #f38ba8;
-    --glass-blur: 10px;
+
+    --glass-blur: 2px;
+
     --glass-opacity: 0.8;
-    --background-color: rgba(0, 0, 0, var(--glass-opacity));
+
+    --backrgound-color: rgba(0, 0, 0, var(--glass-opacity));
+
     --glass-border: rgba(255, 255, 255, 0.15);
+
     --glass-shadow-in: rgba(255, 255, 255, 0.1);
+
     --glass-shadow-out: rgba(0, 0, 0, 0.6);
 }
 
 body {
     font-family: -apple-system, sans-serif;
-    font-size: 18px;
+
+    font-size: 20px;
+
     line-height: 1.6;
+
     color: var(--text);
+
     margin: 0;
+
     padding: 20px;
+
     background-color: black;
+
     background-image: url("assets/Background.webp");
+
     background-repeat: no-repeat;
+
     background-position: center center;
+
+    background-origin: border-box;
+
+    background-clip: border-box;
+
     background-size: cover;
+
     background-attachment: fixed;
-}
-
-.main-layout {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.glass-panel {
-    padding: 2rem;
-    border-radius: 16px;
-    background: var(--background-color);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    box-shadow:
-        inset 0 2px 4px var(--glass-shadow-in),
-        0 8px 32px var(--glass-shadow-out);
-}
-
-#content {
-    flex: 2;
-    max-width: 700px;
-}
-
-#lastfm-container,
-#blog-container {
-    flex: 1;
-    max-width: 300px;
-    min-width: 250px;
 }
 
 #loader {
     position: fixed;
+
     top: 0;
+
     left: 0;
+
     width: 100vw;
+
     height: 100vh;
+
     background: #000;
+
     z-index: 9999;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     transition:
         opacity 1s ease-out,
         visibility 1s ease-out;
@@ -79,12 +82,37 @@ body {
 
 #loader.hidden {
     opacity: 0;
+
     visibility: hidden;
+}
+
+#content {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding: 2rem;
+
+    border-radius: 16px;
+
+    background: var(--backrgound-color);
+
+    backdrop-filter: blur(var(--glass-blur));
+
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        inset 0 2px 4px var(--glass-shadow-in),
+        0 8px 32px var(--glass-shadow-out);
 }
 
 a {
     color: var(--link);
+
     text-decoration: none;
+
     transition: color 0.2s;
 }
 
@@ -94,38 +122,49 @@ a:hover {
 
 blockquote {
     border-left: 4px solid white;
-    padding: 10px 15px;
-    margin: 0 0 1rem 0;
+
+    padding-left: 1rem;
+
+    margin-left: 0;
+
     color: var(--quote-text);
+
     background: var(--quote-bg);
+
+    padding: 10px 15px;
+
     border-radius: 0 8px 8px 0;
 }
 
 img {
-    max-width: 100%;
+    max-width: 700px;
+
+    width: 100%;
+
     height: auto;
+
     display: block;
+
     border-radius: 8px;
 }
 
+img[src*="Avatar.webp"],
 img[alt="Avatar"] {
     max-width: 300px !important;
 }
 
 .error {
     color: var(--error);
+
     font-weight: bold;
 }
 
-@media (max-width: 1100px) {
-    .main-layout {
-        flex-direction: column;
-        align-items: center;
-    }
-    #lastfm-container,
-    #blog-container,
+@media (max-width: 600px) {
     #content {
-        width: 100%;
-        max-width: 700px;
+        padding: 1.5rem;
+    }
+
+    body {
+        padding: 10px;
     }
 }
