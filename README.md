@@ -80,7 +80,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 - #### Whale's Archive
 <p>
-  <a href="https://discord.gg/7FWmpwKhq4">
+  <a href="https://discord.gg/Z6GNTh7W5c">
     <img src="assets/Whale.webp" alt="Join Whale's Archive Discord server">
   </a>
 </p>
@@ -89,7 +89,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 - #### Namcap's Greenland (NCGL)
 <p>
-  <a href="https://discord.gg/Z6GNTh7W5c">
+  <a href="https://discord.gg/7FWmpwKhq4">
     <img src="assets/NCGL.webp" alt="Join NCGL's Discord Server">
   </a>
 </p>
