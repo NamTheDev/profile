@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
+
+.cutive-mono-regular {
+    font-family: "Cutive Mono", monospace;
+    font-weight: 500;
+    font-style: normal;
+}
+
 :root {
     --text: #cdd6f4;
 
@@ -11,22 +19,16 @@
 
     --error: #f38ba8;
 
-    --glass-blur: 2px;
+    --glass-blur: 10px;
 
-    --glass-opacity: 0.8;
+    --glass-opacity: 0.85;
 
     --backrgound-color: rgba(0, 0, 0, var(--glass-opacity));
 
     --glass-border: rgba(255, 255, 255, 0.15);
-
-    --glass-shadow-in: rgba(255, 255, 255, 0.1);
-
-    --glass-shadow-out: rgba(0, 0, 0, 0.6);
 }
 
 body {
-    font-family: -apple-system, sans-serif;
-
     font-size: 20px;
 
     line-height: 1.6;
