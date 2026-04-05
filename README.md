@@ -85,7 +85,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   </a>
 </p>
 
-> A Discord community for sharing art, technology, game, and humor. [Join our Discord Server](https://discord.gg/7FWmpwKhq4)
+> A Discord community for sharing art, technology, game, and humor. [Join our Discord Server](https://discord.gg/Z6GNTh7W5c)
 
 - #### Namcap's Greenland (NCGL)
 <p>
@@ -94,4 +94,4 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   </a>
 </p>
 
-> A Discord apply-to-join community for NCGL Minecraft server. [Join our Discord Server](https://discord.gg/Z6GNTh7W5c)
+> A Discord apply-to-join community for NCGL Minecraft server. [Join our Discord Server](https://discord.gg/7FWmpwKhq4)
