@@ -10,6 +10,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - [Cara](https://cara.app/namchill235 "Cara profile")
 - [Reddit](https://reddit.com/user/namchill235 "Reddit profile")
 - [Twitter](https://x.com/namchill235 "Twitter profile")
+- [Instagram](https://www.instagram.com/namchill235 "Instagram profile")
 - [Discord](https://discord.com/users/1099931955535020053 "Discord profile")
 
 ## Projects
