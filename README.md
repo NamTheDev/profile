@@ -66,7 +66,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   </a>
 </p>
 
-> [Visit GitHub Repository](https://github.com/NamTheDev/FEARLESS "https://github.com/NamTheDev/Green")
+> [Visit GitHub Repository](https://github.com/NamTheDev/FEARLESS "https://github.com/NamTheDev/FEARLESS")
 
 - #### GreenBot (Discord bot)
 <p>
