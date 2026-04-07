@@ -1,171 +1,110 @@
 @import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-
 .cutive-mono-regular {
     font-family: "Cutive Mono", monospace;
     font-weight: 500;
     font-style: normal;
 }
-
 :root {
     --text: #cdd6f4;
-
     --link: #89b4fa;
-
     --link-hover: #b4befe;
-
     --quote-text: #bac2de;
-
     --quote-bg: rgba(0, 0, 0, 0.6);
-
     --error: #f38ba8;
-
     --glass-blur: 10px;
-
     --glass-opacity: 0.85;
-
     --backrgound-color: rgba(0, 0, 0, var(--glass-opacity));
-
     --glass-border: rgba(255, 255, 255, 0.15);
 }
-
 body {
     font-size: 20px;
-
     line-height: 1.6;
-
     color: var(--text);
-
     margin: 0;
-
     padding: 20px;
-
     background-color: black;
-
     background-image: url("assets/Background.webp");
-
     background-repeat: no-repeat;
-
     background-position: center center;
-
     background-origin: border-box;
-
     background-clip: border-box;
-
     background-size: cover;
-
     background-attachment: fixed;
 }
-
 #loader {
     position: fixed;
-
     top: 0;
-
     left: 0;
-
     width: 100vw;
-
     height: 100vh;
-
     background: #000;
-
     z-index: 9999;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     transition:
         opacity 1s ease-out,
         visibility 1s ease-out;
 }
-
 #loader.hidden {
     opacity: 0;
-
     visibility: hidden;
 }
-
 #content {
     max-width: 700px;
-
     margin: 0 auto;
-
     padding: 2rem;
-
     border-radius: 16px;
-
     background: var(--backrgound-color);
-
     backdrop-filter: blur(var(--glass-blur));
-
     -webkit-backdrop-filter: blur(var(--glass-blur));
-
     border: 1px solid var(--glass-border);
-
     box-shadow:
         inset 0 2px 4px var(--glass-shadow-in),
         0 8px 32px var(--glass-shadow-out);
 }
-
 a {
     color: var(--link);
-
     text-decoration: none;
-
     transition: color 0.2s;
 }
-
 a:hover {
     color: var(--link-hover);
 }
-
 blockquote {
     border-left: 4px solid white;
-
     padding-left: 1rem;
-
     margin-left: 0;
-
     color: var(--quote-text);
-
     background: var(--quote-bg);
-
     padding: 10px 15px;
-
     border-radius: 0 8px 8px 0;
 }
-
 img {
     max-width: 700px;
-
     width: 100%;
-
     height: auto;
-
     display: block;
-
     border-radius: 8px;
 }
-
+img[class="icon"] {
+    width: 50px;
+    height: 50px;
+    display: unset;
+    border-radius: 3px;
+}
 img[src*="Avatar.webp"],
 img[alt="Avatar"] {
     max-width: 300px !important;
 }
-
 .error {
     color: var(--error);
-
     font-weight: bold;
 }
-
 @media (max-width: 600px) {
     #content {
         padding: 1.5rem;
     }
-
     body {
         padding: 10px;
     }
