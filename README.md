@@ -62,7 +62,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### FEARLESS (Discord bot)
 <p>
   <a href="https://github.com/NamTheDev/FEARLESS">
-    <img src="https://opengraph.githubassets.com/1/NamTheDev/FEARLESS" alt="FEARLESS bot GitHub Repository">
+    <img src="assets/Github_FEARLESS.webp" alt="FEARLESS bot GitHub Repository">
   </a>
 </p>
 
@@ -71,7 +71,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### GreenBot (Discord bot)
 <p>
   <a href="https://github.com/NamTheDev/Green">
-    <img src="https://opengraph.githubassets.com/1/NamTheDev/Green" alt="GreenBot bot GitHub Repository">
+    <img src="assets/Github_Green.webp" alt="GreenBot bot GitHub Repository">
   </a>
 </p>
 
