@@ -7,11 +7,11 @@ Hi. My name is Nam, and I am a musician; I write, compose, and produce my own mu
 My side hobbies include drawing, venturing in the nature, and explore the tech world.
 
 ## Social media
-- [Cara](https://cara.app/namchill235 "Cara profile")
-- [Reddit](https://reddit.com/user/namchill235 "Reddit profile")
-- [Twitter](https://x.com/namchill235 "Twitter profile")
-- [Instagram](https://www.instagram.com/namchill235 "Instagram profile")
-- [Discord](https://discord.com/users/1099931955535020053 "Discord profile")
+- [<img src="assets/Cara.webp" class="icon" align="center"> Cara](https://cara.app/namchill235 "Cara profile")
+- [<img src="assets/Reddit.webp" class="icon" align="center"> Reddit](https://reddit.com/user/namchill235 "Reddit profile")
+- [<img src="assets/Twitter.webp" class="icon" align="center"> Twitter](https://x.com/namchill235 "Twitter profile")
+- [<img src="assets/Instagram.webp" class="icon" align="center"> Instagram](https://instagram.com/namchill235 "Instagram profile")
+- [<img src="assets/Discord.webp" class="icon" align="center"> Discord](https://discord.users/1099931955535020053 "Discord profile")
 
 ## Projects
 
