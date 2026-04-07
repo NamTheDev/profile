@@ -1,5 +1,5 @@
 <p>
-    <img src="assets/Avatar.webp" width="300" alt="Avatar">
+    <img src="assets/Avatar.webp" alt="Avatar">
 </p>
 
 # namchill235
