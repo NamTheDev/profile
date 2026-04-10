@@ -1,5 +1,5 @@
-<p width="300">
-    <img src="assets/Avatar.webp" alt="Avatar">
+<p>
+    <img src="assets/Avatar.webp" width="300" alt="Avatar">
 </p>
 
 # namchill235
@@ -29,7 +29,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Home
 <p>
   <a href="https://www.youtube.com/watch?v=zt2kS3zKKvQ">
-    <img src="https://img.youtube.com/vi/zt2kS3zKKvQ/0.jpg" alt="Home">
+    <img src="https://img.youtube.com/vi/zt2kS3zKKvQ/0.jpg" width="500" alt="Home">
   </a>
 </p>
 
@@ -38,7 +38,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Sunset
 <p>
   <a href="https://www.youtube.com/watch?v=Hdk7zulaCC4">
-    <img src="https://img.youtube.com/vi/Hdk7zulaCC4/0.jpg" alt="Sunset">
+    <img src="https://img.youtube.com/vi/Hdk7zulaCC4/0.jpg" width="500" alt="Sunset">
   </a>
 </p>
 
@@ -49,7 +49,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Winter Leaf
 <p>
   <a href="https://www.youtube.com/watch?v=3NZ7WlffkWY">
-    <img src="https://img.youtube.com/vi/3NZ7WlffkWY/0.jpg" alt="Winter Leaf">
+    <img src="https://img.youtube.com/vi/3NZ7WlffkWY/0.jpg" width="500" alt="Winter Leaf">
   </a>
 </p>
 
@@ -60,7 +60,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Cara Portfolio
 <p>
   <a href="https://cara.app/namchill235/portfolio">
-    <img src="assets/CaraProfileCard.webp" alt="My Cara Portfolio">
+    <img src="assets/CaraProfileCard.webp" width="500" alt="My Cara Portfolio">
   </a>
 </p>
 
@@ -71,7 +71,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### FEARLESS (Discord bot)
 <p>
   <a href="https://github.com/NamTheDev/FEARLESS">
-    <img src="assets/Github_FEARLESS.webp" alt="FEARLESS bot GitHub Repository">
+    <img src="assets/Github_FEARLESS.webp" width="500" alt="FEARLESS bot GitHub Repository">
   </a>
 </p>
 
@@ -80,7 +80,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Green (Discord bot)
 <p>
   <a href="https://github.com/NamTheDev/Green">
-    <img src="assets/Github_Green.webp" alt="GreenBot bot GitHub Repository">
+    <img src="assets/Github_Green.webp" width="500" alt="GreenBot bot GitHub Repository">
   </a>
 </p>
 
@@ -91,7 +91,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Whale's Archive
 <p>
   <a href="https://discord.gg/Z6GNTh7W5c">
-    <img src="assets/Whale.webp" alt="Join Whale's Archive Discord server">
+    <img src="assets/Whale.webp" width="500" alt="Join Whale's Archive Discord server">
   </a>
 </p>
 
@@ -100,7 +100,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 - #### Namcap's Greenland (NCGL)
 <p>
   <a href="https://discord.gg/7FWmpwKhq4">
-    <img src="assets/NCGL.webp" alt="Join NCGL's Discord Server">
+    <img src="assets/NCGL.webp" width="500" alt="Join NCGL's Discord Server">
   </a>
 </p>
 
