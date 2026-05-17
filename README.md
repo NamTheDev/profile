@@ -3,7 +3,8 @@
 </p>
 
 # namchill235
-Hi. My name is Nam, and I am a musician; I write, compose, and produce my own music.
+Hi. My name is Nam, and I am currently striving to be a graphic designer.
+Additionally, I'm also a musician; I write, compose, and produce my own music.
 My side hobbies include drawing, venturing in the nature, and explore the tech world.
 
 ## Table of Contents
@@ -88,20 +89,20 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Communities
 
-- #### Whale's Archive
+- #### Unecraft
 <p>
-  <a href="https://discord.gg/Z6GNTh7W5c">
-    <img src="assets/Whale.webp" width="700" alt="Join Whale's Archive Discord server">
+  <a href="https://discord.gg/PF87xzGfyK">
+    <img src="assets/Unecraft.webp" width="700" alt="Join Unecraft's Discord Server">
   </a>
 </p>
 
-> A Discord community for sharing art, technology, game, and humor. [Join our Discord Server](https://discord.gg/Z6GNTh7W5c)
+> A Discord apply-to-join community for NCGL Minecraft server, founded by me and unecap. <br>[Join our Discord Server](https://discord.gg/PF87xzGfyK)
 
-- #### Namcap's Greenland (NCGL)
+- #### Ruthless Fears
 <p>
-  <a href="https://discord.gg/7FWmpwKhq4">
-    <img src="assets/NCGL.webp" width="700" alt="Join NCGL's Discord Server">
+  <a href="https://discord.gg/MmHeQNEYHu">
+    <img src="assets/RuthlessFears.webp" width="700" alt="Join Ruthless Fears Discord Server">
   </a>
 </p>
 
-> A Discord apply-to-join community for NCGL Minecraft server. [Join our Discord Server](https://discord.gg/7FWmpwKhq4)
+> A The Strongest Battlegrrounds (Roblox game) Discord community, founded by RDS. <br>[Join our Discord Server](https://discord.gg/MmHeQNEYHu)
