@@ -96,7 +96,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   </a>
 </p>
 
-> A Discord apply-to-join community for NCGL Minecraft server, founded by me and unecap. <br>[Join our Discord Server](https://discord.gg/PF87xzGfyK)
+> A Discord apply-to-join community for Unecraft Minecraft server, founded by me and unecap. <br>[Join our Discord Server](https://discord.gg/PF87xzGfyK)
 
 - #### Ruthless Fears
 <p>
