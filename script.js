@@ -51,7 +51,8 @@ async function loadMarkdown() {
     try {
         const response = await fetch("README.md");
         const text = await response.text();
-        displayDiv.innerHTML = marked.parse(text);
+        const html = marked.parse(text);
+        displayDiv.innerHTML = DOMPurify.sanitize(html);
 
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
             anchor.addEventListener("click", function (e) {
