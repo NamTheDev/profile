@@ -7,7 +7,7 @@ Hi. My name is Nam, and I am currently striving to be a graphic designer.
 Additionally, I'm also a musician; I write, compose, and produce my own music.
 My side hobbies include drawing, venturing in the nature, and explore the tech world.
 
-## Table of Contents
+**Table of Contents**
 - [Social media](#social-media)
 - [Projects](#projects)
   - [Music](#music)
@@ -16,7 +16,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   - [Tech](#tech)
 - [Communities](#communities)
 
-## Social media
+**Social media**
 - [<img src="assets/Cara.webp" width="50" height="50" class="icon" align="center"> Cara](https://cara.app/namchill235 "Cara profile")
 - [<img src="assets/Reddit.webp" width="50" height="50" class="icon" align="center"> Reddit](https://reddit.com/user/namchill235 "Reddit profile")
 - [<img src="assets/Twitter.webp" width="50" height="50" class="icon" align="center"> Twitter](https://x.com/namchill235 "Twitter profile")
@@ -27,7 +27,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Music
 
-- #### Home
+- **Home**
 <p>
   <a href="https://www.youtube.com/watch?v=zt2kS3zKKvQ">
     <img src="https://img.youtube.com/vi/zt2kS3zKKvQ/0.jpg" width="700" alt="Home">
@@ -36,7 +36,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 > The feeling of loss when the distance of what used to be safe and warm grows - home. [Listen on YouTube](https://www.youtube.com/watch?v=zt2kS3zKKvQ)
 
-- #### Sunset
+- **Sunset**
 <p>
   <a href="https://www.youtube.com/watch?v=Hdk7zulaCC4">
     <img src="https://img.youtube.com/vi/Hdk7zulaCC4/0.jpg" width="700" alt="Sunset">
@@ -47,7 +47,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Film
 
-- #### Winter Leaf
+- **Winter Leaf** 
 <p>
   <a href="https://www.youtube.com/watch?v=3NZ7WlffkWY">
     <img src="https://img.youtube.com/vi/3NZ7WlffkWY/0.jpg" width="700" alt="Winter Leaf">
@@ -58,7 +58,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Photography & Visual Artworks
 
-- #### Cara Portfolio
+- **Cara Portfolio **
 <p>
   <a href="https://cara.app/namchill235/portfolio">
     <img src="assets/CaraProfileCard.webp" width="700" alt="My Cara Portfolio">
@@ -69,7 +69,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Tech
 
-- #### FEARLESS (Discord bot)
+- **FEARLESS**
 <p>
   <a href="https://github.com/NamTheDev/FEARLESS">
     <img src="assets/Github_FEARLESS.webp" width="700" alt="FEARLESS bot GitHub Repository">
@@ -78,7 +78,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 > [Visit GitHub Repository](https://github.com/NamTheDev/FEARLESS "https://github.com/NamTheDev/FEARLESS")
 
-- #### Green (Discord bot)
+- **Green**
 <p>
   <a href="https://github.com/NamTheDev/Green">
     <img src="assets/Github_Green.webp" width="700" alt="GreenBot bot GitHub Repository">
@@ -89,7 +89,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Communities
 
-- #### Unecraft
+- **Unecraft**
 <p>
   <a href="https://discord.gg/PF87xzGfyK">
     <img src="assets/Unecraft.webp" width="700" alt="Join Unecraft's Discord Server">
@@ -98,7 +98,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 > A Discord apply-to-join community for Unecraft Minecraft server, founded by me and unecap. <br>[Join our Discord Server](https://discord.gg/PF87xzGfyK)
 
-- #### Ruthless Fears
+- **Ruthless Fears**
 <p>
   <a href="https://discord.gg/MmHeQNEYHu">
     <img src="assets/RuthlessFears.webp" width="700" alt="Join Ruthless Fears Discord Server">

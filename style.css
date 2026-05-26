@@ -1,9 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-.cutive-mono-regular {
-    font-family: "Cutive Mono", monospace;
-    font-weight: 500;
-    font-style: normal;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+.roboto-mono {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
 }
+
 :root {
     --text: #cdd6f4;
     --link: #89b4fa;
@@ -72,6 +75,8 @@ a:hover {
     color: var(--link-hover);
 }
 blockquote {
+    max-width: 600px;
+    width: 100%;
     border-left: 4px solid white;
     padding-left: 1rem;
     margin-left: 0;
@@ -81,7 +86,7 @@ blockquote {
     border-radius: 0 8px 8px 0;
 }
 img {
-    max-width: 700px;
+    max-width: 600px;
     width: 100%;
     height: auto;
     display: block;
