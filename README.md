@@ -16,12 +16,16 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   - [Tech](#tech)
 - [Communities](#communities)
 
-**Social media**
-- [<img src="assets/Cara.webp" width="50" height="50" class="icon" align="center"> Cara](https://cara.app/namchill235 "Cara profile")
-- [<img src="assets/Reddit.webp" width="50" height="50" class="icon" align="center"> Reddit](https://reddit.com/user/namchill235 "Reddit profile")
-- [<img src="assets/Twitter.webp" width="50" height="50" class="icon" align="center"> Twitter](https://x.com/namchill235 "Twitter profile")
-- [<img src="assets/Instagram.webp" width="50" height="50" class="icon" align="center"> Instagram](https://instagram.com/namchill235 "Instagram profile")
-- [<img src="assets/Discord.webp" width="50" height="50" class="icon" align="center"> Discord](https://discord.users/1099931955535020053 "Discord profile")
+## Social Media
+
+- guns.lol
+<p>
+  <a href="https://guns.lol/namchill235">
+    <img src="assets/GunsLolProfile.webp" width="700" alt="My guns.lol Profile">
+  </a>
+</p>
+
+> Most of my social links are located in this site. [Visit my guns.lol](https://guns.lol/namchill235 "guns.lol profile")
 
 ## Projects
 
