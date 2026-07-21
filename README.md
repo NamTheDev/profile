@@ -58,6 +58,8 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
   </a>
 </p>
 
+> A seperate channel for analog horror footages I've made, expressing my inspiration and love for the Backrooms and liminal spaces concepts. [Visit the channel](https://youtube.com/@floorescent.studio) or [watch the intro](https://www.youtube.com/watch?v=FeOnJx_2v7I).
+
 - **Winter Leaf** 
 <p>
   <a href="https://www.youtube.com/watch?v=3NZ7WlffkWY">
