@@ -51,6 +51,13 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Film
 
+- **Floorescent Studio**
+<p>
+  <a href="https://www.youtube.com/watch?v=FeOnJx_2v7I">
+    <img src="https://img.youtube.com/vi/FeOnJx_2v7I/0.jpg" width="700" alt="Winter Leaf">
+  </a>
+</p>
+
 - **Winter Leaf** 
 <p>
   <a href="https://www.youtube.com/watch?v=3NZ7WlffkWY">
@@ -62,7 +69,7 @@ My side hobbies include drawing, venturing in the nature, and explore the tech w
 
 ### Photography & Visual Artworks
 
-- **Cara Portfolio **
+- **Cara Portfolio**
 <p>
   <a href="https://cara.app/namchill235/portfolio">
     <img src="assets/CaraProfileCard.webp" width="700" alt="My Cara Portfolio">
