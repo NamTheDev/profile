@@ -221,6 +221,72 @@ Removed `pages/notes.md`.
 
 Removed `pages/index.json`. With the old page files gone, the `pages/` directory disappeared from the repository.
 
+
+### 01:35:03 — `3834696`
+**Log Profile and root index migration**
+
+Recorded the previous Profile/index migration in the development log.
+
+### 01:40:56 — `5a7caee`
+**Add Markdown page manifest**
+
+Added `manifest.json` as the machine-readable registry for published Markdown pages.
+
+### 01:40:59 — `01120eb`
+**Add archive home page**
+
+Added `pages/home.md` as the reader-facing landing page explaining how the archive works and what to read first.
+
+### 01:41:01 — `59ab1a9`
+**Move owner profile into pages**
+
+Created `pages/profile.md` as the owner's self-written personal profile document.
+
+### 01:41:03 — `38b0bf8`
+**Add human-readable page index**
+
+Added `pages/index.md` as the visitor-facing directory linking the archive pages.
+
+### 01:41:06 — `7fa949b`
+**Add service worker caching**
+
+Added `sw.js` to pre-cache the core site shell and use cached responses for faster repeat visits and offline fallback.
+
+### 01:41:08 — `f74320b`
+**Document pages structure and caching**
+
+Updated the README for the `pages/` model, human-readable index, manifest, and performance strategy.
+
+### 01:41:10 — `558108f`
+**Clarify personal content authorship**
+
+Updated the AI disclosure to distinguish AI-assisted software/navigation work from owner-written autobiographical content.
+
+### 01:41:13 — `8b40734`
+**Remove superseded root Profile file**
+
+Removed the old root `PROFILE.md` after moving the profile document into `pages/`.
+
+### 01:41:15 — `bf0d499`
+**Replace old index manifest**
+
+Removed the old root `index.json` in favor of `manifest.json` plus the human-readable `pages/index.md`.
+
+### 01:42:24 — `6f0ce18`
+**Optimize shell resource connections**
+
+Added an early connection hint for the CDN serving the Markdown renderer and sanitizer.
+
+### 01:42:27 — `32ad805`
+**Add cached Markdown loading and idle prefetch**
+
+Removed forced no-cache loading, added in-memory Markdown caching, idle prefetching, service-worker registration, and a smaller navigation/runtime path.
+
+### 01:43:17 — `8feb8ef`
+**Keep contents navigation on smaller screens**
+
+Kept the compact expandable contents navigation for smaller displays while preserving the simplified runtime.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
