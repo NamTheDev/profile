@@ -2,7 +2,13 @@
   {
     "slug": "home",
     "title": "Home",
-    "file": "pages/home.md",
-    "description": "How to use this self-documentary."
+    "file": "pages/HOME.md",
+    "description": "Introduction to the site."
+  },
+  {
+    "slug": "github",
+    "title": "GitHub",
+    "file": "pages/GITHUB.md",
+    "description": "GitHub repositories and short project summaries."
   }
 ]
