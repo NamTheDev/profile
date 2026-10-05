@@ -2,12 +2,11 @@
 
 This site is a self-documentary built from plain Markdown pages.
 
-It is meant to be read like a small personal reference archive: start with the main profile, then use the index when you want to move through the rest of the material.
+It is meant to be read like a small personal reference archive. Use the index to move through the published material.
 
 ## What to read
 
-1. [Profile](profile.md) — the primary self-documentary page, written by the owner himself.
-2. [Index](index.md) — a directory of the pages available on this site.
+- [Index](index.md) — a directory of the pages available on this site.
 
 ## How the site works
 
