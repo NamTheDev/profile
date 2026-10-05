@@ -303,6 +303,47 @@ Bumped the service-worker cache version and changed the app shell, JavaScript, C
 
 Updated the README to explain the versioned cache, network-first app shell, and stale-while-revalidate content behavior.
 
+
+### 01:54:51 — `b38f018`
+**Remove Profile from page manifest**
+
+Removed the Profile entry from `manifest.json`.
+
+### 01:54:53 — `238b454`
+**Remove Profile from compatibility index**
+
+Removed the Profile entry from the legacy-safe `index.json` alias.
+
+### 01:54:55 — `949a92e`
+**Remove Profile from home navigation**
+
+Updated `pages/home.md` so it no longer points readers to the Profile page.
+
+### 01:54:57 — `4069fb4`
+**Remove Profile from page index**
+
+Removed the Profile link from the human-readable `pages/index.md`.
+
+### 01:55:00 — `a25014c`
+**Remove Profile from documented structure**
+
+Updated the README so the documented content model contains only Home and Index.
+
+### 01:55:02 — `0eb7440`
+**Generalize personal content disclosure**
+
+Removed the Profile-specific wording from `AI_DISCLAIMER.md` while keeping the distinction between AI-assisted development and owner-written autobiographical content.
+
+### 01:55:04 — `a9b7f69`
+**Drop Profile from service worker cache**
+
+Removed `pages/profile.md` from the pre-cache list and bumped the service worker cache version.
+
+### 01:55:06 — `ea9fd55`
+**Remove Profile page**
+
+Deleted `pages/profile.md`.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
