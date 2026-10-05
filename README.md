@@ -1,37 +1,32 @@
-# Nam's stuff
+# profile
 
-This is a site for me to present stuff I made.
+Minimal self-documentary website for Nam.
 
-Hello! My name is **Nam**, nickname **Ethereal**, a Vietnamese who's in love with **Art** and **Music**.
+The site is intentionally content-first and inspired by the navigation simplicity of Wikipedia. It has no build step and uses Markdown files as its document source.
 
-## Art?
+## Add a page
 
-I have been **drawing** since I was around **four years old**, so it's not a coincidence that I would choose the **Graphic Design** path as my **dream career**.
-I believe my art are "awesome" or at least eye-catching to some extend.
+1. Create a Markdown file inside `pages/`.
+2. Add it to `pages/index.json`.
+3. Commit and push.
 
-For example, my own **icon** and **banner** designs:
+Example:
 
-<p>
-    <img src="assets/Avatar.webp" width="300" alt="Avatar">
-</p>
+```json
+{
+  "slug": "journal",
+  "title": "Journal",
+  "file": "pages/journal.md",
+  "description": "Personal notes and dated entries."
+}
+```
 
-<p>
-    <img src="assets/Banner.webp" width="400" alt="Avatar">
-</p>
+Open it with `?page=journal`.
 
-> You can see **more** at my **art & photography** gallery **profile**. [Visit my profile on cara.app](https://cara.app/namchill235)
+## Themes
 
-## What about Music?
-
-Just few years later, around the time when I was **6** ~ **7** years old, I started playing **piano**, unwillingly.
-But I could not be less thankful that my mother did not give up on encouraging me to learn it, or else I wouldn't be who I am today.
-
-For example, this is the **first ever piano song** I wrote and recorded when I was **twelve years old**.
-
-<p>
-    <a href="https://www.youtube.com/watch?v=Hdk7zulaCC4">
-        <img src="https://img.youtube.com/vi/Hdk7zulaCC4/0.jpg" width="700" alt="Sunset">
-    </a>
-</p>
-
-> Just like the **cycle of life**: one thing must end before another can begin - **sunset**. [Listen on YouTube](https://www.youtube.com/watch?v=Hdk7zulaCC4)
+- Dark: Catppuccin Mocha
+- Light: Catppuccin Latte
+- Theme follows the operating system on first visit and can be toggled manually.
+- Interface font: Montserrat
+- Monospace/meta font: Courier New
