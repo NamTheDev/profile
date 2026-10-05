@@ -1,16 +1,16 @@
 # Self-Documentary
 
-A minimal Markdown-driven website for documenting a person, life, work, notes, and history.
+A minimal Markdown-driven personal archive inspired by the clarity of encyclopedia interfaces.
 
 ## Features
 
 - Markdown pages
 - Simple page index and navigation
-- Automatic heading table of contents
+- Automatic contents navigation
 - Catppuccin Latte / Mocha themes
 - Montserrat throughout
 - No framework or build step
-- Works on static hosting
+- Static-hosting friendly
 
 ## Use it
 
@@ -20,7 +20,7 @@ A minimal Markdown-driven website for documenting a person, life, work, notes, a
 4. Register each page in `pages/index.json`.
 5. Serve the repository with any static web server or GitHub Pages.
 
-Example page entry:
+Example:
 
 ```json
 {
