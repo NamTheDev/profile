@@ -6,7 +6,12 @@
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="Nam's self-documentary: notes, history, work, and personal records.">
   <title>Nam — Self-documentary</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">\n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">\n  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
   <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
   <script src="script.js" defer></script>
@@ -14,9 +19,13 @@
 <body>
   <header class="site-header">
     <button class="icon-button mobile-only" id="menu-toggle" aria-label="Open navigation" aria-expanded="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
     </button>
+
     <a class="site-title" href="?page=home" data-page-link="home">Nam</a>
+
     <div class="header-actions">
       <button class="icon-button" id="theme-toggle" aria-label="Toggle color theme">
         <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
