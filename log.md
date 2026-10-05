@@ -287,6 +287,22 @@ Removed forced no-cache loading, added in-memory Markdown caching, idle prefetch
 
 Kept the compact expandable contents navigation for smaller displays while preserving the simplified runtime.
 
+
+### 01:51:20 — `7c1855e`
+**Add legacy-safe page index alias**
+
+Added root `index.json` as a compatibility alias for the Markdown page registry so browsers still running an older cached script can resolve the page index instead of returning HTTP 404.
+
+### 01:51:22 — `c29de14`
+**Fix service worker cache invalidation**
+
+Bumped the service-worker cache version and changed the app shell, JavaScript, CSS, and page registries to network-first loading. Markdown content remains cache-friendly with stale-while-revalidate.
+
+### 01:51:24 — `e402fb3`
+**Document safer cache strategy**
+
+Updated the README to explain the versioned cache, network-first app shell, and stale-while-revalidate content behavior.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
