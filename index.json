@@ -3,12 +3,6 @@
     "slug": "home",
     "title": "Home",
     "file": "pages/home.md",
-    "description": "How this self-documentary works and where to begin."
-  },
-  {
-    "slug": "index",
-    "title": "Index",
-    "file": "pages/index.md",
-    "description": "Directory of published pages."
+    "description": "How to use this self-documentary."
   }
 ]
