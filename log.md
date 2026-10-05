@@ -344,6 +344,37 @@ Removed `pages/profile.md` from the pre-cache list and bumped the service worker
 
 Deleted `pages/profile.md`.
 
+
+### 02:14:28 — `501d5a4`
+**Remove Index page from manifest**
+
+Removed the human-facing Index page from `manifest.json`.
+
+### 02:14:30 — `4345b70`
+**Remove Index page from compatibility registry**
+
+Removed the Index page from the compatibility `index.json` registry.
+
+### 02:14:33 — `0cace81`
+**Rewrite Home as concise navigation guide**
+
+Rewrote `pages/home.md` as a short, direct explanation of the sidebar, page filter, contents navigation, Read/Source controls, theme switch, and Home link.
+
+### 02:14:36 — `fd65983`
+**Document simplified page structure**
+
+Updated the README for a single initial Home page and the manifest-based page workflow.
+
+### 02:14:39 — `f283a0a`
+**Remove Index page from service worker cache**
+
+Removed `pages/index.md` from the pre-cache list and bumped the service-worker cache version.
+
+### 02:14:41 — `9c33eea`
+**Remove redundant Index page**
+
+Deleted `pages/index.md`.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
