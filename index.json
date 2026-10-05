@@ -6,12 +6,6 @@
     "description": "How this self-documentary works and where to begin."
   },
   {
-    "slug": "profile",
-    "title": "Profile",
-    "file": "pages/profile.md",
-    "description": "The owner's personal self-documentary."
-  },
-  {
     "slug": "index",
     "title": "Index",
     "file": "pages/index.md",
