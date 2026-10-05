@@ -1,4 +1,4 @@
-const CACHE = "self-documentary-v2";
+const CACHE = "self-documentary-v3";
 const CORE = [
   "./",
   "index.html",
@@ -7,7 +7,6 @@ const CORE = [
   "manifest.json",
   "index.json",
   "pages/home.md",
-  "pages/profile.md",
   "pages/index.md"
 ];
 
