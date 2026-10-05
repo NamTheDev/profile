@@ -427,6 +427,17 @@ Removed the old lowercase `pages/home.md` after moving content to `pages/HOME.md
 
 Added an abandoned-project notice to the Flow README.
 
+
+### 03:44 — `c7e86ae` (NamTheDev/FEARLESS)
+**Mark project as abandoned**
+
+Added a prominent abandoned-project notice to the FEARLESS README.
+
+### 03:44 — `d2f0d8a` (NamTheDev/FARTLESS)
+**Clarify abandoned project status**
+
+Updated the FARTLESS README to state that both FARTLESS and FEARLESS are abandoned and retained for archival/reference purposes.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
