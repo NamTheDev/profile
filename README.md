@@ -7,12 +7,10 @@ A small, Markdown-driven personal archive with an encyclopedia-style reading int
 ```text
 pages/
 ├── home.md
-├── profile.md
 └── index.md
 ```
 
 - `pages/home.md` explains how the site works and where a reader should begin.
-- `pages/profile.md` is the owner's personal self-documentary. Its substantive personal content is written entirely by the owner himself.
 - `pages/index.md` is the human-readable directory linking to published pages.
 - `manifest.json` is the small machine-readable registry used to build site navigation.
 
