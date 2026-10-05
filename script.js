@@ -134,7 +134,7 @@ function renderToc() {
   mobile.innerHTML = "<summary>Contents</summary><nav></nav>";
   const mobileNav = mobile.querySelector("nav");
   headings.forEach((heading) => mobileNav.append(tocLink(heading)));
-  els.article.querySelector(".article-toolbar")?.insertAdjacentElement("afterend", mobile);
+  els.article.querySelector("h1")?.insertAdjacentElement("afterend", mobile);
 
   state.observer = new IntersectionObserver((entries) => {
     const current = entries
@@ -149,21 +149,6 @@ function renderToc() {
   }, { rootMargin: "-15% 0px -70% 0px" });
 
   headings.forEach((heading) => state.observer.observe(heading));
-}
-
-function toolbar(page) {
-  const title = els.article.querySelector("h1");
-  if (!title) return;
-
-  const bar = document.createElement("nav");
-  bar.className = "article-toolbar";
-  bar.ariaLabel = "Page actions";
-  bar.innerHTML =
-    '<span class="article-tab active">Read</span>' +
-    '<a class="article-tab" target="_blank" rel="noopener">Source</a>';
-
-  bar.querySelector("a").href = page.file;
-  title.insertAdjacentElement("afterend", bar);
 }
 
 function resolveMarkdown(path) {
@@ -227,7 +212,6 @@ async function loadPage(next) {
     els.article.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { gfm: true }));
 
     headingIds();
-    toolbar(page);
     renderToc();
     bindLinks();
 
