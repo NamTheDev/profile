@@ -13,7 +13,7 @@
   --blue: #1e66f5;
   --lavender: #7287fd;
   --red: #d20f39;
-  --font-ui: "Montserrat", Arial, sans-serif;
+  --font: "Montserrat", sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --header-height: 52px;
   --sidebar-width: 240px;
@@ -49,7 +49,7 @@ body {
   margin: 0;
   background: var(--base);
   color: var(--text);
-  font-family: var(--font-ui);
+  font-family: var(--font);
   font-size: 16px;
   line-height: 1.72;
 }
@@ -148,7 +148,7 @@ button, input { font: inherit; }
   display: block;
   margin: 0 0 8px;
   color: var(--subtext0);
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .06em;
@@ -257,7 +257,7 @@ button, input { font: inherit; }
   padding: .12em .32em;
   border-radius: 3px;
   background: var(--mantle);
-  font-family: var(--font-mono);
+  font-family: var(--font);
   font-size: .9em;
 }
 
@@ -301,7 +301,7 @@ button, input { font: inherit; }
 
 .loading, .error {
   color: var(--subtext0);
-  font-family: var(--font-mono);
+  font-family: var(--font);
 }
 
 .error { color: var(--red); }
@@ -319,7 +319,7 @@ button, input { font: inherit; }
   padding: 16px;
   background: var(--mantle);
   border-top: 1px solid var(--surface0);
-  font-family: var(--font-mono);
+  font-family: var(--font);
 }
 
 @media (max-width: 1050px) {
