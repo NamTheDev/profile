@@ -156,6 +156,71 @@ Added this `log.md` file using the repository's Git history as the source of rec
 
 Removed the final unused mobile CSS rule for the deleted brand subtext.
 
+### 01:27:06 — `77f9f53`
+**Update development log with latest cleanup**
+
+Updated `log.md` to include the header cleanup and theme-label changes.
+
+### 01:33:54 — `752cd17`
+**Make Profile the primary documentary page**
+
+Changed the site header/home action so the default documentary entry is `PROFILE.md`.
+
+### 01:33:57 — `a90011c`
+**Move Markdown index to repository root**
+
+Changed the frontend to load the Markdown registry from root `index.json`, default to the `profile` page, and support root-level Markdown files.
+
+### 01:33:59 — `f3c474f`
+**Document owner-written Profile content model**
+
+Updated the README to define `PROFILE.md` as the project owner's entirely self-written personal document and explain the new root index workflow.
+
+### 01:34:01 — `0945e48`
+**Clarify AI is limited to development work**
+
+Updated `AI_DISCLAIMER.md` to state that AI assists software development but does not author the owner's personal self-documentary content.
+
+### 01:34:04 — `60b48d9`
+**Add root Markdown index**
+
+Added root `index.json` as the single registry for Markdown documents.
+
+### 01:34:06 — `fc5bc96`
+**Add owner-written profile document**
+
+Added `PROFILE.md` with only the structural Profile heading, leaving substantive personal content for the owner to write himself.
+
+### 01:34:08 — `d802b08`
+**Remove old documentary scaffold**
+
+Removed `pages/home.md`.
+
+### 01:34:11 — `a206df8`
+**Remove old documentary scaffold**
+
+Removed `pages/about.md`.
+
+### 01:34:14 — `b7ecd11`
+**Remove old documentary scaffold**
+
+Removed `pages/timeline.md`.
+
+### 01:34:17 — `5e89051`
+**Remove old documentary scaffold**
+
+Removed `pages/work.md`.
+
+### 01:34:19 — `6686ccc`
+**Remove old documentary scaffold**
+
+Removed `pages/notes.md`.
+
+### 01:34:21 — `d693516`
+**Remove obsolete pages manifest**
+
+Removed `pages/index.json`. With the old page files gone, the `pages/` directory disappeared from the repository.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
