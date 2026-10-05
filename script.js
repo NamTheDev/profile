@@ -122,11 +122,19 @@ function tocLink(heading) {
 function renderToc() {
   if (state.observer) state.observer.disconnect();
   els.toc.replaceChildren();
+  els.article.querySelector(".mobile-contents")?.remove();
 
   const headings = [...els.article.querySelectorAll("h2, h3")];
   headings.forEach((heading) => els.toc.append(tocLink(heading)));
 
   if (!headings.length) return;
+
+  const mobile = document.createElement("details");
+  mobile.className = "mobile-contents";
+  mobile.innerHTML = "<summary>Contents</summary><nav></nav>";
+  const mobileNav = mobile.querySelector("nav");
+  headings.forEach((heading) => mobileNav.append(tocLink(heading)));
+  els.article.querySelector(".article-toolbar")?.insertAdjacentElement("afterend", mobile);
 
   state.observer = new IntersectionObserver((entries) => {
     const current = entries
@@ -135,7 +143,7 @@ function renderToc() {
 
     if (!current) return;
 
-    document.querySelectorAll(".toc a").forEach((link) => {
+    document.querySelectorAll(".toc a, .mobile-contents a").forEach((link) => {
       link.classList.toggle("active", link.hash === "#" + current.target.id);
     });
   }, { rootMargin: "-15% 0px -70% 0px" });
