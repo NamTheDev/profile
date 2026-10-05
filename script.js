@@ -37,7 +37,7 @@ function toggleTheme() {
 }
 
 function getSlug() {
-  return new URLSearchParams(location.search).get("page") || "home";
+  return new URLSearchParams(location.search).get("page") || "profile";
 }
 
 function slugify(text) {
@@ -247,8 +247,8 @@ function bindInternalLinks() {
     const [path, hash = ""] = rawHref.split("#");
 
     if (path.endsWith(".md")) {
-      const clean = path.replace(/^\.\//, "").replace(/^pages\//, "");
-      const page = state.pages.find((item) => item.file.endsWith("/" + clean));
+      const clean = path.replace(/^\.\//, "");
+      const page = state.pages.find((item) => item.file === clean || item.file.endsWith("/" + clean));
       if (!page) return;
 
       link.href =
@@ -321,7 +321,7 @@ async function init() {
   applyTheme(getPreferredTheme());
 
   try {
-    const response = await fetch("pages/index.json", { cache: "no-cache" });
+    const response = await fetch("index.json", { cache: "no-cache" });
     if (!response.ok) throw new Error("HTTP " + response.status);
 
     state.pages = await response.json();
@@ -341,7 +341,7 @@ els.filter.addEventListener("input", () => renderNav(els.filter.value));
 els.home.addEventListener("click", (event) => {
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
-  navigate("home");
+  navigate("profile");
 });
 
 window.addEventListener("popstate", () => loadPage(getSlug()));
