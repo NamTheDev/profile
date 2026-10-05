@@ -27,8 +27,9 @@ Performance features include:
 - normal browser HTTP caching instead of forced `no-cache` requests
 - in-memory page caching after a document is loaded
 - idle-time prefetching of the remaining Markdown pages
-- a service worker that pre-caches the core shell and uses stale-while-revalidate for static content
-- network-first loading for the page manifest so navigation updates are discovered quickly
+- a versioned service worker that pre-caches the core shell
+- network-first loading for the app shell and page manifests so code updates do not get trapped behind stale cache entries
+- stale-while-revalidate caching for Markdown content and other static resources
 - minified third-party Markdown and sanitization libraries delivered from a CDN
 - no media-heavy interface assets
 
