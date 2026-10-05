@@ -11,7 +11,6 @@
   --text: #4c4f69;
   --subtext0: #6c6f85;
   --subtext1: #5c5f77;
-  --blue: #1e66f5;
   --lavender: #7287fd;
   --red: #d20f39;
 
@@ -36,7 +35,6 @@ html[data-theme="dark"] {
   --text: #cdd6f4;
   --subtext0: #a6adc8;
   --subtext1: #bac2de;
-  --blue: #89b4fa;
   --lavender: #b4befe;
   --red: #f38ba8;
 }
@@ -62,7 +60,7 @@ body {
 }
 
 a {
-  color: var(--blue);
+  color: var(--lavender);
   text-decoration: none;
 }
 
@@ -225,8 +223,8 @@ button {
 }
 
 .page-filter:focus {
-  border-color: var(--blue);
-  box-shadow: inset 0 0 0 1px var(--blue);
+  border-color: var(--lavender);
+  box-shadow: inset 0 0 0 1px var(--lavender);
 }
 
 .page-nav,
@@ -255,7 +253,7 @@ button {
 }
 
 .page-link.active {
-  border-left-color: var(--blue);
+  border-left-color: var(--lavender);
   background: var(--mantle);
   color: var(--text);
   font-weight: 600;
@@ -283,7 +281,7 @@ button {
 }
 
 .toc a.active {
-  border-left-color: var(--blue);
+  border-left-color: var(--lavender);
   color: var(--text);
   font-weight: 600;
 }
