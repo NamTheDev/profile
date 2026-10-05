@@ -1,58 +1,59 @@
 <!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Nam's self-documentary: notes, history, work, and personal records.">
+  <title>Nam — Self-documentary</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <button class="icon-button mobile-only" id="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a class="site-title" href="?page=home" data-page-link="home">Nam</a>
+    <div class="header-actions">
+      <button class="icon-button" id="theme-toggle" aria-label="Toggle color theme">
+        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.42 1.42M16.94 16.94l1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+      </button>
+    </div>
+  </header>
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-inner">
+        <label class="filter-label" for="page-filter">Pages</label>
+        <input id="page-filter" class="page-filter" type="search" placeholder="Filter pages…" autocomplete="off">
+        <nav id="page-nav" class="page-nav" aria-label="Document pages"></nav>
+      </div>
+    </aside>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <main class="main">
+      <article id="article" class="article" aria-live="polite">
+        <p class="loading">Loading…</p>
+      </article>
+    </main>
 
-        <title>namchill235</title>
+    <aside class="toc-panel" aria-label="On this page">
+      <div class="toc-inner">
+        <div class="toc-label">On this page</div>
+        <nav id="toc" class="toc"></nav>
+      </div>
+    </aside>
+  </div>
 
-        <link rel="icon" type="image/x-icon" href="assets/Avatar.webp" />
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
 
-        <meta
-            name="description"
-            content="A random guy on internet who likes art and technology."
-        />
-
-        <meta property="og:title" content="namchill235" />
-
-        <meta
-            property="og:description"
-            content="A random guy on internet who likes art and technology."
-        />
-
-        <meta
-            property="og:image"
-            content="https://github.com/NamTheDev/profile/blob/main/assets/Avatar.webp?raw=true"
-        />
-
-        <meta
-            property="og:url"
-            content="https://github.com/NamTheDev/profile"
-        />
-
-        <meta name="twitter:card" content="summary" />
-
-        <link rel="stylesheet" href="style.css" />
-
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-    </head>
-
-    <!--<div id="loader">
-        <div class="spinner"></div>
-    </div>-->
-
-    <body>
-        <div class="content-container">
-            <div id="title-bar">
-                <img class="title-icon" src="./assets/Avatar.webp" />
-                <div id="title-content"></div>
-            </div>
-            <div id="content"></div>
-        </div>
-        <script src="script.js"></script>
-    </body>
+  <noscript>
+    <div class="noscript">This site requires JavaScript to load Markdown pages.</div>
+  </noscript>
+</body>
 </html>
