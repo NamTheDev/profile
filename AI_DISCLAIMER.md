@@ -12,7 +12,7 @@ ChatGPT by OpenAI has been used for work such as:
 
 AI is not used to author the owner's substantive personal self-documentary.
 
-The personal material in `pages/profile.md`, and substantive personal writing added to the archive by the owner, is written by the owner himself. Personal descriptions, memories, opinions, experiences, and other autobiographical material are not AI-generated.
+Any substantive personal writing added to the archive by the owner is written by the owner himself. Personal descriptions, memories, opinions, experiences, and other autobiographical material are not AI-generated.
 
 Some technical, navigational, or project-documentation text may be AI-assisted because it is part of developing and operating the software rather than the owner's autobiographical content.
 
