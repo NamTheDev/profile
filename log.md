@@ -381,6 +381,52 @@ Deleted `pages/index.md`.
 
 Reduced the Home guide to only the reader-facing controls that need explanation: Pages, Contents, Source, and theme switching.
 
+
+### 02:59:12 — `edb66c2`
+**Add renamed Home introduction page**
+
+Added `pages/HOME.md` with the owner's introduction wording and a short Pages section.
+
+### 02:59:14 — `e773aea`
+**Add GitHub repository index page**
+
+Added `pages/GITHUB.md` linking all public repositories with concise project summaries.
+
+### 02:59:17 — `f162973`
+**Register Home and GitHub pages**
+
+Updated `manifest.json` for `HOME.md` and `GITHUB.md`.
+
+### 02:59:19 — `4754fa1`
+**Update compatibility page registry**
+
+Updated `index.json` to mirror the new Home and GitHub page registry.
+
+### 02:59:22 — `938deaa`
+**Document Home and GitHub page structure**
+
+Updated the README for the new two-page content structure.
+
+### 02:59:24 — `a11cee0`
+**Generalize AI usage notice**
+
+Replaced the detailed AI disclaimer with a general AI usage notice.
+
+### 02:59:26 — `592a880`
+**Cache Home and GitHub pages**
+
+Updated and versioned the service-worker cache for the renamed Home page and new GitHub page.
+
+### 02:59:29 — `cc17c80`
+**Rename Home page to uppercase filename**
+
+Removed the old lowercase `pages/home.md` after moving content to `pages/HOME.md`.
+
+### 02:59:44 — `b717d37` (NamTheDev/Flow)
+**Mark project as abandoned**
+
+Added an abandoned-project notice to the Flow README.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
