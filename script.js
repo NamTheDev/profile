@@ -1,49 +1,45 @@
 const state = {
   pages: [],
   current: null,
-  tocObserver: null
+  text: new Map(),
+  observer: null
 };
 
+const $ = (selector) => document.querySelector(selector);
 const els = {
-  article: document.getElementById("article"),
-  nav: document.getElementById("page-nav"),
-  toc: document.getElementById("toc"),
-  filter: document.getElementById("page-filter"),
-  theme: document.getElementById("theme-toggle"),
-  themeLabel: document.querySelector("#theme-toggle .utility-label"),
-  menu: document.getElementById("menu-toggle"),
-  sidebar: document.getElementById("sidebar"),
-  backdrop: document.getElementById("sidebar-backdrop"),
-  home: document.getElementById("home-link")
+  article: $("#article"),
+  nav: $("#page-nav"),
+  toc: $("#toc"),
+  filter: $("#page-filter"),
+  theme: $("#theme-toggle"),
+  themeLabel: $("#theme-toggle .utility-label"),
+  menu: $("#menu-toggle"),
+  sidebar: $("#sidebar"),
+  backdrop: $("#sidebar-backdrop"),
+  home: $("#home-link")
 };
 
-function getPreferredTheme() {
+function preferredTheme() {
   const saved = localStorage.getItem("theme");
-  if (saved === "light" || saved === "dark") return saved;
-  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return saved === "light" || saved === "dark"
+    ? saved
+    : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem("theme", theme);
-  const nextTheme = theme === "dark" ? "light" : "dark";
-  const label = "Switch to " + nextTheme;
-  els.theme.setAttribute("aria-label", label);
+  const label = "Switch to " + (theme === "dark" ? "light" : "dark");
+  els.theme.ariaLabel = label;
   els.themeLabel.textContent = label;
 }
 
-function toggleTheme() {
-  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-}
-
-function getSlug() {
-  return new URLSearchParams(location.search).get("page") || "profile";
+function slug() {
+  return new URLSearchParams(location.search).get("page") || "home";
 }
 
 function slugify(text) {
-  return text
-    .toLowerCase()
-    .trim()
+  return text.toLowerCase().trim()
     .replace(/[^\p{L}\p{N}\s-]/gu, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
@@ -52,43 +48,30 @@ function slugify(text) {
 function closeMenu() {
   els.sidebar.classList.remove("open");
   els.backdrop.hidden = true;
-  els.menu.setAttribute("aria-expanded", "false");
+  els.menu.ariaExpanded = "false";
 }
 
-function toggleMenu() {
-  const open = !els.sidebar.classList.contains("open");
-  els.sidebar.classList.toggle("open", open);
-  els.backdrop.hidden = !open;
-  els.menu.setAttribute("aria-expanded", String(open));
-
-  if (open) {
-    requestAnimationFrame(() => els.filter.focus());
-  }
-}
-
-function navigate(slug) {
-  const page = state.pages.find((item) => item.slug === slug);
+function navigate(next) {
+  const page = state.pages.find((item) => item.slug === next);
   if (!page) return;
 
   const url = new URL(location.href);
   url.searchParams.set("page", page.slug);
   url.hash = "";
   history.pushState({}, "", url);
-
   closeMenu();
   loadPage(page.slug);
 }
 
 function renderNav(query = "") {
-  const normalized = query.trim().toLowerCase();
-  els.nav.innerHTML = "";
+  const needle = query.trim().toLowerCase();
+  const pages = state.pages.filter((page) =>
+    !needle || (page.title + " " + (page.description || "")).toLowerCase().includes(needle)
+  );
 
-  const matches = state.pages.filter((page) => {
-    const haystack = (page.title + " " + (page.description || "")).toLowerCase();
-    return !normalized || haystack.includes(normalized);
-  });
+  els.nav.replaceChildren();
 
-  if (!matches.length) {
+  if (!pages.length) {
     const empty = document.createElement("p");
     empty.className = "page-nav-empty";
     empty.textContent = "No matching pages.";
@@ -96,17 +79,13 @@ function renderNav(query = "") {
     return;
   }
 
-  for (const page of matches) {
+  for (const page of pages) {
     const link = document.createElement("a");
     link.href = "?page=" + encodeURIComponent(page.slug);
-    link.className = "page-link";
+    link.className = "page-link" + (page.slug === state.current ? " active" : "");
     link.textContent = page.title;
-    link.dataset.slug = page.slug;
 
-    if (page.slug === state.current) {
-      link.classList.add("active");
-      link.setAttribute("aria-current", "page");
-    }
+    if (page.slug === state.current) link.ariaCurrent = "page";
 
     link.addEventListener("click", (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -118,58 +97,21 @@ function renderNav(query = "") {
   }
 }
 
-function makeHeadingIds(container) {
+function headingIds() {
   const used = new Set();
 
-  container.querySelectorAll("h2, h3").forEach((heading) => {
+  els.article.querySelectorAll("h2, h3").forEach((heading) => {
     let id = slugify(heading.textContent) || "section";
     const base = id;
-    let n = 2;
+    let i = 2;
 
-    while (used.has(id)) {
-      id = base + "-" + n;
-      n += 1;
-    }
-
+    while (used.has(id)) id = base + "-" + i++;
     used.add(id);
     heading.id = id;
   });
 }
 
-function setActiveToc(id) {
-  document.querySelectorAll('.toc a, .mobile-contents a').forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("href") === "#" + id);
-  });
-}
-
-function observeHeadings() {
-  if (state.tocObserver) {
-    state.tocObserver.disconnect();
-  }
-
-  const headings = [...els.article.querySelectorAll("h2, h3")];
-  if (!headings.length) return;
-
-  state.tocObserver = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-
-      if (visible.length) {
-        setActiveToc(visible[0].target.id);
-      }
-    },
-    {
-      rootMargin: "-15% 0px -70% 0px",
-      threshold: 0
-    }
-  );
-
-  headings.forEach((heading) => state.tocObserver.observe(heading));
-}
-
-function createTocLink(heading) {
+function tocLink(heading) {
   const link = document.createElement("a");
   link.href = "#" + heading.id;
   link.textContent = heading.textContent;
@@ -178,172 +120,160 @@ function createTocLink(heading) {
 }
 
 function renderToc() {
-  els.toc.innerHTML = "";
+  if (state.observer) state.observer.disconnect();
+  els.toc.replaceChildren();
 
   const headings = [...els.article.querySelectorAll("h2, h3")];
+  headings.forEach((heading) => els.toc.append(tocLink(heading)));
 
-  headings.forEach((heading) => {
-    els.toc.append(createTocLink(heading));
-  });
+  if (!headings.length) return;
 
-  const oldMobile = els.article.querySelector(".mobile-contents");
-  if (oldMobile) oldMobile.remove();
+  state.observer = new IntersectionObserver((entries) => {
+    const current = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
 
-  if (headings.length) {
-    const details = document.createElement("details");
-    details.className = "mobile-contents";
+    if (!current) return;
 
-    const summary = document.createElement("summary");
-    summary.textContent = "Contents";
-
-    const nav = document.createElement("nav");
-    nav.setAttribute("aria-label", "Contents");
-
-    headings.forEach((heading) => {
-      nav.append(createTocLink(heading));
+    document.querySelectorAll(".toc a").forEach((link) => {
+      link.classList.toggle("active", link.hash === "#" + current.target.id);
     });
+  }, { rootMargin: "-15% 0px -70% 0px" });
 
-    details.append(summary, nav);
-
-    const toolbar = els.article.querySelector(".article-toolbar");
-    if (toolbar) {
-      toolbar.insertAdjacentElement("afterend", details);
-    } else {
-      els.article.prepend(details);
-    }
-  }
-
-  observeHeadings();
+  headings.forEach((heading) => state.observer.observe(heading));
 }
 
-function insertArticleToolbar(page) {
+function toolbar(page) {
   const title = els.article.querySelector("h1");
   if (!title) return;
 
-  const toolbar = document.createElement("nav");
-  toolbar.className = "article-toolbar";
-  toolbar.setAttribute("aria-label", "Page actions");
+  const bar = document.createElement("nav");
+  bar.className = "article-toolbar";
+  bar.ariaLabel = "Page actions";
+  bar.innerHTML =
+    '<span class="article-tab active">Read</span>' +
+    '<a class="article-tab" target="_blank" rel="noopener">Source</a>';
 
-  const read = document.createElement("span");
-  read.className = "article-tab active";
-  read.textContent = "Read";
-
-  const source = document.createElement("a");
-  source.className = "article-tab";
-  source.href = page.file;
-  source.textContent = "Source";
-  source.target = "_blank";
-  source.rel = "noopener";
-
-  toolbar.append(read, source);
-  title.insertAdjacentElement("afterend", toolbar);
+  bar.querySelector("a").href = page.file;
+  title.insertAdjacentElement("afterend", bar);
 }
 
-function bindInternalLinks() {
-  els.article.querySelectorAll("a[href]").forEach((link) => {
-    const rawHref = link.getAttribute("href");
-    if (!rawHref || rawHref.startsWith("#")) return;
+function resolveMarkdown(path) {
+  const clean = path.replace(/^\.\//, "");
+  const name = clean.split("/").pop();
 
-    const [path, hash = ""] = rawHref.split("#");
+  return state.pages.find((page) =>
+    page.file === clean || page.file.endsWith("/" + clean) || page.file.endsWith("/" + name)
+  );
+}
 
-    if (path.endsWith(".md")) {
-      const clean = path.replace(/^\.\//, "");
-      const page = state.pages.find((item) => item.file === clean || item.file.endsWith("/" + clean));
-      if (!page) return;
+function bindLinks() {
+  els.article.querySelectorAll('a[href$=".md"], a[href*=".md#"]').forEach((link) => {
+    const raw = link.getAttribute("href");
+    const [path, hash = ""] = raw.split("#");
+    const page = resolveMarkdown(path);
+    if (!page) return;
 
-      link.href =
-        "?page=" +
-        encodeURIComponent(page.slug) +
-        (hash ? "#" + encodeURIComponent(hash) : "");
+    link.href = "?page=" + encodeURIComponent(page.slug) + (hash ? "#" + hash : "");
+    link.addEventListener("click", (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      navigate(page.slug);
 
-      link.addEventListener("click", (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-
-        event.preventDefault();
-        navigate(page.slug);
-
-        if (hash) {
-          setTimeout(() => {
-            const target = document.getElementById(hash);
-            if (target) target.scrollIntoView();
-          }, 0);
-        }
-      });
-    }
+      if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView(), 0);
+    });
   });
 }
 
-async function loadPage(slug) {
-  const page = state.pages.find((item) => item.slug === slug) || state.pages[0];
+async function pageText(page) {
+  if (state.text.has(page.file)) return state.text.get(page.file);
 
-  if (!page) {
-    els.article.innerHTML = '<p class="error">No pages are configured.</p>';
-    return;
-  }
+  const response = await fetch(page.file);
+  if (!response.ok) throw new Error("HTTP " + response.status);
+
+  const text = await response.text();
+  state.text.set(page.file, text);
+  return text;
+}
+
+function prefetchPages() {
+  const run = () => {
+    state.pages
+      .filter((page) => page.slug !== state.current)
+      .forEach((page) => pageText(page).catch(() => {}));
+  };
+
+  "requestIdleCallback" in window ? requestIdleCallback(run) : setTimeout(run, 250);
+}
+
+async function loadPage(next) {
+  const page = state.pages.find((item) => item.slug === next) || state.pages[0];
+  if (!page) return;
 
   state.current = page.slug;
   renderNav(els.filter.value);
   els.article.innerHTML = '<p class="loading">Loading…</p>';
 
   try {
-    const response = await fetch(page.file, { cache: "no-cache" });
-    if (!response.ok) throw new Error("HTTP " + response.status);
+    const markdown = await pageText(page);
+    els.article.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { gfm: true }));
 
-    const markdown = await response.text();
-    const rendered = marked.parse(markdown, { gfm: true });
-
-    els.article.innerHTML = DOMPurify.sanitize(rendered);
-
-    makeHeadingIds(els.article);
-    insertArticleToolbar(page);
+    headingIds();
+    toolbar(page);
     renderToc();
-    bindInternalLinks();
+    bindLinks();
 
     document.title = page.title + " — Nam";
 
-    if (location.hash) {
-      const target = document.querySelector(location.hash);
-      if (target) {
-        target.scrollIntoView();
-        return;
-      }
-    }
-
-    window.scrollTo(0, 0);
+    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    target ? target.scrollIntoView() : scrollTo(0, 0);
   } catch (error) {
-    els.article.innerHTML =
-      '<p class="error">Unable to load this page: ' + error.message + "</p>";
-    els.toc.innerHTML = "";
+    els.article.innerHTML = '<p class="error">Unable to load this page: ' + error.message + "</p>";
+    els.toc.replaceChildren();
+  }
+}
+
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {});
   }
 }
 
 async function init() {
-  applyTheme(getPreferredTheme());
+  applyTheme(preferredTheme());
+  registerServiceWorker();
 
   try {
-    const response = await fetch("index.json", { cache: "no-cache" });
+    const response = await fetch("manifest.json");
     if (!response.ok) throw new Error("HTTP " + response.status);
 
     state.pages = await response.json();
-    renderNav();
-    await loadPage(getSlug());
+    await loadPage(slug());
+    prefetchPages();
   } catch (error) {
-    els.article.innerHTML =
-      '<p class="error">Unable to load page index: ' + error.message + "</p>";
+    els.article.innerHTML = '<p class="error">Unable to load page index: ' + error.message + "</p>";
   }
 }
 
-els.theme.addEventListener("click", toggleTheme);
-els.menu.addEventListener("click", toggleMenu);
+els.theme.addEventListener("click", () =>
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark")
+);
+
+els.menu.addEventListener("click", () => {
+  const open = !els.sidebar.classList.contains("open");
+  els.sidebar.classList.toggle("open", open);
+  els.backdrop.hidden = !open;
+  els.menu.ariaExpanded = String(open);
+  if (open) requestAnimationFrame(() => els.filter.focus());
+});
+
 els.backdrop.addEventListener("click", closeMenu);
 els.filter.addEventListener("input", () => renderNav(els.filter.value));
-
 els.home.addEventListener("click", (event) => {
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
-  navigate("profile");
+  navigate("home");
 });
-
-window.addEventListener("popstate", () => loadPage(getSlug()));
+addEventListener("popstate", () => loadPage(slug()));
 
 init();
