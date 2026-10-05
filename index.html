@@ -18,34 +18,42 @@
 </head>
 <body>
   <header class="site-header">
-    <button class="icon-button mobile-only" id="menu-toggle" aria-label="Open navigation" aria-expanded="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16"/>
-      </svg>
-    </button>
+    <div class="header-inner">
+      <button class="icon-button mobile-only" id="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
 
-    <a class="site-title" href="?page=home" data-page-link="home">Nam</a>
+      <a class="site-brand" id="home-link" href="?page=home">
+        <span class="brand-name">Nam</span>
+        <span class="brand-tagline">Self-documentary</span>
+      </a>
 
-    <div class="header-actions">
-      <button class="icon-button" id="theme-toggle" aria-label="Toggle color theme">
-        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <div class="header-spacer"></div>
+
+      <button class="utility-button" id="theme-toggle" aria-label="Toggle color theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.42 1.42M16.94 16.94l1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/>
           <circle cx="12" cy="12" r="4"/>
         </svg>
+        <span class="utility-label">Appearance</span>
       </button>
     </div>
   </header>
 
-  <div class="layout">
+  <div class="page-shell">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-inner">
-        <label class="filter-label" for="page-filter">Pages</label>
-        <input id="page-filter" class="page-filter" type="search" placeholder="Filter pages…" autocomplete="off">
-        <nav id="page-nav" class="page-nav" aria-label="Document pages"></nav>
+        <section class="sidebar-block">
+          <h2 class="interface-heading">Pages</h2>
+          <input id="page-filter" class="page-filter" type="search" placeholder="Filter pages" autocomplete="off" aria-label="Filter pages">
+          <nav id="page-nav" class="page-nav" aria-label="Document pages"></nav>
+        </section>
       </div>
     </aside>
 
-    <main class="main">
+    <main class="main" id="main-content">
       <article id="article" class="article" aria-live="polite">
         <p class="loading">Loading…</p>
       </article>
@@ -53,7 +61,7 @@
 
     <aside class="toc-panel" aria-label="On this page">
       <div class="toc-inner">
-        <div class="toc-label">On this page</div>
+        <h2 class="interface-heading">Contents</h2>
         <nav id="toc" class="toc"></nav>
       </div>
     </aside>
