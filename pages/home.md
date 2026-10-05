@@ -1,15 +1,10 @@
 # Home
 
-This is a self-documentary. Read the pages listed in the sidebar.
+This is a self-documentary.
 
 ## Guide
 
-- **Nam** — return Home.
-- **Pages** — open a page.
-- **Filter pages** — find a page.
+- **Pages** — browse documents.
 - **Contents** — jump to a section.
-- **Read** — view the formatted page.
-- **Source** — open its Markdown file.
+- **Source** — view the original Markdown.
 - **Switch to light/dark** — change theme.
-
-Start here, then use the sidebar to read the archive.
