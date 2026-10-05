@@ -10,6 +10,7 @@ const els = {
   toc: document.getElementById("toc"),
   filter: document.getElementById("page-filter"),
   theme: document.getElementById("theme-toggle"),
+  themeLabel: document.querySelector("#theme-toggle .utility-label"),
   menu: document.getElementById("menu-toggle"),
   sidebar: document.getElementById("sidebar"),
   backdrop: document.getElementById("sidebar-backdrop"),
@@ -25,10 +26,10 @@ function getPreferredTheme() {
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem("theme", theme);
-  els.theme.setAttribute(
-    "aria-label",
-    "Switch to " + (theme === "dark" ? "light" : "dark") + " mode"
-  );
+  const nextTheme = theme === "dark" ? "light" : "dark";
+  const label = "Switch to " + nextTheme;
+  els.theme.setAttribute("aria-label", label);
+  els.themeLabel.textContent = label;
 }
 
 function toggleTheme() {
