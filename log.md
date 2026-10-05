@@ -375,6 +375,12 @@ Removed `pages/index.md` from the pre-cache list and bumped the service-worker c
 
 Deleted `pages/index.md`.
 
+
+### 02:16:27 — `7fcecda`
+**Trim Home guide to essential controls**
+
+Reduced the Home guide to only the reader-facing controls that need explanation: Pages, Contents, Source, and theme switching.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
