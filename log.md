@@ -146,6 +146,16 @@ Made the theme control dynamically display `Switch to light` or `Switch to dark`
 
 Removed CSS that was only used by the deleted header subtext.
 
+### 01:26:23 — `0830fe9`
+**Add development log from Git history**
+
+Added this `log.md` file using the repository's Git history as the source of record for the redesign.
+
+### 01:26:53 — `334a9cb`
+**Remove remaining mobile tagline styling**
+
+Removed the final unused mobile CSS rule for the deleted brand subtext.
+
 ---
 
 This log documents the rebuild commits created during the collaborative self-documentary redesign. Earlier repository history belongs to previous versions of the project and is intentionally not reproduced here.
