@@ -120,15 +120,6 @@ button {
   letter-spacing: -.02em;
 }
 
-.brand-tagline {
-  margin-top: .2rem;
-  color: var(--subtext0);
-  font-size: .68rem;
-  font-weight: 500;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
 .header-spacer {
   flex: 1;
 }
