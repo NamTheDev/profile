@@ -6,14 +6,16 @@ A small, Markdown-driven personal archive with an encyclopedia-style reading int
 
 ```text
 pages/
-└── home.md
+├── HOME.md
+└── GITHUB.md
 ```
 
-- `pages/home.md` is the landing page and short reader guide.
+- `pages/HOME.md` introduces the site and links to useful starting pages.
+- `pages/GITHUB.md` documents the owner's GitHub repositories with short summaries.
 - `manifest.json` is the machine-readable registry used to build the sidebar.
 - `index.json` mirrors the registry for compatibility with older cached versions.
 
-To add a page, create a Markdown file in `pages/` and register it in `manifest.json` and `index.json`.
+To add a page, create a Markdown file in `pages/`, link it from `HOME.md` when useful, and register it in `manifest.json` and `index.json`.
 
 ## Performance
 
@@ -33,4 +35,4 @@ Serve over HTTP/HTTPS with GitHub Pages or another static web server.
 
 MIT. See [LICENSE](LICENSE).
 
-AI use in software development is documented in [AI_DISCLAIMER.md](AI_DISCLAIMER.md).
+AI use is documented in [AI_DISCLAIMER.md](AI_DISCLAIMER.md).
