@@ -288,6 +288,12 @@ Removed forced no-cache loading, added in-memory Markdown caching, idle prefetch
 Kept the compact expandable contents navigation for smaller displays while preserving the simplified runtime.
 
 
+### 01:43:39 — `e913274`
+**Log pages restructure and performance work**
+
+Updated `log.md` to record the pages restructure, caching, and performance changes.
+
+
 ### 01:51:20 — `7c1855e`
 **Add legacy-safe page index alias**
 
@@ -302,6 +308,12 @@ Bumped the service-worker cache version and changed the app shell, JavaScript, C
 **Document safer cache strategy**
 
 Updated the README to explain the versioned cache, network-first app shell, and stale-while-revalidate content behavior.
+
+
+### 01:51:39 — `87f84be`
+**Log service worker cache fix**
+
+Updated `log.md` to record the compatibility index and service-worker cache invalidation fix.
 
 
 ### 01:54:51 — `b38f018`
@@ -345,6 +357,12 @@ Removed `pages/profile.md` from the pre-cache list and bumped the service worker
 Deleted `pages/profile.md`.
 
 
+### 01:55:22 — `566b7f2`
+**Log Profile page removal**
+
+Updated `log.md` to record the completed Profile-page removal sequence.
+
+
 ### 02:14:28 — `501d5a4`
 **Remove Index page from manifest**
 
@@ -376,10 +394,22 @@ Removed `pages/index.md` from the pre-cache list and bumped the service-worker c
 Deleted `pages/index.md`.
 
 
+### 02:14:58 — `5707c18`
+**Log Index page removal**
+
+Updated `log.md` to record the Index-page simplification and removal.
+
+
 ### 02:16:27 — `7fcecda`
 **Trim Home guide to essential controls**
 
 Reduced the Home guide to only the reader-facing controls that need explanation: Pages, Contents, Source, and theme switching.
+
+
+### 02:16:45 — `b262783`
+**Log Home guide trim**
+
+Updated `log.md` to record the reduced Home guide.
 
 
 ### 02:59:12 — `edb66c2`
@@ -422,6 +452,12 @@ Updated and versioned the service-worker cache for the renamed Home page and new
 
 Removed the old lowercase `pages/home.md` after moving content to `pages/HOME.md`.
 
+
+### 03:00:47 — `b76600f`
+**Log Home GitHub and repository notice updates**
+
+Updated `log.md` to record the Home/GitHub page changes and related repository-status work.
+
 ### 02:59:44 — `b717d37` (NamTheDev/Flow)
 **Mark project as abandoned**
 
@@ -437,6 +473,27 @@ Added a prominent abandoned-project notice to the FEARLESS README.
 **Clarify abandoned project status**
 
 Updated the FARTLESS README to state that both FARTLESS and FEARLESS are abandoned and retained for archival/reference purposes.
+
+
+### 03:48:14 — `8ce95cf`
+**Log abandoned repository notices**
+
+Updated `log.md` with the abandoned-project notices added to the related repositories.
+
+### 03:48:36 — `f1ef48e`
+**Correct abandoned notice log timestamps**
+
+Corrected the recorded timestamps for the abandoned-project notice commits.
+
+### 08:44:51 — `d4dd699`
+**Remove Read Source article toolbar**
+
+Removed the article-level Read / Source switch from `script.js`. Mobile Contents now attaches directly below the article title so compact navigation continues to work without the toolbar.
+
+### 08:45:04 — `cab508e`
+**Remove obsolete article toolbar styles**
+
+Removed the unused `.article-toolbar` and `.article-tab` CSS rules after deleting the Read / Source control.
 
 ---
 
