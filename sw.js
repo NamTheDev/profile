@@ -1,4 +1,4 @@
-const CACHE = "self-documentary-v4";
+const CACHE = "self-documentary-v5";
 const CORE = [
   "./",
   "index.html",
@@ -6,7 +6,8 @@ const CORE = [
   "script.js",
   "manifest.json",
   "index.json",
-  "pages/home.md"
+  "pages/HOME.md",
+  "pages/GITHUB.md"
 ];
 
 const NETWORK_FIRST = new Set([
