@@ -1,0 +1,10 @@
+<Type>: <Commit message>
+
+<Date (DD-MM-YYYY)>
+
+- <Commit details>
+- ...
+
+note:
+- capitalize
+- follow format

@@ -4,4 +4,4 @@ Hello, welcome to my very simple & minimal self-documentation site, inspired by 
 
 ## Pages
 
-- [GitHub](GITHUB.md) - my GitHub repositories are documented here.
+- [Projects](PROJECTS.md) - An index of my creative and technical work.

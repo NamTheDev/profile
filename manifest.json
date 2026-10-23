@@ -1,14 +1,14 @@
 [
   {
-    "slug": "home",
-    "title": "Home",
-    "file": "pages/HOME.md",
-    "description": "Introduction to the site."
+    "slug": "about",
+    "title": "About",
+    "file": "pages/ABOUT.md",
+    "description": "About this site and its author."
   },
   {
-    "slug": "github",
-    "title": "GitHub",
-    "file": "pages/GITHUB.md",
-    "description": "GitHub repositories and short project summaries."
+    "slug": "projects",
+    "title": "Projects",
+    "file": "pages/PROJECTS.md",
+    "description": "Projects and repositories."
   }
 ]
