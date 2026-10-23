@@ -1,4 +1,4 @@
-const CACHE = "self-documentary-v7";
+const CACHE = "self-documentary-v8";
 const CORE = [
   "./",
   "index.html",

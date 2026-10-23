@@ -34,23 +34,9 @@ const state = { pages: [], current: null, text: new Map(), observer: null };
 const $ = (selector) => document.querySelector(selector);
 const els = {
   article: $("#article"), nav: $("#page-nav"), toc: $("#toc"),
-  filter: $("#page-filter"), theme: $("#theme-toggle"),
-  themeLabel: $("#theme-toggle .utility-label"), menu: $("#menu-toggle"),
+  filter: $("#page-filter"), menu: $("#menu-toggle"),
   sidebar: $("#sidebar"), backdrop: $("#sidebar-backdrop"), home: $("#home-link")
 };
-
-function preferredTheme() {
-  const saved = localStorage.getItem("theme");
-  return saved === "light" || saved === "dark" ? saved
-    : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-  localStorage.setItem("theme", theme);
-  const label = "Switch to " + (theme === "dark" ? "light" : "dark");
-  els.theme.ariaLabel = label;
-  els.themeLabel.textContent = label;
-}
 
 /* Default slug = whatever the manifest lists first */
 function slug() {
@@ -227,7 +213,6 @@ function registerServiceWorker() {
   }
 }
 async function init() {
-  applyTheme(preferredTheme());
   registerServiceWorker();
   try {
     state.pages = await loadManifest();
@@ -239,8 +224,6 @@ async function init() {
   }
 }
 function wireEvents() {
-  els.theme.addEventListener("click", () =>
-    applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
   els.menu.addEventListener("click", () => {
     const open = !els.sidebar.classList.contains("open");
     els.sidebar.classList.toggle("open", open);
