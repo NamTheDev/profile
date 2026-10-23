@@ -6,13 +6,13 @@ This is an index of the creative and technical projects undertaken by Nam.
 
 ### Ashes
 
-**Ashes** is a project recording liminal spaces and realistic horror. Everything is captured in real places by real human. *"We officially do NOT tolerate AI use in our content."* The project is hosted on [YouTube (@mertvyylab)](https://www.youtube.com/@mertvyylab). 
+**Ashes** is a project recording liminal spaces and realistic horror. Everything is captured in real places by real human. _"We officially do NOT tolerate AI use in our content."_ The project is hosted on [YouTube (@mertvyylab)](https://www.youtube.com/@mertvyylab).
 
-Check out the co-creator Unecap - Lunatic God 🇻🇳🇺🇦 on X. [x.com/sasgume](https://x.com/sasgume).
+Check out the project's co-creator Unecap - Lunatic God 🇻🇳🇺🇦 on X. [x.com/sasgume](https://x.com/sasgume).
 
 ### Music
 
-The genre of compositions Nam has written are mainly experimental music and fusion, stating: *"I experiment with music. My music isn't defined, it's a mixture of a lot of things I have consumed, experienced, and as well as putting out from within."* Releases are published on [Bandcamp](https://namchill235.bandcamp.com).
+The genre of compositions Nam has written are mainly experimental music and fusion, stating: _"I experiment with music. My music isn't defined, it's a mixture of a lot of things I have consumed, experienced, and as well as putting out from within."_ Releases are published on [Bandcamp](https://namchill235.bandcamp.com).
 
 ## Technology
 
