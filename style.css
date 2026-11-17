@@ -14,12 +14,30 @@
     --lavender: #b4befe;
     --red: #f38ba8;
     --blue: #89b4fa;
+    --green: #a6e3a1;
+    --teal: #94e2d5;
+    --sky: #89dceb;
+    --sapphire: #74c7ec;
 
-    --font: "Montserrat", sans-serif;
+    --font: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --code-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --font-size-body: 1.0625rem;
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+    --font-size-h4: 1.0625rem;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
     --header-height: 60px;
     --content-width: 48rem;
     --rail-width: 13.5rem;
-    --layout-gap: 2rem;
+    --layout-gap: var(--space-6);
     --rule: 1px solid var(--surface0);
 }
 
@@ -37,9 +55,9 @@ body {
     background: var(--base);
     color: var(--text);
     font-family: var(--font);
-    font-size: 16px;
+    font-size: var(--font-size-body);
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.7;
     text-rendering: optimizeLegibility;
 }
 
@@ -51,6 +69,14 @@ a {
 a:hover,
 a:focus-visible {
     text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--lavender);
+    outline-offset: 2px;
 }
 
 button,
@@ -111,7 +137,7 @@ em {
 }
 
 .icon-button {
-    min-height: 32px;
+    min-height: 44px;
     border: 1px solid transparent;
     border-radius: 0;
     background: transparent;
@@ -119,7 +145,7 @@ em {
 }
 
 .icon-button {
-    width: 36px;
+    width: 44px;
     padding: 0;
     display: inline-grid;
     place-items: center;
@@ -129,7 +155,6 @@ em {
 .icon-button:focus-visible {
     background: var(--mantle);
     border-color: var(--surface0);
-    outline: 0;
 }
 
 .icon-button svg {
@@ -217,8 +242,8 @@ em {
 }
 
 .page-link {
-    padding: 0.38rem 0.45rem;
-    font-size: 0.82rem;
+    padding: var(--space-2) 0.625rem;
+    font-size: 0.875rem;
 }
 
 .page-link:hover,
@@ -243,7 +268,7 @@ em {
 
 .toc a {
     padding: 0.27rem 0.4rem;
-    font-size: 0.76rem;
+    font-size: 0.8125rem;
 }
 
 .toc a[data-level="3"] {
@@ -286,43 +311,47 @@ em {
 }
 
 .article h1 {
-    margin: 0;
+    margin: 0 0 1.25rem;
     padding: 0 0 0.32rem;
     border-bottom: var(--rule);
-    font-size: 2rem;
-    font-weight: 500;
+    color: var(--green);
+    font-size: var(--font-size-h1);
+    font-weight: 600;
     letter-spacing: -0.025em;
 }
 
 .article h2 {
-    margin: 2rem 0 0.65rem;
+    margin: 2.25rem 0 0.75rem;
     padding: 0 0 0.25rem;
     border-bottom: var(--rule);
-    font-size: 1.45rem;
+    color: var(--teal);
+    font-size: var(--font-size-h2);
     font-weight: 600;
     letter-spacing: -0.015em;
 }
 
 .article h3 {
-    margin: 1.5rem 0 0.45rem;
-    font-size: 1.12rem;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--sky);
+    font-size: var(--font-size-h3);
     font-weight: 600;
 }
 
 .article h4 {
-    margin: 1.25rem 0 0.4rem;
-    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--sapphire);
+    font-size: var(--font-size-h4);
     font-weight: 600;
 }
 
 .article p,
 .article li,
 .article dd {
-    max-width: 75ch;
+    max-width: 70ch;
 }
 
 .article p {
-    margin: 0.55rem 0 0.9rem;
+    margin: 0.55rem 0 0.85rem;
 }
 
 .article ul,
@@ -348,7 +377,7 @@ em {
 }
 
 .article blockquote {
-    max-width: 75ch;
+    max-width: 70ch;
     margin: 1rem 0;
     padding: 0.55rem 0.85rem;
     border-left: 4px solid var(--surface2);
@@ -360,8 +389,8 @@ em {
     padding: 0.05em 0.22em;
     border: 1px solid var(--surface0);
     background: var(--mantle);
-    font-family: var(--font);
-    font-size: 0.86em;
+    font-family: var(--code-font);
+    font-size: 0.875rem;
 }
 
 .article pre {
@@ -427,6 +456,9 @@ em {
 
 .mobile-contents summary {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 0.82rem;
     font-weight: 600;
 }
@@ -436,9 +468,11 @@ em {
 }
 
 .mobile-contents a {
-    display: block;
-    padding: 0.26rem 0;
-    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
 }
 
 .mobile-only {
@@ -480,6 +514,10 @@ em {
 @media (max-width: 760px) {
     :root {
         --header-height: 52px;
+        --font-size-body: 1rem;
+        --font-size-h1: 1.75rem;
+        --font-size-h2: 1.375rem;
+        --font-size-h3: 1.1875rem;
     }
 
     .mobile-only {
@@ -522,21 +560,19 @@ em {
         padding: 1rem;
     }
 
+    .page-link {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        font-size: 0.9375rem;
+    }
+
     .main {
         padding-top: 1rem;
     }
 
-    .article h1 {
-        font-size: 1.75rem;
-    }
-
     .article h2 {
         margin-top: 1.75rem;
-        font-size: 1.3rem;
-    }
-
-    .article h3 {
-        font-size: 1.08rem;
     }
 }
 
