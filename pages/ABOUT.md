@@ -12,4 +12,5 @@ A random guy who loves music and art.
 - [YouTube — Ashes (@mertvyylab)](https://www.youtube.com/@mertvyylab)
 - [YouTube — Nam (@namrhythmical)](https://www.youtube.com/@namrhythmical)
 - [Cara — namchill235](https://cara.app/namchill235/portfolio)
+- [Facebook — Nam Rhythmical](https://www.facebook.com/namrythmical)
 - [GitHub — NamTheDev](https://github.com/NamTheDev)

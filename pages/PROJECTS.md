@@ -20,6 +20,8 @@ The genre of compositions Nam has written are mainly experimental music and fusi
 
 [Cara — namchill235](https://cara.app/namchill235/portfolio)
 
+I regularly upload posts (photography, art, etc.) on my [Nam Rhythmical page on Facebook](https://www.facebook.com/namrythmical) as well.
+
 ## Technology
 
 ### Active software
