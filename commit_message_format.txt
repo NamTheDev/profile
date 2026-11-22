@@ -8,3 +8,17 @@
 note:
 - capitalize
 - follow format
+
+AI disclosure format (AI_DISCLAIMER.md):
+# AI Usage Notice
+
+## AI involvement
+## Human oversight and responsibility
+## Limitations and attribution
+
+AI disclosure rules:
+- use all three headings, in this order, with meaningful project-specific content
+- preserve truthful AI tool/provider attribution and relevant safety or audit caveats
+- keep a link to AI_DISCLAIMER.md in README.md
+- format is automatically checked on every push and pull request
+- .github/workflows/ai-disclosure-format.yml validates structure and links; it does not generate or fact-check disclosure claims

@@ -1,0 +1,80 @@
+name: AI Disclosure Format
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate AI Disclosure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate AI usage notice and README link
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+          
+          errors = []
+          
+          def fail(message):
+              errors.append(message)
+              print(f"::error::{message}")
+          
+          title = "# AI Usage Notice"
+          sections = [
+              "AI involvement",
+              "Human oversight and responsibility",
+              "Limitations and attribution",
+          ]
+          
+          notice_path = Path("AI_DISCLAIMER.md")
+          if not notice_path.is_file():
+              fail("Missing AI_DISCLAIMER.md")
+          else:
+              notice = notice_path.read_text(encoding="utf-8")
+              if not notice.startswith(title + "\n"):
+                  fail("AI_DISCLAIMER.md must start with '# AI Usage Notice'")
+              parts = re.split(r"(?m)^## ([^\r\n]+)\r?\n", notice)
+              headings = parts[1::2]
+              contents = parts[2::2]
+              if headings != sections:
+                  fail("Required sections (in order): " + ", ".join(sections))
+              else:
+                  for heading, body in zip(headings, contents):
+                      words = re.findall(r"\b[\w'-]+\b", body, flags=re.UNICODE)
+                      if len(words) < 10:
+                          fail(f"Section '{heading}' needs at least 10 words of actual disclosure")
+          
+          readme_path = Path("README.md")
+          if not readme_path.is_file():
+              fail("Missing README.md")
+          elif not re.search(
+              r"\[[^\]\n]+\]\((?:\./)?AI_DISCLAIMER\.md(?:#[^)]*)?\)",
+              readme_path.read_text(encoding="utf-8"),
+          ):
+              fail("README.md must link to AI_DISCLAIMER.md")
+          
+          format_path = Path("commit_message_format.txt")
+          if not format_path.is_file():
+              fail("Missing commit_message_format.txt")
+          else:
+              format_note = format_path.read_text(encoding="utf-8")
+              for heading in [title] + ["## " + section for section in sections]:
+                  if heading not in format_note:
+                      fail("Commit-format note is missing AI disclosure heading: " + heading)
+          
+          if errors:
+              print(f"{len(errors)} AI disclosure formatting check(s) failed.")
+              sys.exit(1)
+          
+          print("AI disclosure sections, nonempty content, format note, and README link are valid.")
+          PY
