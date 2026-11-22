@@ -30,7 +30,7 @@
   console.log("%c[Diagnostic] fetch interceptor installed", "color:#00aaff");
 })();
 
-const state = { pages: [], current: null, text: new Map(), observer: null };
+const state = { pages: [], current: null, text: new Map(), observer: null, loadVersion: 0 };
 const $ = (selector) => document.querySelector(selector);
 const els = {
   article: $("#article"), nav: $("#page-nav"), toc: $("#toc"),
@@ -55,15 +55,15 @@ function closeMenu() {
   els.backdrop.hidden = true;
   els.menu.ariaExpanded = "false";
 }
-function navigate(next) {
+function navigate(next, hash = "") {
   const page = state.pages.find((item) => item.slug === next) || state.pages[0];
   if (!page) return;
   const url = new URL(location.href);
   url.searchParams.set("page", page.slug);
-  url.hash = "";
+  url.hash = hash ? "#" + hash : "";
   history.pushState({}, "", url);
   closeMenu();
-  loadPage(page.slug);
+  void loadPage(page.slug);
 }
 function renderNav(query = "") {
   const needle = query.trim().toLowerCase();
@@ -150,8 +150,7 @@ function bindLinks() {
     link.addEventListener("click", (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
-      navigate(page.slug);
-      if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView(), 0);
+      navigate(page.slug, hash);
     });
   });
 }
@@ -188,21 +187,32 @@ function prefetchPages() {
 async function loadPage(next) {
   const page = state.pages.find((item) => item.slug === next) || state.pages[0];
   if (!page) return;
+  const version = ++state.loadVersion;
   state.current = page.slug;
   renderNav(els.filter.value);
+  if (state.observer) state.observer.disconnect();
   els.article.innerHTML = '<p class="loading">Loading…</p>';
   try {
     const markdown = await pageText(page);
+    if (version !== state.loadVersion) return;
     els.article.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { gfm: true }));
     headingIds();
     renderToc();
     bindLinks();
     document.title = page.title + " — Nam";
-    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    let target = null;
+    if (location.hash) {
+      try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
+      catch { /* Ignore malformed URL fragments. */ }
+    }
     target ? target.scrollIntoView() : scrollTo(0, 0);
   } catch (error) {
+    if (version !== state.loadVersion) return;
     console.error(error);
-    els.article.innerHTML = '<p class="error">Unable to load this page: ' + error.message + "</p>";
+    const message = document.createElement("p");
+    message.className = "error";
+    message.textContent = "Unable to load this page: " + (error?.message || String(error));
+    els.article.replaceChildren(message);
     els.toc.replaceChildren();
   }
 }
