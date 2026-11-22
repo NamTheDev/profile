@@ -1,0 +1,89 @@
+name: Commit Message Format
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Commit Messages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out full commit history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check newly introduced commit messages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import datetime
+          import json
+          import os
+          import re
+          import subprocess
+          import sys
+
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as handle:
+              event = json.load(handle)
+
+          if os.environ["GITHUB_EVENT_NAME"] == "pull_request":
+              base = event["pull_request"]["base"]["sha"]
+              head = event["pull_request"]["head"]["sha"]
+          else:
+              base = event.get("before", "")
+              head = event.get("after", os.environ["GITHUB_SHA"])
+
+          def git(*args):
+              return subprocess.check_output(["git", *args], text=True).strip()
+
+          if not base or set(base) == {"0"}:
+              commits = [head]
+          else:
+              commits = git("rev-list", "--reverse", "--no-merges", f"{base}..{head}").splitlines()
+
+          def validate(message):
+              lines = message.rstrip("\n").splitlines()
+              if len(lines) < 5:
+                  return "Expected subject, blank line, date, blank line, and bullet details"
+              if not re.fullmatch(r"[A-Z][A-Za-z0-9_-]*: [A-Z].*", lines[0]):
+                  return "Subject must be '<CapitalizedType>: <Capitalized message>'"
+              if lines[1] or lines[3]:
+                  return "Subject, date, and details must be separated by blank lines"
+              if not re.fullmatch(r"\d{2}-\d{2}-\d{4}", lines[2]):
+                  return "Date must be DD-MM-YYYY"
+              try:
+                  datetime.datetime.strptime(lines[2], "%d-%m-%Y")
+              except ValueError:
+                  return "Date must be a real calendar date"
+              bullet_seen = False
+              for line in lines[4:]:
+                  if line.startswith("- ") and line[2:].strip():
+                      bullet_seen = True
+                  elif line.startswith(("  ", "\t")) and line.strip() and bullet_seen:
+                      continue
+                  else:
+                      return "Details must be nonempty '- ' bullets (continuations may be indented)"
+              if not bullet_seen:
+                  return "At least one detail bullet is required"
+              return None
+
+          failed = False
+          for sha in commits:
+              message = git("log", "-1", "--format=%B", sha)
+              error = validate(message)
+              if error:
+                  failed = True
+                  print(f"::error title=Invalid commit {sha[:8]}::{error}")
+                  print(f"Commit message: {message!r}")
+              else:
+                  print(f"PASS {sha[:8]}: {message.splitlines()[0]}")
+
+          if failed:
+              print("Required format: Type: Message\\n\\nDD-MM-YYYY\\n\\n- Detail")
+              sys.exit(1)
+          print(f"All {len(commits)} new non-merge commit(s) passed.")
+          PY
