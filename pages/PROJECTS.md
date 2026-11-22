@@ -6,7 +6,7 @@ This is an index of the creative and technical projects undertaken by Nam.
 
 ### Ashes
 
-**Ashes** is a project recording liminal spaces and realistic horror. Everything is captured in real places by real people. _"We officially do NOT tolerate AI use in our content."_ The project is hosted on [YouTube (@mertvyylab)](https://www.youtube.com/@mertvyylab).
+**Ashes** is a project recording liminal spaces and realistic horror. Everything is captured in real places by real people. _"We officially do NOT tolerate AI use in our content."_ The project is hosted on [YouTube (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages).
 
 Credit: Nam & Unecap.
 
