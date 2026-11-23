@@ -167,14 +167,10 @@ em {
 }
 
 
-/* Compact, single-row navigation with standard hyperlink styling.
-   The brand remains on the left; the links can scroll horizontally. */
+/* Keep links usable as a normal horizontal list until JavaScript starts. */
 .header-links {
     flex: 1 1 auto;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
@@ -186,8 +182,34 @@ em {
     display: none;
 }
 
-.header-links > :first-child {
-    margin-left: auto;
+/* Two identical groups loop past one another like a news ticker. */
+.header-links.marquee-enabled {
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee-scroll var(--marquee-duration, 45s) linear infinite;
+    will-change: transform;
+}
+
+.marquee-group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.8rem;
+    padding-right: 0.8rem;
+}
+
+.header-links.marquee-enabled:hover .marquee-track,
+.header-links.marquee-enabled:focus-within .marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    to { transform: translate3d(-50%, 0, 0); }
 }
 
 .quick-links-label {
@@ -587,8 +609,9 @@ em {
         padding: 0 0.85rem;
     }
 
-    .header-links {
+    .marquee-group {
         gap: 0.7rem;
+        padding-right: 0.7rem;
     }
 
     .brand-name {
@@ -644,5 +667,19 @@ em {
     *::before,
     *::after {
         transition: none !important;
+    }
+
+    /* Motion-sensitive visitors can manually scroll the original links. */
+    .header-links.marquee-enabled {
+        overflow-x: auto;
+    }
+
+    .marquee-track {
+        animation: none;
+        will-change: auto;
+    }
+
+    .marquee-group[aria-hidden="true"] {
+        display: none;
     }
 }
