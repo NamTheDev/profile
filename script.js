@@ -250,8 +250,40 @@ function wireEvents() {
   });
   addEventListener("popstate", () => loadPage(slug()));
 }
+/* Continuously loop the existing header links without maintaining a second list. */
+function initHeaderMarquee() {
+  const nav = document.querySelector(".header-links");
+  if (!nav || nav.querySelector(".marquee-track")) return;
+
+  const track = document.createElement("div");
+  track.className = "marquee-track";
+  const group = document.createElement("div");
+  group.className = "marquee-group";
+  while (nav.firstChild) group.append(nav.firstChild);
+
+  const duplicate = group.cloneNode(true);
+  duplicate.setAttribute("aria-hidden", "true");
+  duplicate.querySelectorAll("a, button, [tabindex]").forEach((el) => {
+    el.setAttribute("tabindex", "-1");
+  });
+
+  track.append(group, duplicate);
+  nav.append(track);
+  nav.classList.add("marquee-enabled");
+
+  // Use a constant scrolling speed, regardless of font or viewport size.
+  const updateSpeed = () => {
+    const width = group.getBoundingClientRect().width;
+    if (width) track.style.setProperty("--marquee-duration", Math.max(20, width / 45) + "s");
+  };
+  updateSpeed();
+  if ("ResizeObserver" in window) new ResizeObserver(updateSpeed).observe(group);
+  else window.addEventListener("resize", updateSpeed);
+  document.fonts?.ready.then(updateSpeed).catch(() => {});
+}
+
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => { wireEvents(); init(); });
+  document.addEventListener("DOMContentLoaded", () => { initHeaderMarquee(); wireEvents(); init(); });
 } else {
-  wireEvents(); init();
+  initHeaderMarquee(); wireEvents(); init();
 }
