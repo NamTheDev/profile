@@ -207,7 +207,7 @@ em {
     align-items: center;
     gap: 0.35rem;
     padding: 0.4rem 0.55rem;
-    border: 1px solid var(--blue);
+    border: 1px solid transparent;
     color: var(--blue);
     font-size: 0.8125rem;
     line-height: 1.1;
@@ -219,9 +219,14 @@ em {
     color: inherit;
 }
 
-.quick-link:hover,
-.quick-link:focus-visible {
+.quick-link:hover {
     border-color: var(--lavender);
+    background: var(--mantle);
+    color: var(--lavender);
+    text-decoration: none;
+}
+
+.quick-link:focus-visible {
     background: var(--mantle);
     color: var(--lavender);
     text-decoration: none;
