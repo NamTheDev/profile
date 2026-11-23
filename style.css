@@ -177,8 +177,13 @@ em {
     gap: 0.8rem;
     overflow-x: auto;
     overscroll-behavior-x: contain;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     white-space: nowrap;
+}
+
+.header-links::-webkit-scrollbar {
+    display: none;
 }
 
 .header-links > :first-child {
