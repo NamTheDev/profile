@@ -185,6 +185,8 @@ em {
 /* Two identical groups loop past one another like a news ticker. */
 .header-links.marquee-enabled {
     overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
 }
 
 .marquee-track {
@@ -203,7 +205,13 @@ em {
     padding-right: 0.8rem;
 }
 
-.header-links.marquee-enabled:hover .marquee-track,
+/* Hover pause applies only to pointer devices; touch hover can stay sticky. */
+@media (hover: hover) {
+    .header-links.marquee-enabled:hover .marquee-track {
+        animation-play-state: paused;
+    }
+}
+
 .header-links.marquee-enabled:focus-within .marquee-track {
     animation-play-state: paused;
 }
@@ -672,6 +680,8 @@ em {
     /* Motion-sensitive visitors can manually scroll the original links. */
     .header-links.marquee-enabled {
         overflow-x: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
     }
 
     .marquee-track {
