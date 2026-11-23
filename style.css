@@ -207,26 +207,23 @@ em {
     align-items: center;
     gap: 0.35rem;
     padding: 0.4rem 0.55rem;
-    border: 1px solid transparent;
-    color: var(--text);
+    border: 1px solid var(--blue);
+    color: var(--blue);
     font-size: 0.8125rem;
     line-height: 1.1;
     white-space: nowrap;
 }
 
-.quick-link-platform {
-    color: var(--subtext0);
-}
-
+.quick-link-platform,
 .quick-link-divider {
-    color: var(--overlay0);
+    color: inherit;
 }
 
 .quick-link:hover,
 .quick-link:focus-visible {
-    border-color: var(--surface0);
+    border-color: var(--lavender);
     background: var(--mantle);
-    color: var(--text);
+    color: var(--lavender);
     text-decoration: none;
 }
 
