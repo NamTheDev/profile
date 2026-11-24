@@ -26,11 +26,31 @@ I regularly upload posts (photography, art, etc.) on my [Nam Rhythmical page on 
 
 ### Active software
 
-**Profile** is this website, a lightweight Markdown-driven self-documentation archive. It is hosted on [GitHub](https://github.com/NamTheDev/profile).
+These repositories are public and are not archived. Each project serves a different part of my software and personal-tooling ecosystem.
 
-**MeditorD** is a nostalgic editor for securely saving linked documents, built with Bun, TypeScript, SQLite, Docker, and a browser-based interface. It is hosted on [GitHub](https://github.com/NamTheDev/MeditorD).
+**Profile** — This website is a lightweight, Markdown-driven self-documentation archive with an encyclopedia-style reading interface. It uses HTML, CSS and JavaScript to render Markdown articles, provide searchable page navigation and generate a table of contents.
 
-**MCP-Server** is an MCP server over HTTP that gives an AI assistant tools. It is hosted on [GitHub](https://github.com/NamTheDev/MCP-Server).
+[Source code](https://github.com/NamTheDev/profile)
+
+**MeditorD** — A nostalgic, self-hosted Markdown editor and folder-based media archive. It uses Bun, TypeScript, SQLite and a browser-based interface, with Docker support for self-hosting. It is intended for private or access-controlled use; the document API does not currently provide its own authentication.
+
+[Source code](https://github.com/NamTheDev/MeditorD)
+
+**MCP-Server** — An HTTP-based Model Context Protocol server that exposes tools to AI assistants. Built with Bun and TypeScript, it includes modules for reminders, knowledge, agents and Discord integration. This is an AI-assisted experimental project that should be reviewed and tested before relying on it.
+
+[Source code](https://github.com/NamTheDev/MCP-Server)
+
+**keep** — A local-first browser notes app for quick notes, checklists, labels, reminders and archives. Notes and preferences are stored in the browser's local storage, with JSON backup import/export. It does not require an account or use a hosted database or synchronization server. Built with TypeScript and Bun tooling, it uses a compact, monochrome Material Design 3-inspired interface.
+
+[Website](https://namthedev.github.io/keep/) · [Source code](https://github.com/NamTheDev/keep)
+
+**clipboard** — A temporary cross-device clipboard for sharing text snippets through short vault IDs. Vaults expire after 24 hours or seven days. The frontend is hosted on GitHub Pages, with a Node.js and SQLite API hosted separately on Railway. Vault IDs are access codes rather than passwords; the service is not intended for secrets or other sensitive information.
+
+[Website](https://namthedev.github.io/clipboard/) · [Source code](https://github.com/NamTheDev/clipboard)
+
+**util** — A shared collection of reusable utilities and design assets. Its current focus is the canonical Material Design 3-inspired CSS foundation used by keep and clipboard, providing consistent typography, themes, navigation and component styling across both applications.
+
+[Source code](https://github.com/NamTheDev/util)
 
 ### Archived projects
 
