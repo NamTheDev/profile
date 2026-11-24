@@ -2,62 +2,94 @@
 
 This is an index of the creative and technical projects undertaken by Nam.
 
-## Creative works
+**CREATIVE WORKS**
 
-### Ashes
+## Ashes
 
-**Ashes** is a project recording liminal spaces and realistic horror. Everything is captured in real places by real people. _"We officially do NOT tolerate AI use in our content."_ The project is hosted on [YouTube (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages).
+Ashes is a project recording liminal spaces and realistic horror. Everything is captured in real places by real people.
+
+_"We officially do NOT tolerate AI use in our content."_
+
+The project is hosted on [YouTube (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages).
 
 Credit: Nam & Unecap.
 
-### Music
+## Music
 
-The genre of compositions Nam has written are mainly experimental music and fusion, stating: _"I experiment with music. My music isn't defined, it's a mixture of a lot of things I have consumed, experienced, and as well as putting out from within."_ Releases are published on [Bandcamp](https://namchill235.bandcamp.com).
+Nam's compositions primarily explore experimental music and fusion. In his own words: _"I experiment with music. My music isn't defined, it's a mixture of a lot of things I have consumed, experienced, and as well as putting out from within."_
 
-[YouTube — Nam (@namrhythmical)](https://www.youtube.com/@namrhythmical)
+Releases are published on [Bandcamp](https://namchill235.bandcamp.com), and music can also be found on [YouTube (@namrhythmical)](https://www.youtube.com/@namrhythmical).
 
-### Photography
+## Photography
 
-[Cara — namchill235](https://cara.app/namchill235/portfolio)
+Photography, artwork and other visual works are published on [Cara](https://cara.app/namchill235/portfolio) and the [Nam Rhythmical page on Facebook](https://www.facebook.com/namrythmical).
 
-I regularly upload posts (photography, art, etc.) on my [Nam Rhythmical page on Facebook](https://www.facebook.com/namrythmical) as well.
+---
 
-## Technology
-
-### Active software
+**ACTIVE SOFTWARE**
 
 These repositories are public and are not archived. Each project serves a different part of my software and personal-tooling ecosystem.
 
-**Profile** — This website is a lightweight, Markdown-driven self-documentation archive with an encyclopedia-style reading interface. It uses HTML, CSS and JavaScript to render Markdown articles, provide searchable page navigation and generate a table of contents.
+## Profile
 
-[Source code](https://github.com/NamTheDev/profile)
+This website is a lightweight, Markdown-driven self-documentation archive with an encyclopedia-style reading interface. It uses HTML, CSS and JavaScript to render Markdown articles, provide searchable page navigation and generate a table of contents, with offline access.
 
-**MeditorD** — A nostalgic, self-hosted Markdown editor and folder-based media archive. It uses Bun, TypeScript, SQLite and a browser-based interface, with Docker support for self-hosting. It is intended for private or access-controlled use; the document API does not currently provide its own authentication.
+The source code is maintained on [GitHub](https://github.com/NamTheDev/profile).
 
-[Source code](https://github.com/NamTheDev/MeditorD)
+## MeditorD
 
-**MCP-Server** — An HTTP-based Model Context Protocol server that exposes tools to AI assistants. Built with Bun and TypeScript, it includes modules for reminders, knowledge, agents and Discord integration. This is an AI-assisted experimental project that should be reviewed and tested before relying on it.
+A nostalgic, self-hosted Markdown editor and folder-based media archive, built with Bun, TypeScript and SQLite, with Docker support for self-hosting.
 
-[Source code](https://github.com/NamTheDev/MCP-Server)
+The application is intended for private or access-controlled environments, as its document API does not currently provide its own authentication. Its source code is maintained on [GitHub](https://github.com/NamTheDev/MeditorD).
 
-**keep** — A local-first browser notes app for quick notes, checklists, labels, reminders and archives. Notes and preferences are stored in the browser's local storage, with JSON backup import/export. It does not require an account or use a hosted database or synchronization server. Built with TypeScript and Bun tooling, it uses a compact, monochrome Material Design 3-inspired interface.
+## MCP-Server
 
-[Website](https://namthedev.github.io/keep/) · [Source code](https://github.com/NamTheDev/keep)
+An experimental HTTP-based Model Context Protocol server providing AI assistants with additional tools and integrations. Built with Bun and TypeScript, it includes modules for reminders, knowledge, agents and Discord integration.
 
-**clipboard** — A temporary cross-device clipboard for sharing text snippets through short vault IDs. Vaults expire after 24 hours or seven days. The frontend is hosted on GitHub Pages, with a Node.js and SQLite API hosted separately on Railway. Vault IDs are access codes rather than passwords; the service is not intended for secrets or other sensitive information.
+This AI-assisted project should be reviewed and tested before relying on it. The source code is maintained on [GitHub](https://github.com/NamTheDev/MCP-Server).
 
-[Website](https://namthedev.github.io/clipboard/) · [Source code](https://github.com/NamTheDev/clipboard)
+## keep
 
-**util** — A shared collection of reusable utilities and design assets. Its current focus is the canonical Material Design 3-inspired CSS foundation used by keep and clipboard, providing consistent typography, themes, navigation and component styling across both applications.
+A local-first browser notes application featuring quick notes, checklists, labels, reminders, archives and JSON backup import/export. Notes and preferences are stored in the browser's local storage, without an account, hosted database or synchronization server. Built with TypeScript and Bun tooling, it uses a compact, monochrome Material Design 3-inspired interface.
 
-[Source code](https://github.com/NamTheDev/util)
+The application is accessible through its [website](https://namthedev.github.io/keep/), with its source code hosted on [GitHub](https://github.com/NamTheDev/keep).
 
-### Archived projects
+## clipboard
 
-**Green** is a Discord bot for managing Unecraft (Formerly known as NGCL - NamGreenCapLand) Minecraft and Discord server, hosted on [GitHub](https://github.com/NamTheDev/Green).
+A temporary cross-device clipboard for sharing text snippets through six-character vault IDs. Vaults expire after 24 hours or seven days. The frontend is hosted on GitHub Pages, with a Node.js and SQLite API hosted separately on Railway. Vault IDs are access codes rather than passwords; the service is not intended for secrets or other sensitive information.
 
-**FEARLESS** is an abandoned Discord bot built for automation and management in the Ruthless Fears community (disbanded), hosted on [GitHub](https://github.com/NamTheDev/FEARLESS).
+The application is accessible through its [website](https://namthedev.github.io/clipboard/), with its source code hosted on [GitHub](https://github.com/NamTheDev/clipboard).
 
-**Flow** is an abandoned Bun and TypeScript testing project, hosted on [GitHub](https://github.com/NamTheDev/Flow).
+## util
 
-**FARTLESS** is an abandoned Discord-bot project whose economy, loot, shop, inventory, and receipt systems were later merged into FEARLESS. It is hosted on [GitHub](https://github.com/NamTheDev/FARTLESS).
+A collection of reusable utilities and design assets, including the canonical Material Design 3-inspired stylesheet used by keep and clipboard. It provides consistent typography, themes, navigation and component styling across both applications.
+
+The repository is maintained on [GitHub](https://github.com/NamTheDev/util).
+
+---
+
+**ARCHIVED PROJECTS**
+
+## Green
+
+An abandoned Discord bot developed for managing Unecraft (formerly known as NGCL — NamGreenCapLand) and its associated Minecraft and Discord servers.
+
+The original source code is archived on [GitHub](https://github.com/NamTheDev/Green).
+
+## FEARLESS
+
+An abandoned Discord bot developed for automation and community management within the Ruthless Fears community, which has since disbanded.
+
+The project is archived on [GitHub](https://github.com/NamTheDev/FEARLESS).
+
+## FARTLESS
+
+An abandoned Discord-bot project featuring economy, loot, shop, inventory and receipt systems. Its functionality was subsequently incorporated into FEARLESS.
+
+The original repository remains archived on [GitHub](https://github.com/NamTheDev/FARTLESS).
+
+## Flow
+
+An abandoned experimental development project using Bun and TypeScript.
+
+The repository remains archived on [GitHub](https://github.com/NamTheDev/Flow).
