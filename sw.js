@@ -1,4 +1,4 @@
-const CACHE = "self-documentary-v8";
+const CACHE = "self-documentary-v9";
 const CORE = [
   "./",
   "index.html",
@@ -84,7 +84,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   const file = url.pathname.split("/").pop() || "index.html";
-  if (request.mode === "navigate" || NETWORK_FIRST.has(file)) {
+  if (request.mode === "navigate" || NETWORK_FIRST.has(file) || file.endsWith(".md")) {
     event.respondWith(networkFirst(request));
     return;
   }
