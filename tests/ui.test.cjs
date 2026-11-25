@@ -6,7 +6,7 @@ const http = require('node:http');
 const { chromium } = require('playwright');
 
 test('profile preserves its layout, content and ticker using Bootstrap', async () => {
-  const mime = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.md':'text/plain' };
+  const mime = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.md':'text/plain', '.png':'image/png' };
   const server = http.createServer(async (req,res) => {
     try {
       const pathname = new URL(req.url,'http://localhost').pathname;
@@ -31,6 +31,9 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('head meta[name="color-scheme"]').count(),1);
     assert.equal(await page.locator('head meta[name="color-scheme"]').getAttribute('content'),'dark');
     assert.equal(await page.locator('html').getAttribute('data-bs-theme'),'dark');
+    const favicon = page.locator('head link[rel="icon"]');
+    assert.equal(await favicon.getAttribute('href'), 'assets/icon.png');
+    assert.equal((await page.request.get('http://127.0.0.1:' + server.address().port + '/assets/icon.png')).ok(), true);
     assert.equal(await page.locator('html').evaluate(e=>getComputedStyle(e).colorScheme),'dark');
     assert.equal(await page.locator('meta[name="darkreader-lock"]').count(),0);
     assert.equal(await page.locator('.page-shell').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),3);
@@ -127,7 +130,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     const sections = page.locator('#toc > ul > li');
     assert.equal(await sections.count(), 2);
     assert.deepEqual(await sections.locator(':scope > details > summary > a').allTextContents(),
-      ['Creative works', 'Repositories']);
+      ['Creative works', 'GitHub Repositories']);
     const headingColor = await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color);
     for (const link of await sections.locator(':scope > details > summary > a').all()) {
       assert.equal(await link.evaluate(e=>getComputedStyle(e).color), headingColor);
@@ -146,7 +149,9 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await children.isVisible(), true);
     await children.getByRole('link', {name:'Archived', exact:true}).click();
     assert.equal(new URL(page.url()).hash, '#archived');
+    await page.locator('#article h3#archived').waitFor();
     assert.equal(await page.locator('#article h3#archived').count(), 1);
+    assert.equal(await page.locator('#article .repository-card').count(), catalogue.repositories.length);
     await page.goto('http://127.0.0.1:' + server.address().port + '/?page=projects#keep');
     await page.locator('.repository-card#keep').waitFor();
     assert.equal(await page.locator('.repository-card#keep').isVisible(), true);
@@ -160,6 +165,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       assert.equal(await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length), 1);
     }
     const mobileContents = page.locator('.mobile-contents');
+    await mobileContents.waitFor();
     assert.equal(await page.locator('#toc').isVisible(), false);
     await mobileContents.locator(':scope > summary').click();
     assert.equal(await mobileContents.locator('nav > ul > li').count(), 2);

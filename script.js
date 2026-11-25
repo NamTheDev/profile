@@ -270,7 +270,10 @@ function wireEvents() {
     event.preventDefault();
     navigate(state.pages[0]?.slug || "");
   });
-  addEventListener("popstate", () => loadPage(slug()));
+  addEventListener("popstate", () => {
+  const next = slug();
+  if (next !== state.current) void loadPage(next);
+});
 }
 /* Continuously loop the existing header links without maintaining a second list. */
 function initHeaderMarquee() {

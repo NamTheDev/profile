@@ -88,7 +88,7 @@
         repos.push({name: description.name, archived: description.archived});
       }
     }
-    const heading = element("h2", null, "Repositories");
+    const heading = element("h2", null, "GitHub Repositories");
     heading.id = "repositories";
     const softwareAlias = element("span", "repository-alias");
     softwareAlias.id = "software";
