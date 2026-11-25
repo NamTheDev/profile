@@ -41,6 +41,25 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
+    assert.equal(await page.locator('#article iframe').count(), 0);
+    await page.route('https://www.facebook.com/plugins/page.php?**', route => route.fulfill({body:'<html>Page preview</html>', contentType:'text/html'}));
+    const facebook = page.locator('#article details').filter({hasText:'Nam Rhythmical on Facebook'});
+    await facebook.locator(':scope > summary').click();
+    const facebookFrame = facebook.locator('iframe');
+    await facebookFrame.waitFor();
+    assert.equal(new URL(await facebookFrame.getAttribute('src')).origin, 'https://www.facebook.com');
+    assert.equal(new URL(await facebookFrame.getAttribute('src')).searchParams.get('href'), 'https://www.facebook.com/namrythmical');
+    await facebook.locator(':scope > summary').click();
+    await facebookFrame.waitFor({state:'detached'});
+    await page.route('https://namthedev.github.io/keep/', route => route.fulfill({body:'<html>Keep preview</html>', contentType:'text/html'}));
+    const keepPreview = page.locator('#article details').filter({hasText:'keep — interactive preview'});
+    await keepPreview.locator(':scope > summary').click();
+    const keepFrame = keepPreview.locator('iframe');
+    await keepFrame.waitFor();
+    assert.equal(await keepFrame.getAttribute('src'), 'https://namthedev.github.io/keep/');
+    assert.equal(await keepFrame.evaluate(e=>e.classList.contains('ratio-4x3')), true);
+    await keepPreview.locator(':scope > summary').click();
+    await keepFrame.waitFor({state:'detached'});
     const sections = page.locator('#toc > ul > li');
     assert.equal(await sections.count(), 3);
     assert.deepEqual(await sections.locator(':scope > details > summary > a').allTextContents(),
@@ -70,7 +89,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await mobileContents.locator('nav > ul > li').count(), 3);
     const mobileChildren = mobileContents.locator('#mobile-toc-software');
     assert.equal(await mobileChildren.locator(':scope > li').count(), 6);
-    const mobileSummary = mobileContents.locator('details').filter({has:mobileChildren}).locator(':scope > summary');
+    const mobileSummary = mobileChildren.locator('..').locator(':scope > summary');
     await mobileSummary.focus();
     await mobileSummary.press('Space');
     assert.equal(await mobileChildren.isVisible(), false);
