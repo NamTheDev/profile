@@ -71,7 +71,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       'https://bandcamp.com/EmbeddedPlayer/track=3801929766/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/artwork=small/transparent=true/',
       'https://bandcamp.com/EmbeddedPlayer/track=4198918332/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/artwork=small/transparent=true/'
     ]);
-    assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>[frame.width,frame.height,frame.loading])),[['500','120','lazy'],['500','120','lazy']]);
+    assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>[frame.width,frame.height,frame.loading])),[['640','120','lazy'],['640','120','lazy']]);
     assert.equal(await page.locator('#article iframe:not([src^="https://bandcamp.com/EmbeddedPlayer/"])').count(),0);
     assert.equal(await page.locator('#article a[href="https://namchill235.bandcamp.com"]').count(), 1);
     const catalogue = JSON.parse(await fs.readFile('data/catalogue.json','utf8'));
@@ -108,8 +108,8 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
         const row = page.locator('#article a[href="https://www.youtube.com/watch?v=' + video.id + '"]');
         assert.ok(await row.count() >= 1);
         assert.equal(await row.first().locator('img').getAttribute('src'), 'https://i.ytimg.com/vi/' + video.id + '/mqdefault.jpg');
-        assert.equal(await row.first().locator('img').getAttribute('width'), '138');
-        assert.equal(await row.first().locator('img').getAttribute('height'), '78');
+        assert.equal(await row.first().locator('img').getAttribute('width'), '304');
+        assert.equal(await row.first().locator('img').getAttribute('height'), '171');
       }
     }
     assert.equal(await page.locator('#article a[href*="sub_confirmation"]').count(), 0);
@@ -140,6 +140,10 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('.repository-card#keep').isVisible(), true);
     await page.setViewportSize({width:390,height:844});
     for (const frame of await bandcamp.locator('iframe').all()) assert.equal(await frame.evaluate(e=>e.getBoundingClientRect().width<=e.parentElement.clientWidth+1),true);
+    for (const image of await page.locator('.upload-thumbnail').all()) {
+      assert.equal(await image.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth * .48 + 1), true);
+      assert.equal(await image.evaluate(e=>e.parentElement.scrollWidth <= e.parentElement.clientWidth + 1), true);
+    }
     for (const card of await page.locator('#article .card').all()) {
       assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth + 1), true);
       assert.equal(await card.evaluate(e=>e.scrollWidth <= e.clientWidth + 1), true);

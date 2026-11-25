@@ -137,3 +137,6 @@ em { color: var(--accent); }
 .repository-card .repo-preview { width: 100%; }
 .repository-card .repo-preview img { width: 100%; height: auto; }
 .repository-library .repository-alias { scroll-margin-top: calc(var(--header-height) + 1rem); }
+
+/* Cap upload artwork within narrow article rows while preserving 16:9. */
+.upload-thumbnail { max-width: 48%; height: auto; }
