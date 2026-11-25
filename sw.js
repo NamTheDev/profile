@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v34";
+const CACHE = CACHE_PREFIX + "v35";
 const CORE = [
   "./",
   "index.html",
