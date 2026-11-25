@@ -39,28 +39,20 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.marquee-group').count(),2);
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
-    await page.route('https://www.facebook.com/plugins/page.php?**', route => route.fulfill({body:'<html>Page preview</html>', contentType:'text/html'}));
     await page.route('https://namthedev.github.io/keep/', route => route.fulfill({body:'<html>Keep preview</html>', contentType:'text/html'}));
     await page.route('https://namthedev.github.io/clipboard/', route => route.fulfill({body:'<html>Clipboard preview</html>', contentType:'text/html'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
-    assert.equal(await page.locator('#article iframe').count(), 3);
-    const facebook = page.locator('#article details').filter({hasText:'Nam Rhythmical on Facebook'});
-    assert.equal(await facebook.evaluate(e=>e.open), true);
-    const facebookFrame = facebook.locator('iframe');
-    await facebookFrame.waitFor();
-    assert.equal(new URL(await facebookFrame.getAttribute('src')).origin, 'https://www.facebook.com');
-    assert.equal(new URL(await facebookFrame.getAttribute('src')).searchParams.get('href'), 'https://www.facebook.com/namrythmical');
-    await facebook.locator(':scope > summary').click();
-    await facebookFrame.waitFor({state:'detached'});
-    const keepPreview = page.locator('#article details').filter({hasText:'keep — interactive preview'});
-    assert.equal(await keepPreview.evaluate(e=>e.open), true);
-    const keepFrame = keepPreview.locator('iframe');
-    await keepFrame.waitFor();
-    assert.equal(await keepFrame.getAttribute('src'), 'https://namthedev.github.io/keep/');
-    assert.equal(await keepFrame.evaluate(e=>e.classList.contains('ratio-4x3')), true);
-    await keepPreview.locator(':scope > summary').click();
-    await keepFrame.waitFor({state:'detached'});
+    assert.equal(await page.locator('#article > iframe').count(), 2);
+    assert.equal(await page.locator('#article details iframe').count(), 0);
+    assert.equal(await page.locator('#article iframe[src*="facebook.com"]').count(), 0);
+    assert.equal(await page.locator('#article a[href="https://www.facebook.com/namrythmical"]').count(), 1);
+    for (const name of ['keep', 'clipboard']) {
+      const frame = page.locator('#article > iframe[src="https://namthedev.github.io/' + name + '/"]');
+      assert.equal(await frame.count(), 1);
+      assert.equal(await frame.evaluate(e=>e.classList.contains('ratio-4x3')), true);
+      assert.equal(await frame.getAttribute('loading'), 'lazy');
+    }
     const sections = page.locator('#toc > ul > li');
     assert.equal(await sections.count(), 3);
     assert.deepEqual(await sections.locator(':scope > details > summary > a').allTextContents(),

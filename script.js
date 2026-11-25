@@ -197,27 +197,18 @@ function prefetchPages() {
 }
 /* Only explicitly configured, trusted project embeds. Markdown remains sanitized. */
 const PROJECT_EMBEDS = [
-  { section: "photography", type: "facebook", title: "Nam Rhythmical on Facebook",
-    url: "https://www.facebook.com/namrythmical" },
   { section: "keep", type: "app", title: "keep — interactive preview",
     url: "https://namthedev.github.io/keep/" },
   { section: "clipboard", type: "app", title: "clipboard — interactive preview",
     url: "https://namthedev.github.io/clipboard/" }
 ];
-function projectEmbedSource(embed, width) {
+function projectEmbedSource(embed) {
   if (embed.type === "youtube" && /^UU[\w-]{22}$/.test(embed.playlist || "")) {
     return "https://www.youtube-nocookie.com/embed/videoseries?list=" + embed.playlist;
   }
   if (embed.type === "bandcamp" && /^(album|track)=\d+$/.test(embed.release || "")) {
     return "https://bandcamp.com/EmbeddedPlayer/" + embed.release +
       "/size=large/bgcol=333333/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/";
-  }
-  if (embed.type === "facebook" && embed.url === "https://www.facebook.com/namrythmical") {
-    const params = new URLSearchParams({
-      href: embed.url, tabs: "timeline", width: String(Math.max(180, Math.min(500, Math.floor(width)))),
-      height: "500", small_header: "true", adapt_container_width: "true", show_facepile: "false"
-    });
-    return "https://www.facebook.com/plugins/page.php?" + params;
   }
   if (embed.type === "app" && ["https://namthedev.github.io/keep/", "https://namthedev.github.io/clipboard/"].includes(embed.url)) {
     return embed.url;
@@ -227,46 +218,26 @@ function projectEmbedSource(embed, width) {
 function renderProjectEmbeds() {
   for (const embed of PROJECT_EMBEDS) {
     const heading = document.getElementById(embed.section);
-    if (!heading || !els.article.contains(heading) || !projectEmbedSource(embed, 320)) continue;
+    const src = projectEmbedSource(embed);
+    if (!heading || !els.article.contains(heading) || !src) continue;
     let last = heading;
     while (last.nextElementSibling && !/^H[1-3]$/.test(last.nextElementSibling.tagName)) {
       last = last.nextElementSibling;
     }
-    const disclosure = document.createElement("details");
-    disclosure.className = "my-4";
-    const summary = document.createElement("summary");
-    summary.className = "fg-2 fs-sm fw-medium py-2";
-    summary.textContent = embed.title;
-    const container = document.createElement("div");
-    container.className = "mt-2";
-    disclosure.append(summary, container);
-    last.after(disclosure);
-    const updateEmbed = () => {
-      if (!disclosure.open) {
-        container.replaceChildren();
-        return;
-      }
-      const src = projectEmbedSource(embed, container.clientWidth);
-      if (!src || container.firstChild) return;
-      const frame = document.createElement("iframe");
-      frame.src = src;
-      frame.title = embed.title;
-      frame.className = "d-block w-100 border-0" +
-        (embed.type === "youtube" ? " ratio-16x9" : embed.type === "app" ? " ratio-4x3" : "");
-      frame.loading = "lazy";
-      frame.referrerPolicy = "strict-origin-when-cross-origin";
-      if (embed.type === "facebook") frame.height = "500";
-      if (embed.type === "bandcamp") frame.height = "120";
-      if (embed.type === "youtube") {
-        frame.allow = "encrypted-media; picture-in-picture; fullscreen";
-        frame.allowFullscreen = true;
-      }
-      if (embed.type === "app") frame.allow = "clipboard-read; clipboard-write";
-      container.append(frame);
-    };
-    disclosure.addEventListener("toggle", updateEmbed);
-    disclosure.open = true;
-    updateEmbed();
+    const frame = document.createElement("iframe");
+    frame.src = src;
+    frame.title = embed.title;
+    frame.className = "d-block w-100 border-0 my-4" +
+      (embed.type === "youtube" ? " ratio-16x9" : embed.type === "app" ? " ratio-4x3" : "");
+    frame.loading = "lazy";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    if (embed.type === "bandcamp") frame.height = "120";
+    if (embed.type === "youtube") {
+      frame.allow = "encrypted-media; picture-in-picture; fullscreen";
+      frame.allowFullscreen = true;
+    }
+    if (embed.type === "app") frame.allow = "clipboard-read; clipboard-write";
+    last.after(frame);
   }
 }
 
