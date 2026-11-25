@@ -34,6 +34,14 @@
     title.append(link(url, "NamTheDev/" + repo.name, "fw-semibold text-decoration-none"));
     if (repo.archived) title.append(element("span", "badge theme-secondary", "Archived"));
     body.append(title);
+    const preview = link(url, null, "d-block align-self-start");
+    const image = element("img", "img-fluid rounded-3 d-block");
+    image.src = "https://opengraph.githubassets.com/1/NamTheDev/" + repo.name;
+    image.alt = repo.name + " — GitHub repository preview";
+    image.width = 320;
+    image.loading = "lazy";
+    preview.append(image);
+    body.append(preview);
     const stats = element("div", "d-flex flex-wrap gap-4 fs-sm");
     if (repo.language) stats.append(element("span", "fg-2", repo.language));
     if (repo.license && repo.license !== "NOASSERTION") stats.append(link(url + "/blob/main/LICENSE", repo.license));
@@ -47,29 +55,8 @@
     body.append(nav);
     return outer;
   }
-  function channelCard(channel) {
-    const [outer, body] = card();
-    const url = "https://www.youtube.com/channel/" + channel.id;
-    const header = element("div","d-flex flex-wrap align-items-center gap-3");
-    if (typeof channel.avatar === "string" && /^https:\/\/(?:[\w-]+\.)?googleusercontent\.com\//.test(channel.avatar)) {
-      const avatar = element("img","rounded-circle img-fluid");
-      avatar.src=channel.avatar; avatar.alt=""; avatar.width=48; avatar.height=48; avatar.loading="lazy"; header.append(avatar);
-    }
-    header.append(link(url,channel.title || channel.label,"fw-semibold"));
-    header.append(link(url+"?sub_confirmation=1","Subscribe","btn btn-outline theme-secondary btn-sm rounded-5"));
-    body.append(header);
-    if (channel.description) body.append(element("p","fg-2 fs-sm mb-0",channel.description));
-    const stats=[];
-    if (Number.isFinite(channel.subscribers)) stats.push(channel.subscribers.toLocaleString()+" subscribers");
-    if (Number.isFinite(channel.videoCount)) stats.push(channel.videoCount.toLocaleString()+" videos");
-    if (Number.isFinite(channel.views)) stats.push(channel.views.toLocaleString()+" views");
-    if (stats.length) body.append(element("div","fg-2 fs-sm",stats.join(" · ")));
-    body.append(link(url+"/videos","All uploads","fs-sm"));
-    const frame=element("iframe","d-block w-100 border-0 ratio-16x9 my-4");
-    frame.src="https://www.youtube-nocookie.com/embed/videoseries?list=UU"+channel.id.slice(2);
-    frame.title=channel.label+" uploads"; frame.loading="lazy"; frame.allow="encrypted-media; picture-in-picture; fullscreen"; frame.allowFullscreen=true; frame.referrerPolicy="strict-origin-when-cross-origin";
+  function channelUploads(channel) {
     const group=element("div","my-4");
-    group.append(outer,frame);
     const videos=(channel.videos || []).filter(video=>validVideo(video.id));
     if (videos.length) {
       const list=element("div","d-flex flex-column gap-3");
@@ -83,6 +70,8 @@
         row.append(image,details); list.append(row);
       }
       group.append(list);
+    } else {
+      group.append(link("https://www.youtube.com/channel/" + channel.id + "/videos", "View uploads on YouTube", "fs-sm"));
     }
     return group;
   }
@@ -101,7 +90,7 @@
       const data=await readCatalogue();
       if (!article.contains(marker)) return;
       for (const repo of data.repositories || []) if(validRepo(repo.name)) afterSection(article,repo.name.toLowerCase(),repoCard(repo));
-      for (const channel of data.channels || []) if(validChannel(channel.id)&&/^[a-z-]+$/.test(channel.section)) afterSection(article,channel.section,channelCard(channel));
+      for (const channel of data.channels || []) if(validChannel(channel.id)&&/^[a-z-]+$/.test(channel.section)) afterSection(article,channel.section,channelUploads(channel));
     } catch(error) { console.warn("Project catalogue unavailable",error); }
     finally { marker.remove(); }
   };

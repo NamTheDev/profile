@@ -39,21 +39,30 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.marquee-group').count(),2);
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
-    await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({body:'<html>YouTube player</html>', contentType:'text/html'}));
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
-    await page.locator('#article iframe').first().waitFor();
-    assert.equal(await page.locator('#article iframe').count(), 3);
-    assert.equal(await page.locator('#article .card').count(), 13);
+    await page.locator('#article .card').first().waitFor();
+    assert.equal(await page.locator('#article iframe').count(), 0);
+    assert.equal(await page.locator('#article .card').count(), 10);
     assert.equal(await page.locator('#article a[href="https://github.com/NamTheDev/keep/stargazers"]').count(), 1);
-    for (const channel of [{"section":"youtube","label":"Main YouTube channel","id":"UCuBqPJLikRQ5ILmeGfouvGA"},{"section":"ashes","label":"Ashes","id":"UC9aLhqg5hrEtU8m1ozH2eiQ"},{"section":"music","label":"Music channel","id":"UCjO88kU2XujBoNmaB9dsVCA"}]) {
-      const frame=page.locator('#article iframe[src="https://www.youtube-nocookie.com/embed/videoseries?list=UU' + channel.id.slice(2) + '"]');
-      assert.equal(await frame.count(), 1);
-      assert.equal(await frame.evaluate(e=>e.classList.contains('ratio-16x9')), true);
-      assert.equal(await frame.getAttribute('loading'), 'lazy');
-      assert.equal(await frame.evaluate(e=>e.allowFullscreen), true);
+    const previews = page.locator('#article .card a > img[src^="https://opengraph.githubassets.com/1/NamTheDev/"]');
+    assert.equal(await previews.count(), 10);
+    for (const image of await previews.all()) {
+      assert.equal(await image.getAttribute('width'), '320');
+      assert.equal(await image.evaluate(e=>e.classList.contains('img-fluid')), true);
+      assert.equal(await image.getAttribute('loading'), 'lazy');
+      assert.equal(await image.locator('..').getAttribute('href'), (await image.getAttribute('src')).replace('https://opengraph.githubassets.com/1/', 'https://github.com/'));
     }
+    const catalogue = JSON.parse(await fs.readFile('data/catalogue.json','utf8'));
+    for (const channel of catalogue.channels) {
+      for (const video of channel.videos) {
+        const row = page.locator('#article a[href="https://www.youtube.com/watch?v=' + video.id + '"]');
+        assert.ok(await row.count() >= 1);
+        assert.equal(await row.first().locator('img').getAttribute('src'), 'https://i.ytimg.com/vi/' + video.id + '/mqdefault.jpg');
+      }
+    }
+    assert.equal(await page.locator('#article a[href*="sub_confirmation"]').count(), 0);
     assert.equal(await page.locator('#article details iframe').count(), 0);
     assert.equal(await page.locator('#article iframe[src*="facebook.com"]').count(), 0);
     assert.equal(await page.locator('#article a[href="https://www.facebook.com/namrythmical"]').count(), 1);
