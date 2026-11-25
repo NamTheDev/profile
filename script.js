@@ -49,7 +49,7 @@ function renderNav(query = "") {
   for (const page of pages) {
     const link = document.createElement("a");
     link.href = "?page=" + encodeURIComponent(page.slug);
-    link.className = "page-link" + (page.slug === state.current ? " active" : "");
+    link.className = "page-link d-block" + (page.slug === state.current ? " active" : "");
     link.textContent = page.title;
     if (page.slug === state.current) link.ariaCurrent = "page";
     link.addEventListener("click", (event) => {
@@ -165,6 +165,8 @@ async function loadPage(next) {
     const markdown = await pageText(page);
     if (version !== state.loadVersion) return;
     els.article.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { gfm: true }));
+    els.article.querySelectorAll("img").forEach(image => image.classList.add("img-fluid"));
+    els.article.querySelectorAll("table").forEach(table => table.classList.add("table"));
     headingIds();
     renderToc();
     bindLinks();
@@ -228,9 +230,9 @@ function initHeaderMarquee() {
   if (!nav || nav.querySelector(".marquee-track")) return;
 
   const track = document.createElement("div");
-  track.className = "marquee-track";
+  track.className = "marquee-track d-flex align-items-center";
   const group = document.createElement("div");
-  group.className = "marquee-group";
+  group.className = "marquee-group d-flex flex-shrink-0 align-items-center";
   while (nav.firstChild) group.append(nav.firstChild);
 
   const duplicate = group.cloneNode(true);

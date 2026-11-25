@@ -1,8 +1,10 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v10";
+const CACHE = CACHE_PREFIX + "v11";
 const CORE = [
   "./",
   "index.html",
+  "bootstrap.min.css",
+  "config.css",
   "style.css",
   "script.js",
   "manifest.json",

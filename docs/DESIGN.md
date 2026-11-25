@@ -1,0 +1,13 @@
+# Profile design and implementation
+
+Profile uses the same locally vendored Bootstrap 6.0.0-alpha.2 CSS and canonical [util design configuration](https://github.com/NamTheDev/util/blob/main/design/config.css) as Keep and Clipboard. Load order is bootstrap.min.css, config.css, style.css. Keep config.css identical to util when synchronizing; do not edit the vendor stylesheet. Preserve all license notices.
+
+The site intentionally retains its original reading identity: Source Sans 3, larger article typography, blue links, green/teal/sky/sapphire heading colors, dark Catppuccin Mocha, fixed-width reading column, left page navigation and right table of contents. These are local exceptions to the generic app defaults. The scrolling header remains a deliberate motion exception, with hover/focus pause and reduced-motion fallback.
+
+Native Bootstrap utilities cover flex alignment, spacing where suitable, borders, controls, rounding, typography and rendered Markdown tables/images. Local CSS owns the three-column grid, responsive rails, article typography and marquee. No Bootstrap JavaScript is needed. Profile remains a static site with its existing Markdown rendering and navigation. Bootstrap 6 requires current browsers (Chrome/Edge 138+, Firefox 147+, Safari 26+).
+
+The service worker precaches the local stylesheets and only clears its own versioned caches. The existing external Markdown libraries and font delivery remain unchanged; full offline rendering still depends on those resources being available in the browser cache.
+
+## Verification
+
+GitHub Actions runs syntax checks, cache and manifest tests, plus browser verification for desktop and mobile layouts, navigation, native controls and reduced motion.

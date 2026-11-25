@@ -19,3 +19,6 @@ jobs:
       - run: node --check script.js
       - run: node --check sw.js
       - run: node --test tests/service-worker.test.cjs
+      - run: npm install --no-save --ignore-scripts playwright@1.56.1 marked@15.0.12 dompurify@3.2.6
+      - run: npx playwright install --with-deps chromium
+      - run: node --test tests/ui.test.cjs

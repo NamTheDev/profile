@@ -1,0 +1,160 @@
+/*!
+ * MIT License
+ *
+ * Copyright (c) 2026 NamTheDev
+ * Copyright (c) 2021 Catppuccin (palette)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+/* Shared design configuration — no framework distribution or app layout rules.
+ * Catppuccin Mocha (dark) / Latte (light), Lavender accent.
+ * Palette: https://catppuccin.com/palette/
+ * Bootstrap 6 tokens: https://getbootstrap.com/llms-full.txt
+ * Load after Bootstrap, before application CSS.
+ */
+:root,:host{
+  /* Typography */
+  --font-ui:Roboto,Arial,system-ui,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  --font-size:14px;
+  --font-size-title:22px;
+  --font-size-heading:16px;
+  --font-size-small:12px;
+  --line-height:1.55;
+  --icon-size:20px;
+
+  /* Density, shape and motion */
+  --content-gutter:20px;
+  --content-gap:12px;
+  --card-inset:14px;
+  --pane-inset:12px;
+  --sidebar-width:224px;
+  --radius-control:8px;
+  --radius-card:10px;
+  --radius-dialog:12px;
+  --motion-duration:0s;
+
+  /* Catppuccin color roles; dark-first */
+  color-scheme:dark;
+  --base:#1e1e2e;
+  --mantle:#181825;
+  --crust:#11111b;
+  --surface-0:#313244;
+  --surface-1:#45475a;
+  --surface-2:#585b70;
+  --overlay-0:#6c7086;
+  --overlay-1:#7f849c;
+  --overlay-2:#9399b2;
+  --text:#cdd6f4;
+  --subtext-0:#a6adc8;
+  --subtext-1:#bac2de;
+  --accent:#b4befe;
+  --accent-ink:#1e1e2e;
+  --error:#f38ba8;
+  --success:#a6e3a1;
+  --warning:#f9e2af;
+  --info:#89b4fa;
+
+  /* Framework-independent semantic aliases */
+  --bg:var(--base);
+  --surface:var(--mantle);
+  --raised:var(--surface-0);
+  --high:var(--surface-1);
+  --outline:var(--overlay-0);
+  --outline-soft:var(--surface-1);
+  --muted:var(--subtext-0);
+  --primary:var(--accent);
+  --scrim:#11111bbf;
+  --face:var(--surface);
+
+  /* Bootstrap 6 root tokens and theme roles */
+  --bs-body-font-family:var(--font-ui);
+  --bs-body-font-size:var(--font-size);
+  --bs-body-line-height:var(--line-height);
+  --bs-font-mono:var(--font-mono);
+  --bs-bg-body:var(--base);
+  --bs-bg-1:var(--mantle);
+  --bs-bg-2:var(--surface-0);
+  --bs-bg-3:var(--surface-1);
+  --bs-fg-body:var(--text);
+  --bs-fg-1:var(--text);
+  --bs-fg-2:var(--subtext-1);
+  --bs-fg-3:var(--subtext-0);
+  --bs-border-color:var(--outline-soft);
+  --bs-border-color-translucent:var(--outline-soft);
+  --bs-primary-base:var(--accent);
+  --bs-primary-fg:var(--accent);
+  --bs-primary-fg-emphasis:var(--accent);
+  --bs-primary-bg:var(--accent);
+  --bs-primary-bg-subtle:color-mix(in srgb,var(--accent) 13%,var(--base));
+  --bs-primary-bg-muted:color-mix(in srgb,var(--accent) 23%,var(--base));
+  --bs-primary-border:var(--accent);
+  --bs-primary-contrast:var(--accent-ink);
+  --bs-primary-focus-ring:var(--accent);
+  --bs-secondary-base:var(--surface-1);
+  --bs-secondary-fg:var(--text);
+  --bs-secondary-fg-emphasis:var(--text);
+  --bs-secondary-bg:var(--surface-0);
+  --bs-secondary-bg-subtle:var(--mantle);
+  --bs-secondary-bg-muted:var(--surface-1);
+  --bs-secondary-border:var(--outline);
+  --bs-secondary-contrast:var(--text);
+  --bs-secondary-focus-ring:var(--accent);
+  --bs-link-color:var(--accent);
+  --bs-link-hover-color:var(--accent);
+  --bs-btn-input-font-size:var(--font-size);
+  --bs-radius-5:var(--radius-control);
+  --bs-radius-6:var(--radius-card);
+  --bs-radius-7:var(--radius-dialog);
+  --bs-box-shadow:none;
+  --bs-box-shadow-sm:none;
+  --bs-box-shadow-lg:none;
+  --bs-box-shadow-xl:none;
+  --bs-box-shadow-inset:none;
+}
+:root[data-bs-theme="light"],:host([data-bs-theme="light"]){
+  color-scheme:light;
+  --base:#eff1f5;
+  --mantle:#e6e9ef;
+  --crust:#dce0e8;
+  --surface-0:#ccd0da;
+  --surface-1:#bcc0cc;
+  --surface-2:#acb0be;
+  --overlay-0:#9ca0b0;
+  --overlay-1:#8c8fa1;
+  --overlay-2:#7c7f93;
+  --text:#4c4f69;
+  --subtext-0:#6c6f85;
+  --subtext-1:#5c5f77;
+  --accent:#7287fd;
+  --accent-ink:#11111b;
+  --error:#d20f39;
+  --success:#40a02b;
+  --warning:#df8e1d;
+  --info:#1e66f5;
+  --scrim:#4c4f6966;
+  /* Darker accent foreground for accessible text on light surfaces. */
+  --bs-primary-fg:#4354b3;
+  --bs-primary-fg-emphasis:#4354b3;
+  --bs-link-color:#4354b3;
+  --bs-link-hover-color:#4354b3;
+}
+@media (width < 840px){
+  :root,:host{--content-gutter:12px}
+}
