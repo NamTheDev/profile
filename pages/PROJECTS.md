@@ -26,13 +26,19 @@ Nam's photography, artwork and other visual works are published on [Cara](https:
 
 [Profile](https://github.com/NamTheDev/profile) is a personal documentation website inspired by Wikipedia. The site renders Markdown documents with a table of contents and page navigation. It is written in HTML, CSS and JavaScript and uses a service worker to cache local resources.
 
+[![Profile — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/profile)](https://github.com/NamTheDev/profile)
+
 ### MeditorD
 
 [MeditorD](https://github.com/NamTheDev/MeditorD) is a self-hosted Markdown editor and folder-based media archive. It combines an interface inspired by older software with a Bun, TypeScript and SQLite implementation.
 
+[![MeditorD — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/MeditorD)](https://github.com/NamTheDev/MeditorD)
+
 ### MCP-Server
 
 [MCP-Server](https://github.com/NamTheDev/MCP-Server) is an experimental implementation of the Model Context Protocol (MCP) over HTTP. Written in TypeScript using Bun, it provides tools and integrations for AI assistants, including modules for reminders, knowledge, agents and Discord.
+
+[![MCP-Server — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/MCP-Server)](https://github.com/NamTheDev/MCP-Server)
 
 ### keep
 
@@ -40,15 +46,21 @@ Nam's photography, artwork and other visual works are published on [Cara](https:
 
 Its [implementation](https://github.com/NamTheDev/keep) uses the Catppuccin-based Bootstrap interface shared with clipboard.
 
+[![keep — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/keep)](https://github.com/NamTheDev/keep)
+
 ### clipboard
 
 [clipboard](https://namthedev.github.io/clipboard/) is a web application for temporarily sharing text between devices. Users create or join vaults using six-character identifiers. Guests can read and copy shared items, while owners can manage their contents. Vaults expire after either 24 hours or seven days.
 
 The [application](https://github.com/NamTheDev/clipboard) consists of a frontend hosted on GitHub Pages and a separate Node.js and SQLite API.
 
+[![clipboard — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/clipboard)](https://github.com/NamTheDev/clipboard)
+
 ### util
 
 [util](https://github.com/NamTheDev/util) is a repository of shared utilities, design assets and contribution standards. It contains the common Bootstrap configuration used by Profile, keep and clipboard, as well as documentation for repository formatting and development practices.
+
+[![util — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/util)](https://github.com/NamTheDev/util)
 
 ## Archived projects
 
@@ -56,14 +68,22 @@ The [application](https://github.com/NamTheDev/clipboard) consists of a frontend
 
 [Green](https://github.com/NamTheDev/Green) was a Discord bot developed to manage the Minecraft and Discord servers of Unecraft, formerly known as NGCL (NamGreenCapLand).
 
+[![Green — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/Green)](https://github.com/NamTheDev/Green)
+
 ### FEARLESS
 
 [FEARLESS](https://github.com/NamTheDev/FEARLESS) was a Discord bot developed for internal automation and community management in Ruthless Fears, a community associated with the Roblox game The Strongest Battleground. The community has since disbanded and the bot is no longer maintained.
+
+[![FEARLESS — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/FEARLESS)](https://github.com/NamTheDev/FEARLESS)
 
 ### FARTLESS
 
 [FARTLESS](https://github.com/NamTheDev/FARTLESS) was a Discord bot with economy, loot, shop, inventory and receipt systems. Its functionality was subsequently incorporated into FEARLESS.
 
+[![FARTLESS — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/FARTLESS)](https://github.com/NamTheDev/FARTLESS)
+
 ### Flow
 
 [Flow](https://github.com/NamTheDev/Flow) was an experimental development project using Bun and TypeScript.
+
+[![Flow — GitHub repository preview](https://opengraph.githubassets.com/1/NamTheDev/Flow)](https://github.com/NamTheDev/Flow)

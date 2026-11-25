@@ -44,6 +44,13 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
     assert.equal(await page.locator('#article > iframe').count(), 2);
+    const repositoryCards = page.locator('#article a > img[src^="https://opengraph.githubassets.com/1/NamTheDev/"]');
+    assert.equal(await repositoryCards.count(), 10);
+    for (const card of await repositoryCards.all()) {
+      assert.equal(await card.evaluate(e=>e.classList.contains('img-fluid')), true);
+      const imageUrl = await card.getAttribute('src');
+      assert.equal(await card.locator('..').getAttribute('href'), imageUrl.replace('https://opengraph.githubassets.com/1/', 'https://github.com/'));
+    }
     assert.equal(await page.locator('#article details iframe').count(), 0);
     assert.equal(await page.locator('#article iframe[src*="facebook.com"]').count(), 0);
     assert.equal(await page.locator('#article a[href="https://www.facebook.com/namrythmical"]').count(), 1);
