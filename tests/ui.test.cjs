@@ -40,7 +40,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       'og:title':'Nam — Personal Archive', 'og:description':'A personal archive of Nam.',
       'og:type':'profile', 'og:site_name':'Personal Archive', 'og:url':'https://namthedev.github.io/profile/', 'og:locale':'en_US',
       'og:image':'https://namthedev.github.io/profile/assets/social-preview.jpg', 'og:image:type':'image/jpeg',
-      'og:image:width':'600', 'og:image:height':'315', 'og:image:alt':'Purple stylized Nam wordmark on a dark background.'
+      'og:image:width':'1200', 'og:image:height':'630', 'og:image:alt':'Purple stylized Nam wordmark on a dark background.'
     })) {
       const meta = page.locator('head meta[property="' + property + '"]');
       assert.equal(await meta.count(), 1);
@@ -56,7 +56,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       await banner.decode();
       return [banner.naturalWidth, banner.naturalHeight];
     });
-    assert.deepEqual(bannerDimensions, [600,315]);
+    assert.deepEqual(bannerDimensions, [1200,630]);
     const sitemap = await page.request.get('http://127.0.0.1:' + server.address().port + '/sitemap.xml');
     assert.ok(sitemap.ok());
     assert.ok((await sitemap.text()).includes('<loc>https://namthedev.github.io/profile/</loc>'));
