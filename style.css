@@ -35,7 +35,7 @@ em { color: var(--accent); }
   width: 44px; min-height: 44px; place-items: center;
 }
 .icon-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-.header-links { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.header-links { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x pinch-zoom; scrollbar-width: none; }
 .header-links::-webkit-scrollbar { display: none; }
 .header-links.marquee-overflow { mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent); }
 .marquee-track { width: max-content; }
