@@ -87,37 +87,67 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.site-brand').evaluate(e=>e.tagName),'DIV');
     assert.equal(await page.locator('.site-brand a, a.site-brand').count(),0);
-    assert.equal(await page.locator('.marquee-group').count(),2);
     const ticker = page.locator('.header-links');
-    const tickerLinks = ticker.locator('.marquee-group:not([aria-hidden]) a');
-    assert.equal(await tickerLinks.count(), 12);
+    const original = ticker.locator('.marquee-group:not([aria-hidden])');
+    const tickerLinks = original.locator('a');
+    assert.equal(await tickerLinks.count(),12);
     for (const link of await tickerLinks.all()) {
-      assert.equal(await link.evaluate(e=>e.childNodes.length === 1 && e.firstChild.nodeType === Node.TEXT_NODE && e.textContent.includes(' - ')), true);
-      assert.equal(await link.evaluate(e=>getComputedStyle(e).display.includes('flex')), false);
+      assert.equal(await link.evaluate(e=>e.childNodes.length===1 && e.firstChild.nodeType===Node.TEXT_NODE && e.textContent.includes(' - ')),true);
+      assert.equal(await link.evaluate(e=>getComputedStyle(e).display.includes('flex')),false);
     }
-    assert.equal(await ticker.evaluate(e=>getComputedStyle(e).overflowX),'auto');
-    assert.equal(await ticker.evaluate(e=>getComputedStyle(e).scrollbarWidth),'none');
-    await page.mouse.move(10, 300);
-    await ticker.evaluate(e=>{ document.activeElement?.blur(); e.scrollLeft=0; });
-    await page.waitForFunction(()=>document.querySelector('.header-links').scrollLeft>0);
-    assert.equal(await ticker.evaluate(e=>getComputedStyle(e).overflowY),'hidden');
+    for (const width of [1440,1920,2560,390]) {
+      await page.setViewportSize({width,height:900});
+      await page.mouse.move(0,899);
+      await page.waitForFunction(()=>{
+        const n=document.querySelector('.header-links'), w=n.querySelector('.marquee-group:not([aria-hidden])').getBoundingClientRect().width;
+        return n.scrollWidth-n.clientWidth>=2*w-2;
+      });
+      const geometry=await ticker.evaluate(n=>{
+        const g=n.querySelector('.marquee-group:not([aria-hidden])'), items=[...g.children];
+        return {gap:Math.min(...items.slice(1).map((item,i)=>item.getBoundingClientRect().left-items[i].getBoundingClientRect().right)),
+          padding:parseFloat(getComputedStyle(g).paddingRight), clipped:n.getBoundingClientRect().right<=innerWidth,
+          overflowX:getComputedStyle(n).overflowX, overflowY:getComputedStyle(n).overflowY, scrollbar:getComputedStyle(n).scrollbarWidth};
+      });
+      assert.ok(geometry.gap>=8 && geometry.padding>=8 && geometry.clipped);
+      assert.equal(geometry.overflowX,'auto');
+      assert.equal(geometry.overflowY,'hidden');
+      assert.equal(geometry.scrollbar,'none');
+      const before=await ticker.evaluate(n=>({x:n.scrollLeft,w:n.querySelector('.marquee-group:not([aria-hidden])').getBoundingClientRect().width}));
+      await page.waitForFunction(({x,w})=>((document.querySelector('.header-links').scrollLeft-x)%w+w)%w>12,before,{timeout:4000});
+    }
+    await page.setViewportSize({width:1440,height:900});
     await ticker.hover();
-    const hoverPosition = await ticker.evaluate(e=>e.scrollLeft);
-    const pagePosition = await page.evaluate(()=>window.scrollY);
-    await page.mouse.wheel(0, 240);
+    const cycle=await ticker.evaluate(n=>n.querySelector('.marquee-group:not([aria-hidden])').getBoundingClientRect().width);
+    await ticker.evaluate((n,w)=>{n.scrollLeft=w+12;},cycle);
+    const initial=await ticker.evaluate(n=>n.scrollLeft);
+    const pagePosition=await page.evaluate(()=>window.scrollY);
+    await page.mouse.wheel(0,240);
     await page.waitForTimeout(150);
-    assert.equal(await ticker.evaluate(e=>e.scrollLeft),hoverPosition);
+    assert.equal(await ticker.evaluate(n=>n.scrollLeft),initial);
     assert.equal(await page.evaluate(()=>window.scrollY),pagePosition);
-    await page.waitForTimeout(5100);
-    assert.equal(await ticker.evaluate(e=>e.scrollLeft),hoverPosition);
-    await page.mouse.wheel(240, 0);
-    await page.waitForTimeout(100);
-    const manualPosition = await ticker.evaluate(e=>e.scrollLeft);
-    assert.ok(manualPosition > hoverPosition + 100);
+    for(const delta of [-40,Math.round(cycle*3+75),-Math.round(cycle*4+100),120]){
+      const before=await ticker.evaluate(n=>n.scrollLeft);
+      await page.mouse.wheel(delta,0);
+      await page.waitForFunction(({before,delta,w})=>{
+        const n=document.querySelector('.header-links'), mod=x=>((x%w)+w)%w;
+        return Math.min(mod(n.scrollLeft-before-delta),mod(before+delta-n.scrollLeft))<3 &&
+          n.scrollLeft>=w-2 && n.scrollLeft<2*w+2;
+      },{before,delta,w:cycle});
+      assert.ok(Math.abs(await ticker.evaluate(n=>n.scrollLeft)-before)>5);
+    }
+    const held=await ticker.evaluate(n=>n.scrollLeft);
     await page.waitForTimeout(300);
-    assert.equal(await ticker.evaluate(e=>e.scrollLeft),manualPosition);
-    await page.mouse.move(10, 300);
-    await page.waitForFunction(position=>document.querySelector('.header-links').scrollLeft>position, manualPosition, {timeout:1000});
+    assert.equal(await ticker.evaluate(n=>n.scrollLeft),held);
+    for(const side of ['start','end']){
+      await ticker.evaluate((n,s)=>{n.scrollLeft=s==='start'?0:n.scrollWidth-n.clientWidth;},side);
+      await page.waitForFunction(w=>{
+        const x=document.querySelector('.header-links').scrollLeft;
+        return x>=w-2 && x<2*w+2;
+      },cycle);
+    }
+    await page.mouse.move(0,899);
+    const resumed=await ticker.evaluate(n=>n.scrollLeft);
+    await page.waitForFunction(({x,w})=>((document.querySelector('.header-links').scrollLeft-x)%w+w)%w>12,{x:resumed,w:cycle},{timeout:3000});
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
     await page.route('https://bandcamp.com/EmbeddedPlayer/**',route=>route.fulfill({contentType:'text/html',body:'<html><body>Bandcamp player test fixture</body></html>'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
@@ -225,10 +255,14 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     await page.emulateMedia({reducedMotion:'reduce'});
-    await ticker.evaluate(e=>{e.scrollLeft=0;});
     await page.waitForTimeout(100);
-    assert.equal(await ticker.evaluate(e=>e.scrollLeft),0);
-    assert.equal(await page.locator('.marquee-group[aria-hidden="true"]').isVisible(),false);
+    const still=await ticker.evaluate(n=>n.scrollLeft);
+    await page.waitForTimeout(250);
+    assert.equal(await ticker.evaluate(n=>n.scrollLeft),still);
+    await ticker.hover();
+    await page.mouse.wheel(-70,0);
+    await page.waitForFunction(x=>Math.abs(document.querySelector('.header-links').scrollLeft-x)>10,still);
+    assert.equal(await ticker.locator('.marquee-group[aria-hidden="true"] a:not([tabindex="-1"])').count(),0);
   } finally {
     await browser?.close();
     await new Promise(resolve=>server.close(resolve));

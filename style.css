@@ -35,12 +35,12 @@ em { color: var(--accent); }
   width: 44px; min-height: 44px; place-items: center;
 }
 .icon-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-.header-links { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x pinch-zoom; scrollbar-width: none; }
-.header-links::-webkit-scrollbar { display: none; }
-.header-links.marquee-overflow { mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent); }
-.marquee-track { width: max-content; }
-.marquee-group { gap: .8rem; padding-right: .8rem; }
-.marquee-enabled:not(.marquee-overflow) .marquee-group[aria-hidden="true"] { display: none; }
+/* Only ticker geometry and scrolling behavior require local CSS. */
+.header-links {flex:1 1 0; overscroll-behavior-x:contain; touch-action:pan-x pinch-zoom; scrollbar-width:none; scroll-behavior:auto;}
+.header-links::-webkit-scrollbar {display:none;}
+.marquee-track, .marquee-group {width:max-content;}
+.header-links.marquee-overflow {mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent);}
+
 .quick-links-label { letter-spacing: .04em; }
 
 /* Article with left navigation and a right contents rail. */
@@ -93,7 +93,6 @@ em { color: var(--accent); }
 @media (max-width: 760px) {
   :root { --header-height: 52px; --font-size: 1rem; }
   .mobile-only { display: inline-grid; }
-  .marquee-group { gap: .7rem; padding-right: .7rem; }
   .brand-name { font-size: 1.08rem; }
   .page-shell { display: block; }
   .sidebar {
@@ -111,8 +110,7 @@ em { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
-  .header-links.marquee-enabled { mask-image: none; }
-  .marquee-group[aria-hidden="true"] { display: none !important; }
+  .header-links.marquee-overflow { mask-image: none; }
 }
 
 /* Repository library: adapt to the article width, not the full viewport. */

@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v51";
+const CACHE = CACHE_PREFIX + "v52";
 const CORE = [
   "./",
   "index.html",
@@ -9,6 +9,7 @@ const CORE = [
   "style.css",
   "script.js",
   "js/projects.js",
+  "js/marquee.js",
   "data/catalogue.json",
   "manifest.json",
   "pages/ABOUT.md",
