@@ -2,7 +2,7 @@ const state = { pages: [], current: null, text: new Map(), observer: null, loadV
 const $ = (selector) => document.querySelector(selector);
 const els = {
   article: $("#article"), nav: $("#page-nav"), toc: $("#toc"),
-  filter: $("#page-filter"), menu: $("#menu-toggle"),
+  menu: $("#menu-toggle"),
   sidebar: $("#sidebar"), backdrop: $("#sidebar-backdrop")
 };
 
@@ -40,20 +40,9 @@ function bindNavigation(link, next, hash = "") {
     navigate(next, hash);
   });
 }
-function renderNav(query = "") {
-  const needle = query.trim().toLowerCase();
-  const pages = state.pages.filter((page) =>
-    !needle || (page.title + " " + (page.description || "")).toLowerCase().includes(needle)
-  );
+function renderNav() {
   els.nav.replaceChildren();
-  if (!pages.length) {
-    const empty = document.createElement("p");
-    empty.className = "fg-3 fs-xs my-2 mx-3";
-    empty.textContent = "No matching pages.";
-    els.nav.append(empty);
-    return;
-  }
-  for (const page of pages) {
+  for (const page of state.pages) {
     const link = document.createElement("a");
     link.href = "?page=" + encodeURIComponent(page.slug);
     link.className = "page-link d-block" + (page.slug === state.current ? " active" : "");
@@ -202,7 +191,7 @@ async function loadPage(next) {
   if (!page) return;
   const version = ++state.loadVersion;
   state.current = page.slug;
-  renderNav(els.filter.value);
+  renderNav();
   if (state.observer) state.observer.disconnect();
   els.article.innerHTML = '<p class="fg-3 fs-xs my-3">Loading…</p>';
   try {
@@ -260,10 +249,9 @@ function wireEvents() {
     els.sidebar.classList.toggle("open", open);
     els.backdrop.hidden = !open;
     els.menu.ariaExpanded = String(open);
-    if (open) requestAnimationFrame(() => els.filter.focus());
+    if (open) requestAnimationFrame(() => (els.nav.querySelector('[aria-current="page"]') || els.nav.querySelector("a"))?.focus());
   });
   els.backdrop.addEventListener("click", closeMenu);
-  els.filter.addEventListener("input", () => renderNav(els.filter.value));
   addEventListener("popstate", () => {
   const next = slug();
   if (next !== state.current) void loadPage(next);

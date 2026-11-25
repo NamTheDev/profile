@@ -52,15 +52,6 @@ em { color: var(--accent); }
   position: sticky; top: calc(var(--header-height) + 1rem);
   max-height: calc(100vh - var(--header-height) - 2rem);
 }
-.page-filter {
-  --bs-control-min-height: 34px;
-  --bs-control-padding-y: .4rem;
-  --bs-control-padding-x: .5rem;
-  --bs-control-font-size: .8rem;
-  --bs-control-bg: var(--base);
-  --bs-control-border-color: var(--surface-1);
-  margin-bottom: .65rem;
-}
 .page-link { border-left: 2px solid transparent; color: var(--subtext-1); line-height: 1.35; padding: .5rem .625rem; font-size: .875rem; }
 .page-link:hover, .page-link:focus-visible, .page-link.active { background: var(--mantle); color: var(--text); text-decoration: none; }
 .page-link.active { border-left-color: var(--accent); color: var(--text); font-weight: 600; }
