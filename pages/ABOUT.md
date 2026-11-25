@@ -4,8 +4,6 @@ Nam (also known as namchill235 and NamTheDev) works in music, visual arts and so
 
 > *"Hello, welcome to my very simple & minimal self-documentation site, inspired by Wikipedia. Most of the projects I work on are recorded here, so feel free to explore my small personal world."*
 
-> *"A random guy who loves music and art."*
-
 ## Elsewhere
 
 - [Bandcamp — namchill235](https://namchill235.bandcamp.com)
