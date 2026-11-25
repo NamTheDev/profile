@@ -18,3 +18,7 @@ A small, Markdown-driven personal archive with an encyclopedia-style reading int
 ## License
 
 Original project material is licensed under the [MIT License](LICENSE). Bootstrap retains its [upstream license](LICENSE.bootstrap); shared palette notices are included in config.css.
+
+## Project catalogue
+
+Individual project articles live under `pages/projects/`. Their order is defined in `manifest.json`. The Refresh project catalogue GitHub Actions workflow fetches public repository metadata and recent YouTube uploads daily. Set the repository Actions secret `YOUTUBE_API_KEY` to enable full YouTube upload pagination and channel statistics. See [design documentation](docs/DESIGN.md).
