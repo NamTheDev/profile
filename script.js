@@ -202,11 +202,7 @@ const PROJECT_EMBEDS = [
   { section: "ashes", type: "youtube", title: "Ashes — YouTube uploads",
     playlist: "UU9aLhqg5hrEtU8m1ozH2eiQ" },
   { section: "music", type: "youtube", title: "Nam — music channel uploads",
-    playlist: "UUjO88kU2XujBoNmaB9dsVCA" },
-  { section: "keep", type: "app", title: "keep — interactive preview",
-    url: "https://namthedev.github.io/keep/" },
-  { section: "clipboard", type: "app", title: "clipboard — interactive preview",
-    url: "https://namthedev.github.io/clipboard/" }
+    playlist: "UUjO88kU2XujBoNmaB9dsVCA" }
 ];
 function projectEmbedSource(embed) {
   if (embed.type === "youtube" && /^UU[\w-]{22}$/.test(embed.playlist || "")) {
@@ -215,9 +211,6 @@ function projectEmbedSource(embed) {
   if (embed.type === "bandcamp" && /^(album|track)=\d+$/.test(embed.release || "")) {
     return "https://bandcamp.com/EmbeddedPlayer/" + embed.release +
       "/size=large/bgcol=333333/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/";
-  }
-  if (embed.type === "app" && ["https://namthedev.github.io/keep/", "https://namthedev.github.io/clipboard/"].includes(embed.url)) {
-    return embed.url;
   }
   return null;
 }
@@ -234,7 +227,7 @@ function renderProjectEmbeds() {
     frame.src = src;
     frame.title = embed.title;
     frame.className = "d-block w-100 border-0 my-4" +
-      (embed.type === "youtube" ? " ratio-16x9" : embed.type === "app" ? " ratio-4x3" : "");
+      (embed.type === "youtube" ? " ratio-16x9" : "");
     frame.loading = "lazy";
     frame.referrerPolicy = "strict-origin-when-cross-origin";
     if (embed.type === "bandcamp") frame.height = "120";
@@ -242,7 +235,6 @@ function renderProjectEmbeds() {
       frame.allow = "encrypted-media; picture-in-picture; fullscreen";
       frame.allowFullscreen = true;
     }
-    if (embed.type === "app") frame.allow = "clipboard-read; clipboard-write";
     last.after(frame);
   }
 }

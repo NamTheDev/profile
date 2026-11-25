@@ -39,12 +39,10 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.marquee-group').count(),2);
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
-    await page.route('https://namthedev.github.io/keep/', route => route.fulfill({body:'<html>Keep preview</html>', contentType:'text/html'}));
-    await page.route('https://namthedev.github.io/clipboard/', route => route.fulfill({body:'<html>Clipboard preview</html>', contentType:'text/html'}));
     await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({body:'<html>YouTube player</html>', contentType:'text/html'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
-    assert.equal(await page.locator('#article > iframe').count(), 5);
+    assert.equal(await page.locator('#article > iframe').count(), 3);
     for (const [section, playlist] of [["youtube","UUuBqPJLikRQ5ILmeGfouvGA"],["ashes","UU9aLhqg5hrEtU8m1ozH2eiQ"],["music","UUjO88kU2XujBoNmaB9dsVCA"]]) {
       const frame = page.locator('#article > iframe[src="https://www.youtube-nocookie.com/embed/videoseries?list=' + playlist + '"]');
       assert.equal(await frame.count(), 1);
@@ -65,9 +63,8 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#article a[href="https://www.facebook.com/namrythmical"]').count(), 1);
     for (const name of ['keep', 'clipboard']) {
       const frame = page.locator('#article > iframe[src="https://namthedev.github.io/' + name + '/"]');
-      assert.equal(await frame.count(), 1);
-      assert.equal(await frame.evaluate(e=>e.classList.contains('ratio-4x3')), true);
-      assert.equal(await frame.getAttribute('loading'), 'lazy');
+      assert.equal(await frame.count(), 0);
+      assert.equal(await page.locator('#article a[href="https://namthedev.github.io/' + name + '/"]').count(), 1);
     }
     const sections = page.locator('#toc > ul > li');
     assert.equal(await sections.count(), 3);
