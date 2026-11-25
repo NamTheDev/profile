@@ -1,24 +1,20 @@
 # Projects
 
-Nam (also known as namchill235 and NamTheDev) works on projects in music, photography, audiovisual media and software development. The following overview includes ongoing creative work, software applications and earlier projects retained for archival purposes.
+Nam (also known as namchill235 and NamTheDev) works on projects in music, photography, audiovisual media and software development.
 
 ## Creative works
 
 ### Ashes
 
-Ashes is an audiovisual project by Nam and Unecap documenting liminal spaces and exploring realistic horror. Its footage is recorded in real locations by real people. The project states:
+Ashes is an audiovisual project by Nam and Unecap documenting liminal spaces and exploring realistic horror. Its footage is recorded in real locations by real people and published on [YouTube (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages).
 
 > *"We officially do NOT tolerate AI use in our content."*
 
-Videos are published on the [Ashes YouTube channel (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages).
-
 ### Music
 
-Nam's compositions explore experimental music and fusion. Rather than working within a single genre, he draws on music and other experiences that have influenced him. He describes his approach as follows:
+Nam's compositions explore experimental music and fusion. His recordings are available on [Bandcamp](https://namchill235.bandcamp.com) and [YouTube (@namrhythmical)](https://www.youtube.com/@namrhythmical).
 
 > *"I experiment with music. My music isn't defined, it's a mixture of a lot of things I have consumed, experienced, and as well as putting out from within."*
-
-His recordings are available on [Bandcamp](https://namchill235.bandcamp.com) and [YouTube (@namrhythmical)](https://www.youtube.com/@namrhythmical).
 
 ### Photography
 

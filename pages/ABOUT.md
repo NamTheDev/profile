@@ -1,20 +1,12 @@
 # Introduction
 
-This website is Nam's personal documentation archive, inspired by Wikipedia. An overview of his creative and technical work is available in [Projects](PROJECTS.md).
-
-Nam introduces the site in his own words:
+Nam (also known as namchill235 and NamTheDev) works in music, visual arts and software development. This website documents his [projects](PROJECTS.md).
 
 > *"Hello, welcome to my very simple & minimal self-documentation site, inspired by Wikipedia. Most of the projects I work on are recorded here, so feel free to explore my small personal world."*
->
-> *"Please check out my projects in [Projects](PROJECTS.md)."*
-
-## Elsewhere
-
-Nam describes himself as:
 
 > *"A random guy who loves music and art."*
 
-His work and profiles can be found on the following platforms:
+## Elsewhere
 
 - [Bandcamp — namchill235](https://namchill235.bandcamp.com)
 - [YouTube — Ashes (@smertelnyyfootages)](https://www.youtube.com/@smertelnyyfootages)
