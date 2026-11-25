@@ -45,6 +45,11 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.locator('#article .card').first().waitFor();
     assert.equal(await page.locator('#article iframe').count(), 0);
     assert.equal(await page.locator('#article .card').count(), 10);
+    for (const card of await page.locator('#article .card').all()) {
+      assert.equal(await card.evaluate(e=>e.classList.contains('w-fit')), true);
+      assert.equal(await card.evaluate(e=>getComputedStyle(e).backgroundColor), 'rgb(24, 24, 37)');
+      assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width < e.parentElement.clientWidth), true);
+    }
     assert.equal(await page.locator('#article a[href="https://github.com/NamTheDev/keep/stargazers"]').count(), 1);
     const previews = page.locator('#article .card a > img[src^="https://opengraph.githubassets.com/1/NamTheDev/"]');
     assert.equal(await previews.count(), 10);
@@ -94,6 +99,10 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(new URL(page.url()).hash, '#keep');
     assert.equal(await page.locator('#article h3#keep').count(), 1);
     await page.setViewportSize({width:390,height:844});
+    for (const card of await page.locator('#article .card').all()) {
+      assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth + 1), true);
+      assert.equal(await card.evaluate(e=>e.scrollWidth <= e.clientWidth + 1), true);
+    }
     const mobileContents = page.locator('.mobile-contents');
     assert.equal(await page.locator('#toc').isVisible(), false);
     await mobileContents.locator(':scope > summary').click();

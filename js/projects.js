@@ -22,8 +22,8 @@
     last.after(node);
   }
   function card() {
-    const outer = element("div", "card rounded-6 my-4");
-    const body = element("div", "card-body d-flex flex-column gap-3");
+    const outer = element("div", "card w-fit max-w-100 bg-1 rounded-6 my-4");
+    const body = element("div", "card-body min-w-0 d-flex flex-column gap-3");
     outer.append(body);
     return [outer, body];
   }
@@ -31,10 +31,10 @@
     const [outer, body] = card();
     const url = "https://github.com/NamTheDev/" + repo.name;
     const title = element("div", "d-flex flex-wrap align-items-center gap-3");
-    title.append(link(url, "NamTheDev/" + repo.name, "fw-semibold text-decoration-none"));
+    title.append(link(url, "NamTheDev/" + repo.name, "fw-semibold text-decoration-none text-break"));
     if (repo.archived) title.append(element("span", "badge theme-secondary", "Archived"));
     body.append(title);
-    const preview = link(url, null, "d-block align-self-start");
+    const preview = link(url, null, "d-block align-self-start max-w-100");
     const image = element("img", "img-fluid rounded-3 d-block");
     image.src = "https://opengraph.githubassets.com/1/NamTheDev/" + repo.name;
     image.alt = repo.name + " — GitHub repository preview";
