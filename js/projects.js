@@ -60,7 +60,7 @@
     const videos=(channel.videos || []).filter(video=>validVideo(video.id));
     if (videos.length) {
       const list=element("div","d-flex flex-column gap-3");
-      list.append(element("p","fw-semibold mb-0","Uploads ("+videos.length+" listed)"));
+      list.append(element("p","fw-semibold mb-0",(channel.section === "music" ? "YouTube uploads" : "Uploads")+" ("+videos.length+" listed)"));
       for (const video of videos) {
         const row=link("https://www.youtube.com/watch?v="+video.id,null,"d-flex align-items-start gap-3 text-decoration-none border-bottom pb-3");
         const image=element("img","img-fluid rounded-3 flex-shrink-0"); image.src="https://i.ytimg.com/vi/"+video.id+"/mqdefault.jpg"; image.alt=""; image.width=120; image.height=68; image.loading="lazy";
@@ -75,6 +75,64 @@
     }
     return group;
   }
+  const bandcampHome = "https://namchill235.bandcamp.com/";
+  function safeReleaseUrl(value) {
+    try {
+      const url = new URL(value);
+      return url.origin === new URL(bandcampHome).origin && /^\/(album|track)\/[^/]+\/?$/.test(url.pathname) && !url.username && !url.password ? url.href : null;
+    } catch { return null; }
+  }
+  function safeArtwork(value) {
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && /^(?:[a-z0-9-]+\.)*bcbits\.com$/i.test(url.hostname) && !url.username && !url.password ? url.href : null;
+    } catch { return null; }
+  }
+  function bandcampReleases(data) {
+    const group = element("section", "my-4");
+    group.setAttribute("aria-label", "Bandcamp releases");
+    const releases = Array.isArray(data?.releases) ? data.releases : [];
+    const seen = new Set();
+    const items = releases.filter(r => r && typeof r.title === "string" && r.title.trim() && safeReleaseUrl(r.url))
+      .map(r => ({...r, url:safeReleaseUrl(r.url)}))
+      .sort((a,b) => String(b.released || "").localeCompare(String(a.released || "")))
+      .filter(r => { if(seen.has(r.url)) return false; seen.add(r.url); return true; });
+    group.append(element("p","fw-semibold mb-3","Bandcamp releases"));
+    const list = element("div","d-flex flex-column gap-3");
+    for (const release of items) {
+      const row = link(release.url,null,"d-flex align-items-center gap-3 text-decoration-none");
+      const art = safeArtwork(release.artwork);
+      if (art) {
+        const image = element("img","img-fluid rounded-3 flex-shrink-0");
+        image.src = art; image.alt = ""; image.width = 76; image.height = 76; image.loading = "lazy";
+        row.append(image);
+      }
+      const details = element("div","min-w-0 d-flex flex-column gap-1");
+      details.append(element("span","fw-medium text-break",release.title));
+      const type = ["Album","EP","Single"].includes(release.type) ? release.type : "";
+      const date = /^\d{4}-\d{2}-\d{2}$/.test(release.released || "") ? release.released : "";
+      const metadata = [type,date].filter(Boolean).join(" · ");
+      if (metadata) details.append(element("span","fg-3 fs-xs",metadata));
+      row.append(details); list.append(row);
+    }
+    group.append(list,link(bandcampHome+"music","View all releases on Bandcamp","d-inline-block mt-3 fs-sm"));
+    return group;
+  }
+  async function readBandcamp() {
+    const read = async (url, options) => {
+      const response = await fetch(url,options);
+      if (!response.ok) throw Error("Bandcamp catalogue "+response.status);
+      const data = await response.json();
+      if (!Array.isArray(data.releases)) throw Error("Invalid Bandcamp catalogue");
+      return data;
+    };
+    try {
+      return await read("https://raw.githubusercontent.com/NamTheDev/profile/main/data/bandcamp.json",{cache:"no-cache",signal:AbortSignal.timeout(4000)});
+    } catch {
+      try { return await read("data/bandcamp.json"); }
+      catch { return {releases:[]}; }
+    }
+  }
   async function readCatalogue() {
     const local=await fetch("data/catalogue.json").then(r=>{if(!r.ok)throw Error("Catalogue "+r.status);return r.json()});
     try {
@@ -87,7 +145,9 @@
     const marker=document.createComment("project catalogue");
     article.append(marker);
     try {
-      const data=await readCatalogue();
+      const bandcamp = readBandcamp().then(data => { if (article.contains(marker)) afterSection(article,"music",bandcampReleases(data)); });
+      const data=await readCatalogue().catch(error => { console.warn("Project catalogue unavailable",error); return {repositories:[],channels:[]}; });
+      await bandcamp;
       if (!article.contains(marker)) return;
       for (const repo of data.repositories || []) if(validRepo(repo.name)) afterSection(article,repo.name.toLowerCase(),repoCard(repo));
       for (const channel of data.channels || []) if(validChannel(channel.id)&&/^[a-z-]+$/.test(channel.section)) afterSection(article,channel.section,channelUploads(channel));
