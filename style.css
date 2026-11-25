@@ -125,20 +125,15 @@ em { color: var(--accent); }
 /* Repository library: adapt to the article width, not the full viewport. */
 .repository-library { container-type: inline-size; }
 .repository-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 15rem));
-  justify-content: start;
-  align-items: start;
+  display: grid; grid-template-columns: minmax(0, 1fr);
 }
-.repository-card {
-  --bs-card-spacer-x: calc(var(--bs-spacer-6) * .7);
-  --bs-card-spacer-y: calc(var(--bs-spacer-6) * .7);
-  scroll-margin-top: calc(var(--header-height) + 1rem);
-  font-size: .875rem;
+@container (min-width: 40rem) {
+  .repository-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.repository-card .gap-3 { gap: .35rem; }
-.repository-card .gap-4 { gap: .525rem; }
-.repository-card .fs-sm { font-size: .8rem; }
+@container (min-width: 60rem) {
+  .repository-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.repository-card { scroll-margin-top: calc(var(--header-height) + 1rem); }
 .repository-card .repo-preview { width: 100%; }
 .repository-card .repo-preview img { width: 100%; height: auto; }
 .repository-archive-badge {
