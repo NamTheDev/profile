@@ -1,0 +1,31 @@
+{
+  "channels": [
+    {
+      "section": "youtube",
+      "label": "Main YouTube channel",
+      "id": "UCuBqPJLikRQ5ILmeGfouvGA"
+    },
+    {
+      "section": "ashes",
+      "label": "Ashes",
+      "id": "UC9aLhqg5hrEtU8m1ozH2eiQ"
+    },
+    {
+      "section": "music",
+      "label": "Music channel",
+      "id": "UCjO88kU2XujBoNmaB9dsVCA"
+    }
+  ],
+  "repositories": [
+    "profile",
+    "MeditorD",
+    "MCP-Server",
+    "keep",
+    "clipboard",
+    "util",
+    "Green",
+    "FEARLESS",
+    "FARTLESS",
+    "Flow"
+  ]
+}

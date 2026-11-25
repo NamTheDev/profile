@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v24";
+const CACHE = CACHE_PREFIX + "v25";
 const CORE = [
   "./",
   "index.html",
@@ -7,6 +7,8 @@ const CORE = [
   "config.css",
   "style.css",
   "script.js",
+  "js/projects.js",
+  "data/catalogue.json",
   "manifest.json",
   "pages/ABOUT.md",
   "pages/PROJECTS.md"
@@ -35,9 +37,17 @@ function isCacheable(request, response) {
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
-    const results = await Promise.allSettled(CORE.map((url) => cache.add(url)));
+    let files = [...CORE];
+    try {
+      const response = await fetch("manifest.json", {cache:"no-cache"});
+      if (response.ok) {
+        const pages = await response.json();
+        files = [...new Set([...files, ...pages.flatMap(page => [page.file, ...(page.parts || [])])])];
+      }
+    } catch {}
+    const results = await Promise.allSettled(files.map((url) => cache.add(url)));
     results.forEach((r, i) => {
-      if (r.status === "rejected") console.warn("[sw] failed to precache", CORE[i], r.reason);
+      if (r.status === "rejected") console.warn("[sw] failed to precache", files[i], r.reason);
     });
     await self.skipWaiting();
   })());

@@ -9,6 +9,25 @@
     "slug": "projects",
     "title": "Projects",
     "file": "pages/PROJECTS.md",
-    "description": "Projects and repositories."
+    "description": "Projects and repositories.",
+    "parts": [
+      "pages/projects/creative-works/index.md",
+      "pages/projects/creative-works/youtube.md",
+      "pages/projects/creative-works/ashes.md",
+      "pages/projects/creative-works/music.md",
+      "pages/projects/creative-works/photography.md",
+      "pages/projects/software/index.md",
+      "pages/projects/software/profile.md",
+      "pages/projects/software/meditord.md",
+      "pages/projects/software/mcp-server.md",
+      "pages/projects/software/keep.md",
+      "pages/projects/software/clipboard.md",
+      "pages/projects/software/util.md",
+      "pages/projects/archived-projects/index.md",
+      "pages/projects/archived-projects/green.md",
+      "pages/projects/archived-projects/fearless.md",
+      "pages/projects/archived-projects/fartless.md",
+      "pages/projects/archived-projects/flow.md"
+    ]
   }
 ]

@@ -165,18 +165,21 @@ function bindLinks() {
     });
   });
 }
-async function pageText(page) {
-  if (state.text.has(page.file)) return state.text.get(page.file);
-  const response = await fetch(page.file);
+async function markdownText(file) {
+  if (state.text.has(file)) return state.text.get(file);
+  const response = await fetch(file);
   if (!response.ok) throw new Error("HTTP " + response.status);
   const ct = (response.headers.get("content-type") || "").toLowerCase();
   if (ct.includes("text/html")) {
     const body = await response.clone().text();
-    throw new Error(`Server returned HTML instead of markdown for "${page.file}". Body starts: ${body.slice(0, 80)}`);
+    throw new Error(`Server returned HTML instead of markdown for "${file}". Body starts: ${body.slice(0, 80)}`);
   }
   const text = await response.text();
-  state.text.set(page.file, text);
+  state.text.set(file, text);
   return text;
+}
+async function pageText(page) {
+  return (await Promise.all([page.file, ...(page.parts || [])].map(markdownText))).join("\n\n");
 }
 async function loadManifest() {
   const response = await fetch("manifest.json", { cache: "no-cache" });
@@ -195,50 +198,6 @@ function prefetchPages() {
   };
   "requestIdleCallback" in window ? requestIdleCallback(run) : setTimeout(run, 250);
 }
-/* Only explicitly configured, trusted project embeds. Markdown remains sanitized. */
-const PROJECT_EMBEDS = [
-  { section: "youtube", type: "youtube", title: "Nam — main YouTube channel uploads",
-    playlist: "UUuBqPJLikRQ5ILmeGfouvGA" },
-  { section: "ashes", type: "youtube", title: "Ashes — YouTube uploads",
-    playlist: "UU9aLhqg5hrEtU8m1ozH2eiQ" },
-  { section: "music", type: "youtube", title: "Nam — music channel uploads",
-    playlist: "UUjO88kU2XujBoNmaB9dsVCA" }
-];
-function projectEmbedSource(embed) {
-  if (embed.type === "youtube" && /^UU[\w-]{22}$/.test(embed.playlist || "")) {
-    return "https://www.youtube-nocookie.com/embed/videoseries?list=" + embed.playlist;
-  }
-  if (embed.type === "bandcamp" && /^(album|track)=\d+$/.test(embed.release || "")) {
-    return "https://bandcamp.com/EmbeddedPlayer/" + embed.release +
-      "/size=large/bgcol=333333/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/";
-  }
-  return null;
-}
-function renderProjectEmbeds() {
-  for (const embed of PROJECT_EMBEDS) {
-    const heading = document.getElementById(embed.section);
-    const src = projectEmbedSource(embed);
-    if (!heading || !els.article.contains(heading) || !src) continue;
-    let last = heading;
-    while (last.nextElementSibling && !/^H[1-3]$/.test(last.nextElementSibling.tagName)) {
-      last = last.nextElementSibling;
-    }
-    const frame = document.createElement("iframe");
-    frame.src = src;
-    frame.title = embed.title;
-    frame.className = "d-block w-100 border-0 my-4" +
-      (embed.type === "youtube" ? " ratio-16x9" : "");
-    frame.loading = "lazy";
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    if (embed.type === "bandcamp") frame.height = "120";
-    if (embed.type === "youtube") {
-      frame.allow = "encrypted-media; picture-in-picture; fullscreen";
-      frame.allowFullscreen = true;
-    }
-    last.after(frame);
-  }
-}
-
 async function loadPage(next) {
   const page = state.pages.find((item) => item.slug === next) || state.pages[0];
   if (!page) return;
@@ -255,7 +214,8 @@ async function loadPage(next) {
     els.article.querySelectorAll("img").forEach(image => image.classList.add("img-fluid"));
     els.article.querySelectorAll("table").forEach(table => table.classList.add("table", "table-bordered", "fs-sm"));
     headingIds();
-    if (page.slug === "projects") renderProjectEmbeds();
+    if (page.slug === "projects") await renderProjectCatalogue(els.article);
+    if (version !== state.loadVersion) return;
     renderToc();
     bindLinks();
     document.title = page.title + " — Nam";
