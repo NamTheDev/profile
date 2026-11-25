@@ -125,7 +125,7 @@
       list.append(element("p","fw-semibold mb-0",(channel.section === "music" ? "YouTube uploads" : "Uploads")+" ("+videos.length+" listed)"));
       for (const video of videos) {
         const row=link("https://www.youtube.com/watch?v="+video.id,null,"d-flex align-items-start gap-3 text-decoration-none border-bottom pb-3");
-        const image=element("img","img-fluid rounded-3 flex-shrink-0"); image.src="https://i.ytimg.com/vi/"+video.id+"/mqdefault.jpg"; image.alt=""; image.width=120; image.height=68; image.loading="lazy";
+        const image=element("img","img-fluid rounded-3 flex-shrink-0"); image.src="https://i.ytimg.com/vi/"+video.id+"/mqdefault.jpg"; image.alt=""; image.width=138; image.height=78; image.loading="lazy";
         const details=element("div","min-w-0 d-flex flex-column gap-1");
         details.append(element("span","fw-medium text-break",video.title || video.id));
         if (video.published) details.append(element("span","fg-3 fs-xs",video.published.slice(0,10)));
