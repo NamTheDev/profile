@@ -75,47 +75,6 @@
     }
     return group;
   }
-  // Only official, release-specific Bandcamp players are allowed.
-  function officialPlayerUrl(value) {
-    try {
-      const url = new URL(value);
-      if (url.origin !== "https://bandcamp.com" || url.username || url.password) return null;
-      const match = url.pathname.match(/^\/EmbeddedPlayer\/(album|track)=(\d+)\//);
-      if (!match || !/^\d{1,15}$/.test(match[2])) return null;
-      // Use Bandcamp's compact 42px player and match the native dark palette.
-      return "https://bandcamp.com/EmbeddedPlayer/" + match[1] + "=" + match[2] + "/size=small/bgcol=333333/linkcol=89b4fa/transparent=true/";
-    } catch { return null; }
-  }
-  function bandcampPlayers(data) {
-    const players = Array.isArray(data?.players) ? data.players : [];
-    const seen = new Set();
-    const group = element("section", "my-4");
-    group.setAttribute("aria-label", "Bandcamp players");
-    group.append(element("p","fw-semibold mb-3","Bandcamp releases"));
-    const list = element("div","d-flex flex-column gap-3");
-    for (const item of players) {
-      const src = officialPlayerUrl(item?.src);
-      if (!src || seen.has(src)) continue;
-      seen.add(src);
-      const frame = element("iframe","d-block w-100 border-0");
-      frame.src = src;
-      frame.height = "42";
-      frame.loading = "lazy";
-      frame.title = typeof item.title === "string" && item.title.trim() ? "Bandcamp — " + item.title : "Bandcamp release player";
-      list.append(frame);
-    }
-    // Do not publish a redundant heading or placeholder when no releases are configured.
-    if (!seen.size) return null;
-    group.append(list,link("https://namchill235.bandcamp.com/music","View all releases on Bandcamp","d-inline-block mt-3 fs-sm"));
-    return group;
-  }
-  async function readBandcamp() {
-    try {
-      const response = await fetch("data/bandcamp.json");
-      if (!response.ok) throw Error("Bandcamp configuration unavailable");
-      return await response.json();
-    } catch { return {players:[]}; }
-  }
   async function readCatalogue() {
     const local=await fetch("data/catalogue.json").then(r=>{if(!r.ok)throw Error("Catalogue "+r.status);return r.json()});
     try {
@@ -128,12 +87,7 @@
     const marker=document.createComment("project catalogue");
     article.append(marker);
     try {
-      const bandcamp = readBandcamp().then(data => {
-        const players = bandcampPlayers(data);
-        if (players && article.contains(marker)) afterSection(article,"music",players);
-      });
-      const data=await readCatalogue().catch(error => { console.warn("Project catalogue unavailable",error); return {repositories:[],channels:[]}; });
-      await bandcamp;
+      const data=await readCatalogue();
       if (!article.contains(marker)) return;
       for (const repo of data.repositories || []) if(validRepo(repo.name)) afterSection(article,repo.name.toLowerCase(),repoCard(repo));
       for (const channel of data.channels || []) if(validChannel(channel.id)&&/^[a-z-]+$/.test(channel.section)) afterSection(article,channel.section,channelUploads(channel));

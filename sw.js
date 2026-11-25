@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v32";
+const CACHE = CACHE_PREFIX + "v33";
 const CORE = [
   "./",
   "index.html",
@@ -9,7 +9,6 @@ const CORE = [
   "script.js",
   "js/projects.js",
   "data/catalogue.json",
-  "data/bandcamp.json",
   "manifest.json",
   "pages/ABOUT.md",
   "pages/PROJECTS.md"
