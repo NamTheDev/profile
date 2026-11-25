@@ -19,6 +19,26 @@ class CatalogueTests(unittest.TestCase):
         with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=feed(entry)):
             self.assertEqual([v["id"] for v in catalogue.channel(SOURCE, PREVIOUS)["videos"]], ["new"])
 
+    def test_prefixless_channel_id(self):
+        data = feed().replace(b"<yt:channelId>UC123", b"<yt:channelId>123")
+        with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=data):
+            self.assertEqual(catalogue.channel(SOURCE, PREVIOUS)["videos"], [])
+
+    def test_atom_id_only(self):
+        data = feed().replace(b"<yt:channelId>UC123</yt:channelId>", b"<id>yt:channel:123</id>")
+        with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=data):
+            self.assertEqual(catalogue.channel(SOURCE, PREVIOUS)["videos"], [])
+
+    def test_self_link_only(self):
+        data = feed().replace(b"<yt:channelId>UC123</yt:channelId>", b'<link rel="self" href="https://www.youtube.com/feeds/videos.xml?channel_id=UC123"/>')
+        with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=data):
+            self.assertEqual(catalogue.channel(SOURCE, PREVIOUS)["videos"], [])
+
+    def test_unrelated_feed_rejected(self):
+        with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=feed().replace(b"UC123", b"UC456")):
+            with self.assertRaises(ValueError):
+                catalogue.channel(SOURCE, PREVIOUS)
+
     def test_valid_empty_feed_clears_uploads(self):
         with patch.object(catalogue, "KEY", ""), patch.object(catalogue, "request", return_value=feed()):
             self.assertEqual(catalogue.channel(SOURCE, PREVIOUS)["videos"], [])

@@ -53,8 +53,24 @@ def channel(source, previous):
                 break
     else:
         feed = ET.fromstring(request("https://www.youtube.com/feeds/videos.xml?" + urllib.parse.urlencode({"channel_id": source["id"]})))
-        if feed.tag != ATOM+"feed" or feed.findtext(YT+"channelId") != source["id"]:
-            raise ValueError("Unexpected YouTube feed")
+        if feed.tag != ATOM+"feed":
+            raise ValueError("Unexpected YouTube feed root")
+        # YouTube may omit the UC prefix from the feed-level ID.
+        # The Atom ID, self URL and individual entries can also identify it.
+        expected = source["id"]
+        def matches(value):
+            return value in (expected, expected.removeprefix("UC"))
+        candidates = [feed.findtext(YT+"channelId")]
+        atom_id = feed.findtext(ATOM+"id") or ""
+        if atom_id.startswith("yt:channel:"):
+            candidates.append(atom_id.removeprefix("yt:channel:"))
+        for link in feed.findall(ATOM+"link"):
+            if link.get("rel") == "self":
+                query = urllib.parse.parse_qs(urllib.parse.urlsplit(link.get("href", "")).query)
+                candidates.extend(query.get("channel_id", []))
+        candidates.extend(entry.findtext(YT+"channelId") for entry in feed.findall(ATOM+"entry"))
+        if not any(matches(value) for value in candidates):
+            raise ValueError("YouTube feed channel identity could not be verified")
         result["title"] = feed.findtext(ATOM+"title") or source["label"]
         for entry in feed.findall(ATOM+"entry"):
             vid = entry.findtext(YT+"videoId")
