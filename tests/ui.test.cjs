@@ -6,7 +6,7 @@ const http = require('node:http');
 const { chromium } = require('playwright');
 
 test('profile preserves its layout, content and ticker using Bootstrap', async () => {
-  const mime = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.md':'text/plain', '.png':'image/png' };
+  const mime = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.md':'text/plain', '.png':'image/png', '.jpg':'image/jpeg', '.xml':'application/xml' };
   const server = http.createServer(async (req,res) => {
     try {
       const pathname = new URL(req.url,'http://localhost').pathname;
@@ -31,6 +31,35 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('head meta[name="color-scheme"]').count(),1);
     assert.equal(await page.locator('head meta[name="color-scheme"]').getAttribute('content'),'dark');
     assert.equal(await page.locator('html').getAttribute('data-bs-theme'),'dark');
+    assert.equal(await page.title(), 'Nam — Personal Archive');
+    assert.equal(await page.locator('head meta[name="description"]').getAttribute('content'), 'A personal archive of Nam.');
+    assert.equal(await page.locator('head meta[name="author"]').getAttribute('content'), 'namchill235');
+    assert.equal(await page.locator('head meta[name="theme-color"]').getAttribute('content'), '#1e1e2e');
+    assert.equal(await page.locator('head link[rel="canonical"]').getAttribute('href'), 'https://namthedev.github.io/profile/');
+    for (const [property, value] of Object.entries({
+      'og:title':'Nam — Personal Archive', 'og:description':'A personal archive of Nam.',
+      'og:type':'profile', 'og:site_name':'Personal Archive', 'og:url':'https://namthedev.github.io/profile/', 'og:locale':'en_US',
+      'og:image':'https://namthedev.github.io/profile/assets/social-preview.jpg', 'og:image:type':'image/jpeg',
+      'og:image:width':'600', 'og:image:height':'315', 'og:image:alt':'Purple stylized Nam wordmark on a dark background.'
+    })) {
+      const meta = page.locator('head meta[property="' + property + '"]');
+      assert.equal(await meta.count(), 1);
+      assert.equal(await meta.getAttribute('content'), value);
+    }
+    assert.equal(await page.locator('head meta[name="twitter:card"]').getAttribute('content'), 'summary_large_image');
+    const structured = JSON.parse(await page.locator('head script[type="application/ld+json"]').textContent());
+    assert.deepEqual(structured['@graph'].map(node=>node['@type']), ['WebSite','ProfilePage','Person']);
+    assert.equal(structured['@graph'][1].mainEntity['@id'], structured['@graph'][2]['@id']);
+    const bannerDimensions = await page.evaluate(async () => {
+      const banner = new Image();
+      banner.src = 'assets/social-preview.jpg';
+      await banner.decode();
+      return [banner.naturalWidth, banner.naturalHeight];
+    });
+    assert.deepEqual(bannerDimensions, [600,315]);
+    const sitemap = await page.request.get('http://127.0.0.1:' + server.address().port + '/sitemap.xml');
+    assert.ok(sitemap.ok());
+    assert.ok((await sitemap.text()).includes('<loc>https://namthedev.github.io/profile/</loc>'));
     const favicon = page.locator('head link[rel="icon"]');
     assert.equal(await favicon.getAttribute('href'), 'assets/icon.png');
     assert.equal((await page.request.get('http://127.0.0.1:' + server.address().port + '/assets/icon.png')).ok(), true);

@@ -217,7 +217,7 @@ async function loadPage(next) {
     if (version !== state.loadVersion) return;
     renderToc();
     bindLinks();
-    document.title = page.title + " — Nam";
+    document.title = page.slug === "about" ? "Nam — Personal Archive" : page.title + " — Nam — Personal Archive";
     let target = null;
     if (location.hash) {
       try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
