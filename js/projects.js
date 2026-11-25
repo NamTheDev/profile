@@ -62,7 +62,6 @@
     return outer;
   }
   // Keep the Markdown descriptions and historical anchor IDs while presenting one library.
-  let revealRepositoryHash = null;
   function repositoryLibrary(article, metadata) {
     const software = article.querySelector("#software");
     const archive = article.querySelector("#archived-projects");
@@ -96,21 +95,6 @@
     heading.append(softwareAlias);
     const library = element("section", "repository-library my-4");
     library.setAttribute("aria-labelledby", heading.id);
-    const controls = element("div", "d-flex flex-column gap-3 mb-4");
-    const search = element("input", "form-control rounded-5 w-100");
-    search.type = "search";
-    search.placeholder = "Search repositories...";
-    search.setAttribute("aria-label", "Search repositories");
-    const filters = element("div", "d-flex flex-wrap gap-2");
-    filters.setAttribute("role", "group");
-    filters.setAttribute("aria-label", "Repository category");
-    const count = element("div", "fg-3 fs-xs");
-    count.setAttribute("role", "status");
-    controls.append(search, filters, count);
-    library.append(controls);
-
-    const sections = new Map();
-    const cards = [];
     for (const [key, label] of [["active", "Active"], ["archived", "Archived"]]) {
       const section = element("section", "mb-4");
       const title = element("h3", null, label);
@@ -122,70 +106,17 @@
       }
       const grid = element("div", "repository-grid gap-3");
       section.append(title, grid);
-      sections.set(key, section);
       library.append(section);
       for (const repo of repos.filter(repo => Boolean(repo.archived) === (key === "archived"))) {
         const description = descriptions.get(repo.name.toLowerCase())?.nodes || [];
         const card = repoCard(repo, description);
         grid.append(card);
-        cards.push({key, card, name: repo.name.toLowerCase(), searchable: [repo.name, repo.language, ...description.map(node => node.textContent)].filter(Boolean).join(" ").toLowerCase()});
       }
     }
-    const empty = element("p", "fg-3 fs-sm", "No matching repositories.");
-    library.append(empty);
-    let selected = "active";
-    const buttons = new Map();
-    for (const [key, label] of [["active", "Active"], ["archived", "Archived"], ["all", "All"]]) {
-      const total = cards.filter(item => key === "all" || item.key === key).length;
-      const button = element("button", "btn btn-outline theme-secondary repository-filter", label + " (" + total + ")");
-      button.type = "button";
-      button.addEventListener("click", () => { selected = key; render(); });
-      buttons.set(key, button);
-      filters.append(button);
-    }
-    function render() {
-      const query = search.value.trim().toLowerCase();
-      let shown = 0;
-      for (const [key, button] of buttons) button.setAttribute("aria-pressed", String(key === selected));
-      for (const item of cards) {
-        item.card.hidden = !(selected === "all" || item.key === selected) || !item.searchable.includes(query);
-        if (!item.card.hidden) shown++;
-      }
-      for (const [key, section] of sections) section.hidden = !cards.some(item => item.key === key && !item.card.hidden);
-      empty.hidden = shown > 0;
-      count.textContent = shown + " of " + cards.length + " repositories";
-    }
-    search.addEventListener("input", render);
     software.before(heading, library);
     // Descriptions have moved into cards; remove only the original section-level nodes.
     for (const node of oldNodes) if (node.parentNode === article) node.remove();
-    revealRepositoryHash = id => {
-      if (!library.isConnected) return false;
-      const item = cards.find(card => card.name === id);
-      const key = id === "archived-projects" || id === "archived" ? "archived" : id === "active" || id === "software" ? "active" : item?.key;
-      if (!key) return false;
-      if (selected !== "all" || id === "active" || id === "archived") selected = key;
-      search.value = "";
-      render();
-      return true;
-    };
-    render();
-    try { revealRepositoryHash(decodeURIComponent(location.hash.slice(1))); } catch {}
   }
-  // Reveal hidden categories before navigating from the contents rail or an old deep link.
-  document.addEventListener("click", event => {
-    const anchor = event.target.closest?.(".toc a, .mobile-contents a");
-    const hash = anchor?.getAttribute("href");
-    if (hash?.startsWith("#")) {
-      try { revealRepositoryHash?.(decodeURIComponent(hash.slice(1))); } catch {}
-    }
-  });
-  window.addEventListener("hashchange", () => {
-    try {
-      const id = decodeURIComponent(location.hash.slice(1));
-      if (revealRepositoryHash?.(id)) document.getElementById(id)?.scrollIntoView();
-    } catch {}
-  });
   function channelUploads(channel) {
     const group=element("div","my-4");
     const videos=(channel.videos || []).filter(video=>validVideo(video.id));
