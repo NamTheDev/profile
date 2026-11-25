@@ -41,3 +41,5 @@ The Music section renders two official Bandcamp track players, using artist-supp
 ## Website metadata
 
 The static HTML head identifies the website as Nam — Personal Archive, with the description "A personal archive of Nam.", author attribution, dark theme color, canonical URL, Open Graph fields, X summary-large-image card and linked Schema.org WebSite, ProfilePage and Person records. The original favicon and Apple touch icon remain assets/icon.png. The social preview uses the artist-supplied banner, center-cropped and resized to a 1200 × 630 JPEG (quality 95, no chroma subsampling) at assets/social-preview.jpg; metadata dimensions and MIME type match the file. All social metadata is available before JavaScript executes. About and Projects are query-based views of a single canonical website, so sitemap.xml lists the canonical root only. No invented X handles, redundant index directives, PWA conversion or subdirectory robots.txt. Browser tests verify the tags, structured data, decoded banner dimensions and sitemap.
+
+The header brand is noninteractive text; navigation is provided by the page links.

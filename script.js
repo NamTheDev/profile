@@ -3,7 +3,7 @@ const $ = (selector) => document.querySelector(selector);
 const els = {
   article: $("#article"), nav: $("#page-nav"), toc: $("#toc"),
   filter: $("#page-filter"), menu: $("#menu-toggle"),
-  sidebar: $("#sidebar"), backdrop: $("#sidebar-backdrop"), home: $("#home-link")
+  sidebar: $("#sidebar"), backdrop: $("#sidebar-backdrop")
 };
 
 /* Default slug = whatever the manifest lists first */
@@ -264,11 +264,6 @@ function wireEvents() {
   });
   els.backdrop.addEventListener("click", closeMenu);
   els.filter.addEventListener("input", () => renderNav(els.filter.value));
-  els.home.addEventListener("click", (event) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    navigate(state.pages[0]?.slug || "");
-  });
   addEventListener("popstate", () => {
   const next = slug();
   if (next !== state.current) void loadPage(next);
