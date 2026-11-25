@@ -299,7 +299,7 @@ function initHeaderMarquee() {
   // Native scroll keeps trackpad, touch and keyboard scrolling available.
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hover = window.matchMedia("(hover: hover)");
-  let loopWidth = 0, manualUntil = 0, hoverUntil = 0, activePointer = null;
+  let loopWidth = 0, manualUntil = 0, activePointer = null;
   let previous = 0, remainder = 0, automaticPosition = nav.scrollLeft;
   const resumeDelay = 1500;
   const pauseManual = () => { manualUntil = performance.now() + resumeDelay; };
@@ -315,15 +315,18 @@ function initHeaderMarquee() {
   } else window.addEventListener("resize", updateWidth);
   document.fonts?.ready.then(updateWidth).catch(() => {});
 
-  nav.addEventListener("pointerenter", () => {
-    if (hover.matches) hoverUntil = performance.now() + 5000;
+  nav.addEventListener("pointerleave", event => {
+    if (event.pointerType === "touch" || !hover.matches) return;
+    // Resume immediately on mouse exit, even after manual scrolling.
+    manualUntil = 0;
+    automaticPosition = nav.scrollLeft;
   });
-  nav.addEventListener("pointerleave", () => { hoverUntil = 0; });
   nav.addEventListener("wheel", event => {
-    if (event.ctrlKey || event.metaKey || nav.scrollWidth <= nav.clientWidth) return;
-    // Horizontal wheel input only; vertical wheel input remains page scrolling.
-    if (!event.deltaX || Math.abs(event.deltaY) > Math.abs(event.deltaX)) return;
+    if (event.ctrlKey || event.metaKey) return;
+    // Capture wheel input over the ticker without scrolling the page.
     event.preventDefault();
+    if (nav.scrollWidth <= nav.clientWidth ||
+        !event.deltaX || Math.abs(event.deltaY) > Math.abs(event.deltaX)) return;
     pauseManual();
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? nav.clientWidth : 1;
     nav.scrollLeft += event.deltaX * unit;
@@ -349,7 +352,7 @@ function initHeaderMarquee() {
     const elapsed = previous ? Math.min(now - previous, 50) : 0;
     previous = now;
     const paused = reducedMotion.matches || loopWidth <= nav.clientWidth ||
-      activePointer !== null || now < manualUntil || now < hoverUntil ||
+      activePointer !== null || now < manualUntil || (hover.matches && nav.matches(":hover")) ||
       nav.querySelector(":focus-visible") !== null;
     if (!paused) {
       const distance = elapsed * .045 + remainder;
