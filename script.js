@@ -296,15 +296,61 @@ function initHeaderMarquee() {
   nav.append(track);
   nav.classList.add("marquee-enabled");
 
-  // Use a constant scrolling speed, regardless of font or viewport size.
-  const updateSpeed = () => {
-    const width = group.getBoundingClientRect().width;
-    if (width) track.style.setProperty("--marquee-duration", Math.max(20, width / 45) + "s");
+  // Native scroll keeps trackpad, touch and keyboard scrolling available.
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const hover = window.matchMedia("(hover: hover)");
+  let loopWidth = 0, manualUntil = 0, activePointer = null;
+  let previous = 0, remainder = 0;
+  const updateWidth = () => {
+    loopWidth = Math.round(group.getBoundingClientRect().width);
+    nav.classList.toggle("marquee-overflow", loopWidth > nav.clientWidth);
   };
-  updateSpeed();
-  if ("ResizeObserver" in window) new ResizeObserver(updateSpeed).observe(group);
-  else window.addEventListener("resize", updateSpeed);
-  document.fonts?.ready.then(updateSpeed).catch(() => {});
+  updateWidth();
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(group);
+    observer.observe(nav);
+  } else window.addEventListener("resize", updateWidth);
+  document.fonts?.ready.then(updateWidth).catch(() => {});
+
+  nav.addEventListener("wheel", event => {
+    if (event.ctrlKey || event.metaKey || nav.scrollWidth <= nav.clientWidth) return;
+    manualUntil = performance.now() + 1500;
+    // Ordinary mouse wheels also scroll the links horizontally.
+    if (!event.deltaX && event.deltaY) {
+      event.preventDefault();
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? nav.clientWidth : 1;
+      nav.scrollLeft += event.deltaY * unit;
+    }
+  }, { passive: false });
+  nav.addEventListener("pointerdown", event => {
+    activePointer = event.pointerId;
+    manualUntil = performance.now() + 1500;
+  });
+  const releasePointer = event => {
+    if (event.pointerId !== activePointer) return;
+    activePointer = null;
+    manualUntil = performance.now() + 1500;
+  };
+  window.addEventListener("pointerup", releasePointer);
+  window.addEventListener("pointercancel", releasePointer);
+
+  // Resume the same native scroll position after interaction; loop at one group.
+  const advance = now => {
+    const elapsed = previous ? Math.min(now - previous, 50) : 0;
+    previous = now;
+    const paused = reducedMotion.matches || loopWidth <= nav.clientWidth ||
+      activePointer !== null || now < manualUntil ||
+      (hover.matches && nav.matches(":hover")) || nav.matches(":focus-within");
+    if (!paused) {
+      const distance = elapsed * .045 + remainder;
+      const step = Math.floor(distance);
+      remainder = distance - step;
+      if (step) nav.scrollLeft = (nav.scrollLeft + step) % loopWidth;
+    } else remainder = 0;
+    requestAnimationFrame(advance);
+  };
+  requestAnimationFrame(advance);
 }
 
 if (document.readyState === "loading") {

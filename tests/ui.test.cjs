@@ -57,7 +57,19 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color),'rgb(166, 227, 161)');
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.marquee-group').count(),2);
-    assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
+    const ticker = page.locator('.header-links');
+    assert.equal(await ticker.evaluate(e=>getComputedStyle(e).overflowX),'auto');
+    assert.equal(await ticker.evaluate(e=>getComputedStyle(e).scrollbarWidth),'none');
+    await page.mouse.move(10, 300);
+    await ticker.evaluate(e=>{ document.activeElement?.blur(); e.scrollLeft=0; });
+    await page.waitForFunction(()=>document.querySelector('.header-links').scrollLeft>0);
+    await ticker.hover();
+    await ticker.evaluate(e=>{e.scrollLeft=0;});
+    await page.mouse.wheel(0, 240);
+    await page.waitForFunction(()=>document.querySelector('.header-links').scrollLeft>100);
+    const manualPosition = await ticker.evaluate(e=>e.scrollLeft);
+    await page.waitForTimeout(100);
+    assert.equal(await ticker.evaluate(e=>e.scrollLeft),manualPosition);
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
     await page.route('https://bandcamp.com/EmbeddedPlayer/**',route=>route.fulfill({contentType:'text/html',body:'<html><body>Bandcamp player test fixture</body></html>'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
@@ -165,7 +177,9 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     await page.emulateMedia({reducedMotion:'reduce'});
-    assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'none');
+    await ticker.evaluate(e=>{e.scrollLeft=0;});
+    await page.waitForTimeout(100);
+    assert.equal(await ticker.evaluate(e=>e.scrollLeft),0);
     assert.equal(await page.locator('.marquee-group[aria-hidden="true"]').isVisible(),false);
   } finally {
     await browser?.close();
