@@ -136,9 +136,4 @@ em { color: var(--accent); }
 .repository-card { scroll-margin-top: calc(var(--header-height) + 1rem); }
 .repository-card .repo-preview { width: 100%; }
 .repository-card .repo-preview img { width: 100%; height: auto; }
-.repository-archive-badge {
-  --bs-badge-bg: var(--error);
-  --bs-badge-color: var(--base);
-  --bs-badge-border-radius: 999px;
-}
 .repository-library .repository-alias { scroll-margin-top: calc(var(--header-height) + 1rem); }

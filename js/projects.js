@@ -32,7 +32,6 @@
     const url = "https://github.com/NamTheDev/" + repo.name;
     const title = element("div", "d-flex flex-wrap align-items-center gap-3");
     title.append(link(url, "NamTheDev/" + repo.name, "fw-semibold text-decoration-none text-break"));
-    if (repo.archived) title.append(element("span", "badge repository-archive-badge", "Archived"));
     body.append(title);
     const preview = link(url, null, "repo-preview d-block align-self-start max-w-100");
     const image = element("img", "img-fluid rounded-3 d-block");
@@ -65,10 +64,11 @@
   function repositoryLibrary(article, metadata) {
     const software = article.querySelector("#software");
     const archive = article.querySelector("#archived-projects");
-    if (!software || !archive) return;
+    if (!software) return;
     const descriptions = new Map();
     const oldNodes = [];
     for (const [heading, archived] of [[software, false], [archive, true]]) {
+      if (!heading) continue;
       oldNodes.push(heading);
       let current = null;
       for (let node = heading.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
@@ -84,7 +84,7 @@
     const known = new Set(repos.map(repo => repo.name.toLowerCase()));
     // If metadata is incomplete, preserve the existing documented projects without invented stats.
     for (const [id, description] of descriptions) {
-      if (!known.has(id) && validRepo(description.name)) {
+      if (!description.archived && !known.has(id) && validRepo(description.name)) {
         repos.push({name: description.name, archived: description.archived});
       }
     }
@@ -95,23 +95,11 @@
     heading.append(softwareAlias);
     const library = element("section", "repository-library my-4");
     library.setAttribute("aria-labelledby", heading.id);
-    for (const [key, label] of [["active", "Active"], ["archived", "Archived"]]) {
-      const section = element("section", "mb-4");
-      const title = element("h3", null, label);
-      title.id = key;
-      if (key === "archived") {
-        const alias = element("span", "repository-alias");
-        alias.id = "archived-projects";
-        title.append(alias);
-      }
-      const grid = element("div", "repository-grid gap-3");
-      section.append(title, grid);
-      library.append(section);
-      for (const repo of repos.filter(repo => Boolean(repo.archived) === (key === "archived"))) {
-        const description = descriptions.get(repo.name.toLowerCase())?.nodes || [];
-        const card = repoCard(repo, description);
-        grid.append(card);
-      }
+    const grid = element("div", "repository-grid gap-3");
+    library.append(grid);
+    for (const repo of repos.filter(repo => !repo.archived)) {
+      const description = descriptions.get(repo.name.toLowerCase())?.nodes || [];
+      grid.append(repoCard(repo, description));
     }
     software.before(heading, library);
     // Descriptions have moved into cards; remove only the original section-level nodes.
