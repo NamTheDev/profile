@@ -21,14 +21,10 @@
     while (last.nextElementSibling && !/^H[1-3]$/.test(last.nextElementSibling.tagName)) last = last.nextElementSibling;
     last.after(node);
   }
-  function card() {
+  function repoCard(repo, description = []) {
     const outer = element("div", "card repository-card w-100 min-w-0 bg-1 rounded-6");
     const body = element("div", "card-body min-w-0 d-flex flex-column gap-3");
     outer.append(body);
-    return [outer, body];
-  }
-  function repoCard(repo, description = []) {
-    const [outer, body] = card();
     const url = "https://github.com/NamTheDev/" + repo.name;
     const title = element("div", "d-flex flex-wrap align-items-center gap-3");
     title.append(link(url, "NamTheDev/" + repo.name, "fw-semibold text-decoration-none text-break"));
@@ -62,29 +58,24 @@
   // Keep the Markdown descriptions and historical anchor IDs while presenting one library.
   function repositoryLibrary(article, metadata) {
     const software = article.querySelector("#software");
-    const archive = article.querySelector("#archived-projects");
     if (!software) return;
     const descriptions = new Map();
-    const oldNodes = [];
-    for (const [heading, archived] of [[software, false], [archive, true]]) {
-      if (!heading) continue;
-      oldNodes.push(heading);
-      let current = null;
-      for (let node = heading.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
-        oldNodes.push(node);
-        if (node.tagName === "H3") {
-          current = {name: node.textContent.trim(), archived, nodes: []};
-          descriptions.set(node.id, current);
-        } else if (current) current.nodes.push(node);
-      }
+    const oldNodes = [software];
+    let current = null;
+    for (let node = software.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
+      oldNodes.push(node);
+      if (node.tagName === "H3") {
+        current = {name: node.textContent.trim(), nodes: []};
+        descriptions.set(node.id, current);
+      } else if (current) current.nodes.push(node);
     }
 
     const repos = metadata.filter(repo => typeof repo.name === "string" && validRepo(repo.name));
     const known = new Set(repos.map(repo => repo.name.toLowerCase()));
     // If metadata is incomplete, preserve the existing documented projects without invented stats.
     for (const [id, description] of descriptions) {
-      if (!description.archived && !known.has(id) && validRepo(description.name)) {
-        repos.push({name: description.name, archived: description.archived});
+      if (!known.has(id) && validRepo(description.name)) {
+        repos.push({name: description.name});
       }
     }
     const heading = element("h2", null, "GitHub Repositories");

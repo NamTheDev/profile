@@ -61,8 +61,7 @@ em { color: var(--accent); }
   --bs-control-border-color: var(--surface-1);
   margin-bottom: .65rem;
 }
-.page-link { border-left: 2px solid transparent; color: var(--subtext-1); line-height: 1.35; }
-.page-link { padding: .5rem .625rem; font-size: .875rem; }
+.page-link { border-left: 2px solid transparent; color: var(--subtext-1); line-height: 1.35; padding: .5rem .625rem; font-size: .875rem; }
 .page-link:hover, .page-link:focus-visible, .page-link.active { background: var(--mantle); color: var(--text); text-decoration: none; }
 .page-link.active { border-left-color: var(--accent); color: var(--text); font-weight: 600; }
 .article > :first-child { margin-top: 0; }
@@ -71,13 +70,12 @@ em { color: var(--accent); }
 .article h2 { margin: 2.25rem 0 .75rem; padding-bottom: .25rem; border-bottom: var(--rule); color: var(--heading-teal); font-size: 1.5rem; letter-spacing: -.015em; }
 .article h3 { margin: 1.75rem 0 .5rem; color: var(--heading-sky); font-size: 1.25rem; }
 .article h4 { margin: 1.5rem 0 .5rem; color: var(--heading-sapphire); font-size: 1.0625rem; }
-.article blockquote { max-width: 70ch; }
 .article p { margin: .55rem 0 .85rem; }
 .article :is(ul,ol):not(.list-unstyled) { margin: .5rem 0 1rem; padding-left: 1.75rem; }
 .article :is(ul,ol):not(.list-unstyled) > li { margin-block: .2rem; }
 .article dl { margin: .7rem 0 1rem; }
 .article dd { margin-left: 1.5rem; }
-.article blockquote { margin: 1rem 0; padding: .55rem .85rem; border-left: 4px solid var(--surface-2); background: var(--mantle); color: var(--subtext-1); }
+.article blockquote { max-width: 70ch; margin: 1rem 0; padding: .55rem .85rem; border-left: 4px solid var(--surface-2); background: var(--mantle); color: var(--subtext-1); }
 .article code { padding: .05em .22em; border: var(--rule); background: var(--mantle); color: inherit; font-size: .875rem; }
 .article pre { overflow-x: auto; margin: 1rem 0; padding: .85rem 1rem; border: var(--rule); background: var(--mantle); }
 .article pre code { padding: 0; border: 0; background: transparent; }
@@ -113,7 +111,7 @@ em { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
-  .header-links.marquee-enabled { overflow-x: auto; mask-image: none; }
+  .header-links.marquee-enabled { mask-image: none; }
   .marquee-group[aria-hidden="true"] { display: none !important; }
 }
 

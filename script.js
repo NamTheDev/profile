@@ -33,6 +33,13 @@ function navigate(next, hash = "") {
   closeMenu();
   void loadPage(page.slug);
 }
+function bindNavigation(link, next, hash = "") {
+  link.addEventListener("click", event => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    navigate(next, hash);
+  });
+}
 function renderNav(query = "") {
   const needle = query.trim().toLowerCase();
   const pages = state.pages.filter((page) =>
@@ -41,7 +48,7 @@ function renderNav(query = "") {
   els.nav.replaceChildren();
   if (!pages.length) {
     const empty = document.createElement("p");
-    empty.className = "page-nav-empty fg-3 fs-xs my-2 mx-3";
+    empty.className = "fg-3 fs-xs my-2 mx-3";
     empty.textContent = "No matching pages.";
     els.nav.append(empty);
     return;
@@ -52,11 +59,7 @@ function renderNav(query = "") {
     link.className = "page-link d-block" + (page.slug === state.current ? " active" : "");
     link.textContent = page.title;
     if (page.slug === state.current) link.ariaCurrent = "page";
-    link.addEventListener("click", (event) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      navigate(page.slug);
-    });
+    bindNavigation(link, page.slug);
     els.nav.append(link);
   }
 }
@@ -158,11 +161,7 @@ function bindLinks() {
     const page = resolveMarkdown(path);
     if (!page) return;
     link.href = "?page=" + encodeURIComponent(page.slug) + (hash ? "#" + hash : "");
-    link.addEventListener("click", (event) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      navigate(page.slug, hash);
-    });
+    bindNavigation(link, page.slug, hash);
   });
 }
 async function markdownText(file) {
@@ -205,7 +204,7 @@ async function loadPage(next) {
   state.current = page.slug;
   renderNav(els.filter.value);
   if (state.observer) state.observer.disconnect();
-  els.article.innerHTML = '<p class="loading fg-3 fs-xs my-3">Loading…</p>';
+  els.article.innerHTML = '<p class="fg-3 fs-xs my-3">Loading…</p>';
   try {
     const markdown = await pageText(page);
     if (version !== state.loadVersion) return;
@@ -229,7 +228,7 @@ async function loadPage(next) {
     if (version !== state.loadVersion) return;
     console.error(error);
     const message = document.createElement("p");
-    message.className = "error fg-danger fs-xs my-3";
+    message.className = "fg-danger fs-xs my-3";
     message.textContent = "Unable to load this page: " + (error?.message || String(error));
     els.article.replaceChildren(message);
     els.toc.replaceChildren();
@@ -250,7 +249,7 @@ async function init() {
   } catch (error) {
     console.error(error);
     const message = document.createElement("p");
-    message.className = "error fg-danger fs-xs my-3";
+    message.className = "fg-danger fs-xs my-3";
     message.textContent = "Unable to load page index: " + (error?.message || String(error));
     els.article.replaceChildren(message);
   }
@@ -308,12 +307,9 @@ function initHeaderMarquee() {
     nav.classList.toggle("marquee-overflow", loopWidth > nav.clientWidth);
   };
   updateWidth();
-  if ("ResizeObserver" in window) {
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(group);
-    observer.observe(nav);
-  } else window.addEventListener("resize", updateWidth);
-  document.fonts?.ready.then(updateWidth).catch(() => {});
+  const observer = new ResizeObserver(updateWidth);
+  observer.observe(group);
+  observer.observe(nav);
 
   nav.addEventListener("pointerleave", event => {
     if (event.pointerType === "touch" || !hover.matches) return;
@@ -368,8 +364,6 @@ function initHeaderMarquee() {
   requestAnimationFrame(advance);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => { initHeaderMarquee(); wireEvents(); init(); });
-} else {
-  initHeaderMarquee(); wireEvents(); init();
-}
+initHeaderMarquee();
+wireEvents();
+init();
