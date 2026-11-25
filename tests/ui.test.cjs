@@ -58,6 +58,12 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
     assert.equal(await page.locator('.marquee-group').count(),2);
     const ticker = page.locator('.header-links');
+    const tickerLinks = ticker.locator('.marquee-group:not([aria-hidden]) a');
+    assert.equal(await tickerLinks.count(), 12);
+    for (const link of await tickerLinks.all()) {
+      assert.equal(await link.evaluate(e=>e.childNodes.length === 1 && e.firstChild.nodeType === Node.TEXT_NODE && e.textContent.includes(' - ')), true);
+      assert.equal(await link.evaluate(e=>getComputedStyle(e).display.includes('flex')), false);
+    }
     assert.equal(await ticker.evaluate(e=>getComputedStyle(e).overflowX),'auto');
     assert.equal(await ticker.evaluate(e=>getComputedStyle(e).scrollbarWidth),'none');
     await page.mouse.move(10, 300);
