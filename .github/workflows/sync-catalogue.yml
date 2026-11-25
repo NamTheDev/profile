@@ -7,6 +7,12 @@ on:
       - 'scripts/sync_catalogue.py'
       - '.github/workflows/sync-catalogue.yml'
   workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Refresh all metadata or a selected YouTube channel'
+        type: choice
+        options: [all, youtube, music, ashes]
+        default: all
   schedule:
     - cron: '23 3 * * *'
 permissions:
@@ -28,6 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          CATALOGUE_CHANNEL: ${{ inputs.channel || 'all' }}
       - name: Commit refreshed public metadata
         run: |
           git diff --quiet -- data/catalogue.json && exit 0

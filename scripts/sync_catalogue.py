@@ -90,8 +90,21 @@ def refresh(sources, previous, key, fn):
 
 def main():
     data = json.loads(TARGET.read_text())
-    data["repositories"], repo_fail = refresh(SOURCES["repositories"], data.get("repositories", []), "name", lambda source, old: repository(source))
-    data["channels"], channel_fail = refresh(SOURCES["channels"], data.get("channels", []), "id", channel)
+    target = os.environ.get("CATALOGUE_CHANNEL", "all")
+    if target == "all":
+        data["repositories"], repo_fail = refresh(SOURCES["repositories"], data.get("repositories", []), "name", lambda source, old: repository(source))
+        data["channels"], channel_fail = refresh(SOURCES["channels"], data.get("channels", []), "id", channel)
+    else:
+        selected = [source for source in SOURCES["channels"] if source["section"] == target]
+        if not selected:
+            raise ValueError("Unknown catalogue channel")
+        previous = data.get("channels", [])
+        refreshed, channel_fail = refresh(selected, previous, "id", channel)
+        updates = {item["id"]: item for item in refreshed}
+        existing = {item["id"]: item for item in previous}
+        existing.update(updates)
+        data["channels"] = [existing[source["id"]] for source in SOURCES["channels"] if source["id"] in existing]
+        repo_fail = 0
     TARGET.write_text(json.dumps(data, ensure_ascii=False, indent=2)+"\n")
     print(f"Repository failures: {repo_fail}; channel failures: {channel_fail}; videos captured: {sum(len(c['videos']) for c in data['channels'])}")
     return repo_fail + channel_fail
