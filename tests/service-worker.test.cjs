@@ -6,20 +6,29 @@ const vm = require('node:vm');
 test('activation removes only old profile caches', async () => {
   const handlers = {};
   const deleted = [];
+  let claimed = false;
+  let keys = [];
   const self = {
     addEventListener: (type, handler) => { handlers[type] = handler; },
-    clients: { claim: async () => {} }
+    clients: { claim: async () => { claimed = true; } }
   };
-  vm.runInNewContext(fs.readFileSync('sw.js', 'utf8'), {
+  const context = vm.createContext({
     self, URL, caches: {
-      keys: async () => ['self-documentary-v9', 'self-documentary-v10', 'self-documentary-v11', 'self-documentary-v12', 'self-documentary-v13', 'self-documentary-v14', 'self-documentary-v15', 'self-documentary-v16', 'self-documentary-v17', 'self-documentary-v18', 'self-documentary-v19', 'self-documentary-v20', 'self-documentary-v21', 'self-documentary-v22', 'self-documentary-v23', 'self-documentary-v24', 'self-documentary-v25', 'self-documentary-v26', 'self-documentary-v27', 'self-documentary-v28', 'self-documentary-v29', 'self-documentary-v30', 'self-documentary-v31', 'self-documentary-v32', 'self-documentary-v33', 'self-documentary-v34', 'keep-cache', 'clipboard-cache'],
+      keys: async () => keys,
       delete: async key => { deleted.push(key); }
     }
   });
+  vm.runInContext(fs.readFileSync('sw.js', 'utf8'), context);
+  const current = vm.runInContext('CACHE', context);
+  assert.match(current, /^self-documentary-v[1-9]\d*$/);
+  const version = Number(current.split('-v').at(-1));
+  const old = ['self-documentary-v0', 'self-documentary-v' + (version - 1)].filter((key, index, list) => list.indexOf(key) === index);
+  keys = [...old, current, 'keep-cache', 'clipboard-cache'];
   let pending;
   handlers.activate({ waitUntil: task => { pending = task; } });
   await pending;
-  assert.deepEqual(deleted, ['self-documentary-v9', 'self-documentary-v10', 'self-documentary-v11', 'self-documentary-v12', 'self-documentary-v13', 'self-documentary-v14', 'self-documentary-v15', 'self-documentary-v16', 'self-documentary-v17', 'self-documentary-v18', 'self-documentary-v19', 'self-documentary-v20', 'self-documentary-v21', 'self-documentary-v22', 'self-documentary-v23', 'self-documentary-v24', 'self-documentary-v25', 'self-documentary-v26', 'self-documentary-v27', 'self-documentary-v28', 'self-documentary-v29', 'self-documentary-v30', 'self-documentary-v31', 'self-documentary-v32', 'self-documentary-v33']);
+  assert.deepEqual(deleted, old);
+  assert.equal(claimed, true);
 });
 test('manifest pages exist', () => {
   const pages = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
