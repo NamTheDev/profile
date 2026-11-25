@@ -41,9 +41,18 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
     await page.route('https://namthedev.github.io/keep/', route => route.fulfill({body:'<html>Keep preview</html>', contentType:'text/html'}));
     await page.route('https://namthedev.github.io/clipboard/', route => route.fulfill({body:'<html>Clipboard preview</html>', contentType:'text/html'}));
+    await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({body:'<html>YouTube player</html>', contentType:'text/html'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
-    assert.equal(await page.locator('#article > iframe').count(), 2);
+    assert.equal(await page.locator('#article > iframe').count(), 5);
+    for (const [section, playlist] of [["youtube","UUuBqPJLikRQ5ILmeGfouvGA"],["ashes","UU9aLhqg5hrEtU8m1ozH2eiQ"],["music","UUjO88kU2XujBoNmaB9dsVCA"]]) {
+      const frame = page.locator('#article > iframe[src="https://www.youtube-nocookie.com/embed/videoseries?list=' + playlist + '"]');
+      assert.equal(await frame.count(), 1);
+      assert.equal(await frame.evaluate(e=>e.classList.contains('ratio-16x9')), true);
+      assert.equal(await frame.getAttribute('loading'), 'lazy');
+      assert.equal(await frame.evaluate(e=>e.allowFullscreen), true);
+      assert.equal(await frame.evaluate(e=>{let node=e.previousElementSibling;while(node&&!/^H[1-3]$/.test(node.tagName))node=node.previousElementSibling;return node?.id}), section);
+    }
     const repositoryCards = page.locator('#article a > img[src^="https://opengraph.githubassets.com/1/NamTheDev/"]');
     assert.equal(await repositoryCards.count(), 10);
     for (const card of await repositoryCards.all()) {

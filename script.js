@@ -197,6 +197,12 @@ function prefetchPages() {
 }
 /* Only explicitly configured, trusted project embeds. Markdown remains sanitized. */
 const PROJECT_EMBEDS = [
+  { section: "youtube", type: "youtube", title: "Nam — main YouTube channel uploads",
+    playlist: "UUuBqPJLikRQ5ILmeGfouvGA" },
+  { section: "ashes", type: "youtube", title: "Ashes — YouTube uploads",
+    playlist: "UU9aLhqg5hrEtU8m1ozH2eiQ" },
+  { section: "music", type: "youtube", title: "Nam — music channel uploads",
+    playlist: "UUjO88kU2XujBoNmaB9dsVCA" },
   { section: "keep", type: "app", title: "keep — interactive preview",
     url: "https://namthedev.github.io/keep/" },
   { section: "clipboard", type: "app", title: "clipboard — interactive preview",
