@@ -241,7 +241,7 @@ function renderProjectEmbeds() {
     container.className = "mt-2";
     disclosure.append(summary, container);
     last.after(disclosure);
-    disclosure.addEventListener("toggle", () => {
+    const updateEmbed = () => {
       if (!disclosure.open) {
         container.replaceChildren();
         return;
@@ -263,7 +263,10 @@ function renderProjectEmbeds() {
       }
       if (embed.type === "app") frame.allow = "clipboard-read; clipboard-write";
       container.append(frame);
-    });
+    };
+    disclosure.addEventListener("toggle", updateEmbed);
+    disclosure.open = true;
+    updateEmbed();
   }
 }
 
