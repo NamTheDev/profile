@@ -34,6 +34,10 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('html').evaluate(e=>getComputedStyle(e).colorScheme),'dark');
     assert.equal(await page.locator('meta[name="darkreader-lock"]').count(),0);
     assert.equal(await page.locator('.page-shell').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),3);
+    await page.setViewportSize({width:1920,height:1080});
+    assert.equal(await page.locator('.page-shell').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
+    assert.equal(await page.locator('#article').evaluate(e=>e.clientWidth>1100),true);
+    await page.setViewportSize({width:1440,height:900});
     assert.equal(await page.locator('body').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(30, 30, 46)');
     assert.equal(await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color),'rgb(166, 227, 161)');
     assert.equal(await page.locator('#page-filter').evaluate(e=>getComputedStyle(e).borderTopLeftRadius),'8px');
@@ -42,6 +46,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
+    assert.equal(await page.locator('.page-shell').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
     await page.locator('#article .card').first().waitFor();
     assert.equal(await page.locator('#article iframe').count(), 0);
     assert.equal(await page.locator('#article .card').count(), 10);

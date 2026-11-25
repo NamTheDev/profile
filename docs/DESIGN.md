@@ -2,7 +2,7 @@
 
 Profile uses the same locally vendored Bootstrap 6.0.0-alpha.2 CSS and canonical [util design configuration](https://github.com/NamTheDev/util/blob/main/design/config.css) as Keep and Clipboard. Load order is bootstrap.min.css, config.css, style.css. Keep config.css identical to util when synchronizing; do not edit the vendor stylesheet. Preserve all license notices.
 
-The site intentionally retains its original reading identity: Source Sans 3, larger article typography, blue links, green/teal/sky/sapphire heading colors, dark Catppuccin Mocha, fixed-width reading column, left page navigation and right table of contents. These are local exceptions to the generic app defaults. The scrolling header remains a deliberate motion exception, with hover/focus pause and reduced-motion fallback.
+The site intentionally retains its original reading identity: Source Sans 3, larger article typography, blue links, green/teal/sky/sapphire heading colors, dark Catppuccin Mocha, fluid full-width reading column, left page navigation and right table of contents. These are local exceptions to the generic app defaults. The scrolling header remains a deliberate motion exception, with hover/focus pause and reduced-motion fallback.
 
 Native Bootstrap utilities cover flex alignment, spacing where suitable, borders, controls, rounding, typography and rendered Markdown tables/images. Local CSS owns the three-column grid, responsive rails, article typography and marquee. No Bootstrap JavaScript is needed. Profile remains a static site with its existing Markdown rendering and navigation. The contents rail and mobile contents disclosure share a nested heading-based list (H2–H6). Branches are expanded by default and use native HTML details/summary disclosure with Bootstrap utilities for spacing, nesting, typography, borders and active states. Top-level links use Bootstrap's fg-success utility, mapped to the existing H1 green through the Bootstrap success foreground token. Do not add tree-specific CSS or dependencies; section links retain their original anchors. Bootstrap 6 requires current browsers (Chrome/Edge 138+, Firefox 147+, Safari 26+).
 
@@ -16,7 +16,7 @@ The fixed dark theme is advertised through the color-scheme meta element, the ro
 
 ## Bootstrap-first styling
 
-Follow the [minimum-custom-CSS standard in util](https://github.com/NamTheDev/util/blob/main/design/DESIGN_PRINCIPLES.md). The local stylesheet retains only application-specific exceptions: exact reading-column geometry, responsive navigation rail and drawer, marquee animation, Markdown article typography and link behavior, and configuration overrides required by Profile's established visual identity. Use existing Bootstrap utilities in markup for generic spacing, sizing, borders and color.
+Follow the [minimum-custom-CSS standard in util](https://github.com/NamTheDev/util/blob/main/design/DESIGN_PRINCIPLES.md). The local stylesheet retains only application-specific exceptions: fluid three-column reading geometry, responsive navigation rail and drawer, marquee animation, Markdown article typography and link behavior, and configuration overrides required by Profile's established visual identity. Use existing Bootstrap utilities in markup for generic spacing, sizing, borders and color.
 
 ## Editorial style
 
@@ -31,3 +31,5 @@ data/sources.json holds public channel and repository identifiers. data/catalogu
 Channel metadata may be captured by the official API but is not displayed as a separate card. Do not invent video titles or statistics. Original source links are retained in Markdown.
 
 The Refresh project catalogue workflow runs daily and on source changes or manual dispatch. It updates repository metadata from the public GitHub REST API. Without a YouTube API key it reads public Atom feeds (recent uploads) and retains earlier captured entries; with the optional repository Actions secret `YOUTUBE_API_KEY` it uses the official YouTube Data API and paginates through the uploads playlist to collect all available public uploads and channel statistics. Failed sources retain existing records. The workflow reports partial failures and commits successful updates. No API key is exposed to the browser. The catalogue may include historically captured entries that are later removed by the provider.
+
+The reading shell spans the viewport without a centered maximum width. The center column grows between the existing navigation rails; Bootstrap padding utilities provide small internal gutters. Paragraphs and lists use the available width, while quotations and repository cards remain compact.

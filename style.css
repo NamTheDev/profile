@@ -12,9 +12,7 @@
   --heading-sky: #89dceb;
   --heading-sapphire: #74c7ec;
   --header-height: 60px;
-  --content-width: 48rem;
   --rail-width: 13.5rem;
-  --layout-gap: 2rem;
   --rule: 1px solid var(--surface-0);
 }
 html { background: var(--base); scroll-padding-top: calc(var(--header-height) + 1rem); }
@@ -51,9 +49,8 @@ em { color: var(--accent); }
 
 /* Article with left navigation and a right contents rail. */
 .page-shell {
-  width: min(100%, 92rem); margin-inline: auto; padding: 0 1.25rem 4rem;
-  display: grid; grid-template-columns: var(--rail-width) minmax(0, var(--content-width)) var(--rail-width);
-  justify-content: center; align-items: start; gap: var(--layout-gap);
+  display: grid; grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--rail-width);
+  align-items: start;
 }
 .sidebar, .toc-panel {
   position: sticky; top: calc(var(--header-height) + 1rem);
@@ -79,7 +76,7 @@ em { color: var(--accent); }
 .article h2 { margin: 2.25rem 0 .75rem; padding-bottom: .25rem; border-bottom: var(--rule); color: var(--heading-teal); font-size: 1.5rem; letter-spacing: -.015em; }
 .article h3 { margin: 1.75rem 0 .5rem; color: var(--heading-sky); font-size: 1.25rem; }
 .article h4 { margin: 1.5rem 0 .5rem; color: var(--heading-sapphire); font-size: 1.0625rem; }
-.article :is(p,li,dd,blockquote) { max-width: 70ch; }
+.article blockquote { max-width: 70ch; }
 .article p { margin: .55rem 0 .85rem; }
 .article :is(ul,ol):not(.list-unstyled) { margin: .5rem 0 1rem; padding-left: 1.75rem; }
 .article :is(ul,ol):not(.list-unstyled) > li { margin-block: .2rem; }
@@ -96,7 +93,7 @@ em { color: var(--accent); }
 .mobile-contents, .mobile-only { display: none; }
 .sidebar-backdrop { inset: var(--header-height) 0 0; z-index: 19; background: rgb(0 0 0 / .42); }
 @media (max-width: 1180px) {
-  .page-shell { grid-template-columns: var(--rail-width) minmax(0, var(--content-width)); }
+  .page-shell { grid-template-columns: var(--rail-width) minmax(0, 1fr); }
   .toc-panel { display: none; }
   .mobile-contents { display: block; margin-bottom: 1rem; padding-block: .6rem; border-block: var(--rule); }
 }
@@ -106,7 +103,7 @@ em { color: var(--accent); }
   .header-inner { padding-inline: .85rem; }
   .marquee-group { gap: .7rem; padding-right: .7rem; }
   .brand-name { font-size: 1.08rem; }
-  .page-shell { display: block; padding: 0 1rem 3rem; }
+  .page-shell { display: block; }
   .sidebar {
     position: fixed; top: var(--header-height); bottom: 0; left: 0; z-index: 20;
     width: min(84vw, 19rem); max-height: none; overflow-y: auto; background: var(--base);
