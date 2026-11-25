@@ -56,11 +56,20 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('.marquee-group').count(),2);
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
+    await page.route('https://bandcamp.com/EmbeddedPlayer/**',route=>route.fulfill({contentType:'text/html',body:'<html><body>Bandcamp player test fixture</body></html>'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
     assert.equal(await page.locator('#site-wrapper').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
     await page.locator('#article .card').first().waitFor();
-    assert.equal(await page.locator('#article iframe').count(), 0);
+    const bandcamp = page.locator('section[aria-label="Bandcamp releases"]');
+    await bandcamp.waitFor();
+    assert.equal(await bandcamp.locator('iframe').count(),2);
+    assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>frame.getAttribute('src'))),[
+      'https://bandcamp.com/EmbeddedPlayer/track=3801929766/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/',
+      'https://bandcamp.com/EmbeddedPlayer/track=4198918332/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/'
+    ]);
+    assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>[frame.width,frame.height,frame.loading])),[['500','120','lazy'],['500','120','lazy']]);
+    assert.equal(await page.locator('#article iframe:not([src^="https://bandcamp.com/EmbeddedPlayer/"])').count(),0);
     assert.equal(await page.locator('#article a[href="https://namchill235.bandcamp.com"]').count(), 1);
     assert.equal(await page.locator('#article .card').count(), 10);
     assert.equal(await page.locator('#article .card a[href$="/releases"]').count(), 0);
@@ -118,6 +127,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(new URL(page.url()).hash, '#keep');
     assert.equal(await page.locator('#article h3#keep').count(), 1);
     await page.setViewportSize({width:390,height:844});
+    for (const frame of await bandcamp.locator('iframe').all()) assert.equal(await frame.evaluate(e=>e.getBoundingClientRect().width<=e.parentElement.clientWidth+1),true);
     for (const card of await page.locator('#article .card').all()) {
       assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth + 1), true);
       assert.equal(await card.evaluate(e=>e.scrollWidth <= e.clientWidth + 1), true);

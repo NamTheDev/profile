@@ -75,6 +75,28 @@
     }
     return group;
   }
+  // Official player IDs supplied by the artist, in display order.
+  const bandcampTracks = [
+    {id:"3801929766", title:"May The War End"},
+    {id:"4198918332", title:"My Time"}
+  ];
+  function bandcampPlayers() {
+    const group = element("section","my-4");
+    group.setAttribute("aria-label","Bandcamp releases");
+    group.append(element("p","fw-semibold mb-3","Bandcamp releases"));
+    const list = element("div","d-flex flex-column gap-3");
+    for (const track of bandcampTracks) {
+      const frame = element("iframe","d-block border-0 max-w-100");
+      frame.src = "https://bandcamp.com/EmbeddedPlayer/track=" + track.id + "/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/";
+      frame.title = track.title + " by Nam — Bandcamp player";
+      frame.width = "500";
+      frame.height = "120";
+      frame.loading = "lazy";
+      list.append(frame);
+    }
+    group.append(list);
+    return group;
+  }
   async function readCatalogue() {
     const local=await fetch("data/catalogue.json").then(r=>{if(!r.ok)throw Error("Catalogue "+r.status);return r.json()});
     try {
@@ -86,6 +108,7 @@
   window.renderProjectCatalogue=async function(article) {
     const marker=document.createComment("project catalogue");
     article.append(marker);
+    afterSection(article,"music",bandcampPlayers());
     try {
       const data=await readCatalogue();
       if (!article.contains(marker)) return;
