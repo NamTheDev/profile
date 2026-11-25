@@ -35,7 +35,19 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('meta[name="darkreader-lock"]').count(),0);
     assert.equal(await page.locator('.page-shell').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),3);
     await page.setViewportSize({width:1920,height:1080});
-    assert.equal(await page.locator('.page-shell').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
+    assert.equal(await page.locator('#site-wrapper').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
+    const spacing = await page.evaluate(()=>{
+      const wrapper = document.querySelector('#site-wrapper');
+      const header = document.querySelector('.header-inner');
+      const shell = document.querySelector('.page-shell');
+      const inset = parseFloat(getComputedStyle(wrapper).paddingLeft);
+      const aligned = Math.abs(header.getBoundingClientRect().left-shell.getBoundingClientRect().left)<=1 &&
+        Math.abs(shell.getBoundingClientRect().left-inset)<=1 &&
+        Math.abs(header.getBoundingClientRect().right-shell.getBoundingClientRect().right)<=1;
+      const unpadded = [header,shell,...shell.children].every(el=>parseFloat(getComputedStyle(el).paddingLeft)===0 && parseFloat(getComputedStyle(el).paddingRight)===0);
+      return aligned && unpadded && inset>0;
+    });
+    assert.equal(spacing,true);
     assert.equal(await page.locator('#article').evaluate(e=>e.clientWidth>1100),true);
     await page.setViewportSize({width:1440,height:900});
     assert.equal(await page.locator('body').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(30, 30, 46)');
@@ -46,7 +58,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
-    assert.equal(await page.locator('.page-shell').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
+    assert.equal(await page.locator('#site-wrapper').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
     await page.locator('#article .card').first().waitFor();
     assert.equal(await page.locator('#article iframe').count(), 0);
     assert.equal(await page.locator('#article .card').count(), 10);

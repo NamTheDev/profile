@@ -21,8 +21,9 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div id="site-wrapper" class="w-100 min-dvh-100 px-4 lg:px-6 pb-7">
   <header class="site-header position-sticky top-0 bg-body border-bottom">
-    <div class="header-inner d-flex align-items-center w-100">
+    <div class="header-inner d-flex align-items-center w-100 gap-4">
       <a class="site-brand d-flex flex-column justify-content-center flex-shrink-0 text-decoration-none min-w-0 fg-body" id="home-link" href="?page=about">
         <span class="brand-name fw-semibold">NAMCHILL235</span>
       </a>
@@ -53,9 +54,9 @@
     </div>
   </header>
 
-  <div class="page-shell w-100 pb-7">
-    <aside class="sidebar overflow-auto px-4" id="sidebar">
-      <div class="sidebar-inner pt-6">
+  <div class="page-shell w-100 gap-6 pt-6">
+    <aside class="sidebar overflow-auto" id="sidebar">
+      <div class="sidebar-inner">
         <section class="sidebar-block mb-7">
           <h2 class="interface-heading border-bottom fw-semibold fg-body fs-xs mb-3 pb-2 lh-sm">Pages</h2>
           <input id="page-filter" class="page-filter form-control rounded-5 w-100" type="search" placeholder="Filter pages" autocomplete="off" aria-label="Filter pages">
@@ -64,18 +65,20 @@
       </div>
     </aside>
 
-    <main class="main min-w-0 px-4 lg:px-6" id="main-content">
+    <main class="main min-w-0" id="main-content">
       <article id="article" class="article w-100 min-w-0 text-break" aria-live="polite">
         <p class="loading fg-3 fs-xs my-3">Loading…</p>
       </article>
     </main>
 
-    <aside class="toc-panel overflow-auto px-4" aria-label="On this page">
-      <div class="toc-inner pt-6">
+    <aside class="toc-panel overflow-auto" aria-label="On this page">
+      <div class="toc-inner">
         <h2 class="interface-heading border-bottom fw-semibold fg-body fs-xs mb-3 pb-2 lh-sm">Contents</h2>
         <nav id="toc" class="toc d-flex flex-column"></nav>
       </div>
     </aside>
+  </div>
+
   </div>
 
   <div class="sidebar-backdrop position-fixed" id="sidebar-backdrop" hidden></div>
