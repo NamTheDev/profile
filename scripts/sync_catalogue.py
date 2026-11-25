@@ -28,7 +28,8 @@ def integer(value):
 
 def channel(source, previous):
     result = {**previous, **source}
-    videos = {video["id"]: video for video in previous.get("videos", [])}
+    # A successful refresh replaces the snapshot; do not retain removed uploads.
+    videos = {}
     if KEY:
         item = api("channels", part="snippet,statistics,contentDetails", id=source["id"])["items"][0]
         snippet, stats = item["snippet"], item["statistics"]
@@ -52,6 +53,8 @@ def channel(source, previous):
                 break
     else:
         feed = ET.fromstring(request("https://www.youtube.com/feeds/videos.xml?" + urllib.parse.urlencode({"channel_id": source["id"]})))
+        if feed.tag != ATOM+"feed" or feed.findtext(YT+"channelId") != source["id"]:
+            raise ValueError("Unexpected YouTube feed")
         result["title"] = feed.findtext(ATOM+"title") or source["label"]
         for entry in feed.findall(ATOM+"entry"):
             vid = entry.findtext(YT+"videoId")

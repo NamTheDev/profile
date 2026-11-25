@@ -28,6 +28,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_catalogue.py'
       - id: refresh
         run: python scripts/sync_catalogue.py
         continue-on-error: true
