@@ -51,7 +51,7 @@
     body.append(stats);
     if (repo.updated) body.append(element("div","fg-3 fs-xs","Last pushed: " + repo.updated));
     const nav = element("div","d-flex flex-wrap gap-4 fs-sm");
-    for (const [label, path] of [["Code",""],["Commits","/commits/main/"],["Releases","/releases"]]) nav.append(link(url+path,label));
+    for (const [label, path] of [["Code",""],["Commits","/commits/main/"]]) nav.append(link(url+path,label));
     body.append(nav);
     return outer;
   }

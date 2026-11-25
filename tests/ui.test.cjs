@@ -45,6 +45,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.locator('#article .card').first().waitFor();
     assert.equal(await page.locator('#article iframe').count(), 0);
     assert.equal(await page.locator('#article .card').count(), 10);
+    assert.equal(await page.locator('#article .card a[href$="/releases"]').count(), 0);
     for (const card of await page.locator('#article .card').all()) {
       assert.equal(await card.evaluate(e=>e.classList.contains('w-fit')), true);
       assert.equal(await card.evaluate(e=>getComputedStyle(e).backgroundColor), 'rgb(24, 24, 37)');
