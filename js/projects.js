@@ -42,7 +42,6 @@
     preview.append(image);
     body.append(preview);
     const stats = element("div", "d-flex flex-wrap gap-4 fs-sm");
-    if (repo.language) stats.append(element("span", "fg-2", repo.language));
     if (repo.license && repo.license !== "NOASSERTION") stats.append(link(url + "/blob/main/LICENSE", repo.license));
     for (const [label, key, path] of [["Stars","stars","stargazers"],["Forks","forks","forks"],["Open issues","issues","issues"]]) {
       if (Number.isInteger(repo[key]) && repo[key] >= 0) stats.append(link(url + "/" + path, label + ": " + repo[key]));
