@@ -17,3 +17,7 @@ The fixed dark theme is advertised through the color-scheme meta element, the ro
 ## Bootstrap-first styling
 
 Follow the [minimum-custom-CSS standard in util](https://github.com/NamTheDev/util/blob/main/design/DESIGN_PRINCIPLES.md). The local stylesheet retains only application-specific exceptions: exact reading-column geometry, responsive navigation rail and drawer, marquee animation, Markdown article typography and link behavior, and configuration overrides required by Profile's established visual identity. Use existing Bootstrap utilities in markup for generic spacing, sizing, borders and color.
+
+## Editorial style
+
+Write descriptions in neutral third-person, encyclopedic prose. Preserve Nam's original personal statements and first-person language verbatim as Markdown block quotations, with italic text inside double quotation marks: `> *"Original statement."*`. Introduce quotations with appropriate attribution. Apply the same treatment to direct statements by collaborative projects; never present generated or paraphrased text as the author's own words. Do not add first-person statements on the author's behalf.
