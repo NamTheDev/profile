@@ -41,7 +41,7 @@ function renderNav(query = "") {
   els.nav.replaceChildren();
   if (!pages.length) {
     const empty = document.createElement("p");
-    empty.className = "page-nav-empty";
+    empty.className = "page-nav-empty fg-3 fs-xs my-2 mx-3";
     empty.textContent = "No matching pages.";
     els.nav.append(empty);
     return;
@@ -202,13 +202,14 @@ async function loadPage(next) {
   state.current = page.slug;
   renderNav(els.filter.value);
   if (state.observer) state.observer.disconnect();
-  els.article.innerHTML = '<p class="loading">Loading…</p>';
+  els.article.innerHTML = '<p class="loading fg-3 fs-xs my-3">Loading…</p>';
   try {
     const markdown = await pageText(page);
     if (version !== state.loadVersion) return;
     els.article.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { gfm: true }));
+    els.article.querySelectorAll("video").forEach(video => video.classList.add("max-w-100", "h-auto"));
     els.article.querySelectorAll("img").forEach(image => image.classList.add("img-fluid"));
-    els.article.querySelectorAll("table").forEach(table => table.classList.add("table"));
+    els.article.querySelectorAll("table").forEach(table => table.classList.add("table", "table-bordered", "fs-sm"));
     headingIds();
     renderToc();
     bindLinks();
@@ -223,7 +224,7 @@ async function loadPage(next) {
     if (version !== state.loadVersion) return;
     console.error(error);
     const message = document.createElement("p");
-    message.className = "error";
+    message.className = "error fg-danger fs-xs my-3";
     message.textContent = "Unable to load this page: " + (error?.message || String(error));
     els.article.replaceChildren(message);
     els.toc.replaceChildren();
@@ -244,7 +245,7 @@ async function init() {
   } catch (error) {
     console.error(error);
     const message = document.createElement("p");
-    message.className = "error";
+    message.className = "error fg-danger fs-xs my-3";
     message.textContent = "Unable to load page index: " + (error?.message || String(error));
     els.article.replaceChildren(message);
   }
