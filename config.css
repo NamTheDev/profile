@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 /* Shared design configuration — no framework distribution or app layout rules.
- * Catppuccin Mocha (dark) / Latte (light), Lavender accent.
+ * Catppuccin Mocha (dark only), Lavender accent.
  * Palette: https://catppuccin.com/palette/
  * Bootstrap 6 tokens: https://getbootstrap.com/llms-full.txt
  * Load after Bootstrap, before application CSS.
@@ -50,7 +50,7 @@
   --radius-dialog:12px;
   --motion-duration:0s;
 
-  /* Catppuccin color roles; dark-first */
+  /* Catppuccin color roles; dark only */
   color-scheme:dark;
   --base:#1e1e2e;
   --mantle:#181825;
@@ -127,33 +127,6 @@
   --bs-box-shadow-lg:none;
   --bs-box-shadow-xl:none;
   --bs-box-shadow-inset:none;
-}
-:root[data-bs-theme="light"],:host([data-bs-theme="light"]){
-  color-scheme:light;
-  --base:#eff1f5;
-  --mantle:#e6e9ef;
-  --crust:#dce0e8;
-  --surface-0:#ccd0da;
-  --surface-1:#bcc0cc;
-  --surface-2:#acb0be;
-  --overlay-0:#9ca0b0;
-  --overlay-1:#8c8fa1;
-  --overlay-2:#7c7f93;
-  --text:#4c4f69;
-  --subtext-0:#6c6f85;
-  --subtext-1:#5c5f77;
-  --accent:#7287fd;
-  --accent-ink:#11111b;
-  --error:#d20f39;
-  --success:#40a02b;
-  --warning:#df8e1d;
-  --info:#1e66f5;
-  --scrim:#4c4f6966;
-  /* Darker accent foreground for accessible text on light surfaces. */
-  --bs-primary-fg:#4354b3;
-  --bs-primary-fg-emphasis:#4354b3;
-  --bs-link-color:#4354b3;
-  --bs-link-hover-color:#4354b3;
 }
 @media (width < 840px){
   :root,:host{--content-gutter:12px}
