@@ -62,7 +62,7 @@ function renderNav(query = "") {
 }
 function headingIds() {
   const used = new Set();
-  els.article.querySelectorAll("h2, h3").forEach((heading) => {
+  els.article.querySelectorAll("h2, h3, h4, h5, h6").forEach((heading) => {
     let id = slugify(heading.textContent) || "section";
     const base = id;
     let i = 2;
@@ -71,33 +71,80 @@ function headingIds() {
     heading.id = id;
   });
 }
-function tocLink(heading) {
-  const link = document.createElement("a");
-  link.href = "#" + heading.id;
-  link.textContent = heading.textContent;
-  link.dataset.level = heading.tagName === "H3" ? "3" : "2";
-  return link;
+/* Build a hierarchy from heading levels, including skipped levels. */
+function tocTree(headings) {
+  const root = { level: 1, children: [] };
+  const stack = [root];
+  for (const heading of headings) {
+    const level = Number(heading.tagName.slice(1));
+    while (stack.length > 1 && stack.at(-1).level >= level) stack.pop();
+    const node = { heading, level, children: [] };
+    stack.at(-1).children.push(node);
+    stack.push(node);
+  }
+  return root.children;
+}
+function setActiveToc(id) {
+  document.querySelectorAll(".toc a, .mobile-contents a").forEach((link) => {
+    const active = link.getAttribute("href") === "#" + id;
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+}
+function tocList(nodes, prefix) {
+  const list = document.createElement("ul");
+  list.className = "toc-list";
+  for (const node of nodes) {
+    const item = document.createElement("li");
+    const row = document.createElement("div");
+    row.className = "toc-row";
+    const link = document.createElement("a");
+    link.href = "#" + node.heading.id;
+    link.textContent = node.heading.textContent;
+    link.addEventListener("click", () => setActiveToc(node.heading.id));
+    if (node.children.length) {
+      const children = tocList(node.children, prefix);
+      children.id = prefix + "-" + node.heading.id;
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "toc-toggle btn p-0";
+      toggle.setAttribute("aria-controls", children.id);
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Collapse " + node.heading.textContent);
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        children.hidden = expanded;
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        toggle.setAttribute("aria-label", (expanded ? "Expand " : "Collapse ") + node.heading.textContent);
+      });
+      row.append(toggle, link);
+      item.append(row, children);
+    } else {
+      row.append(link);
+      item.append(row);
+    }
+    list.append(item);
+  }
+  return list;
 }
 function renderToc() {
   if (state.observer) state.observer.disconnect();
   els.toc.replaceChildren();
   els.article.querySelector(".mobile-contents")?.remove();
-  const headings = [...els.article.querySelectorAll("h2, h3")];
-  headings.forEach((heading) => els.toc.append(tocLink(heading)));
+  const headings = [...els.article.querySelectorAll("h2, h3, h4, h5, h6")];
   if (!headings.length) return;
+  const tree = tocTree(headings);
+  els.toc.append(tocList(tree, "desktop-toc"));
   const mobile = document.createElement("details");
   mobile.className = "mobile-contents";
-  mobile.innerHTML = "<summary>Contents</summary><nav></nav>";
-  const mobileNav = mobile.querySelector("nav");
-  headings.forEach((heading) => mobileNav.append(tocLink(heading)));
+  mobile.innerHTML = '<summary>Contents</summary><nav aria-label="On this page"></nav>';
+  mobile.querySelector("nav").append(tocList(tree, "mobile-toc"));
   els.article.querySelector("h1")?.insertAdjacentElement("afterend", mobile);
   state.observer = new IntersectionObserver((entries) => {
     const current = entries.filter((entry) => entry.isIntersecting)
       .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-    if (!current) return;
-    document.querySelectorAll(".toc a, .mobile-contents a").forEach((link) => {
-      link.classList.toggle("active", link.hash === "#" + current.target.id);
-    });
+    if (current) setActiveToc(current.target.id);
   }, { rootMargin: "-15% 0px -70% 0px" });
   headings.forEach((heading) => state.observer.observe(heading));
 }
