@@ -141,8 +141,4 @@ em { color: var(--accent); }
   --bs-badge-color: var(--base);
   --bs-badge-border-radius: 999px;
 }
-.repository-filter[aria-pressed="true"] {
-  background: var(--surface-0); color: var(--text); border-color: var(--surface-1);
-}
-.repository-library [hidden] { display: none !important; }
 .repository-library .repository-alias { scroll-margin-top: calc(var(--header-height) + 1rem); }
