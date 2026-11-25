@@ -56,26 +56,28 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('.marquee-group').count(),2);
     assert.equal(await page.locator('.marquee-track').evaluate(e=>getComputedStyle(e).animationName),'marquee-scroll');
     await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/catalogue.json', route => route.abort());
-    await page.route('https://raw.githubusercontent.com/NamTheDev/profile/main/data/bandcamp.json', route => route.abort());
-    // Test fixture only: never published as release metadata.
-    const releases = [
-      {title:'Older fixture',url:'https://namchill235.bandcamp.com/track/older-fixture',released:'2025-01-01',type:'Single'},
-      {title:'Newer fixture',url:'https://namchill235.bandcamp.com/album/newer-fixture',released:'2026-01-01',type:'EP',artwork:'https://f4.bcbits.com/img/a123_2.jpg'},
-      {title:'Invalid fixture',url:'https://example.com/album/invalid'}
+    // Test fixtures only; never published as the artist's releases.
+    const players = [
+      {title:'Album fixture',src:'https://bandcamp.com/EmbeddedPlayer/album=12345/size=small/'},
+      {title:'Track fixture',src:'https://bandcamp.com/EmbeddedPlayer/track=67890/size=small/'},
+      {title:'Duplicate fixture',src:'https://bandcamp.com/EmbeddedPlayer/album=12345/size=large/'},
+      {title:'Invalid fixture',src:'https://example.com/EmbeddedPlayer/album=12345/size=small/'}
     ];
-    await page.route('**/data/bandcamp.json',route=>route.fulfill({json:{releases}}));
+    await page.route('**/data/bandcamp.json',route=>route.fulfill({json:{players}}));
+    await page.route('https://bandcamp.com/EmbeddedPlayer/**',route=>route.fulfill({contentType:'text/html',body:'<html><body>Player test fixture</body></html>'}));
     await page.locator('#page-nav a').filter({hasText:'Projects'}).click();
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
     assert.equal(await page.locator('#site-wrapper').evaluate(e=>Math.abs(e.getBoundingClientRect().width-document.documentElement.clientWidth)<=1),true);
     await page.locator('#article .card').first().waitFor();
-    const bandcamp = page.locator('section[aria-label="Bandcamp releases"]');
+    const bandcamp = page.locator('section[aria-label="Bandcamp players"]');
     await bandcamp.waitFor();
-    assert.deepEqual(await bandcamp.locator('a[href*="/album/"],a[href*="/track/"]').allTextContents(),['Newer fixtureEP · 2026-01-01','Older fixtureSingle · 2025-01-01']);
-    assert.equal(await bandcamp.locator('img').getAttribute('width'),'76');
-    assert.equal(await bandcamp.locator('img').getAttribute('height'),'76');
-    assert.equal(await bandcamp.locator('a[href*="example.com"]').count(),0);
-    assert.equal(await bandcamp.locator('a[href="https://namchill235.bandcamp.com/music"]').count(),1);
-    assert.equal(await page.locator('#article iframe').count(), 0);
+    assert.equal(await bandcamp.locator('iframe').count(),2);
+    assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>frame.getAttribute('src'))),[
+      'https://bandcamp.com/EmbeddedPlayer/album=12345/size=small/bgcol=333333/linkcol=89b4fa/transparent=true/',
+      'https://bandcamp.com/EmbeddedPlayer/track=67890/size=small/bgcol=333333/linkcol=89b4fa/transparent=true/'
+    ]);
+    assert.equal(await bandcamp.locator('iframe').first().getAttribute('height'),'42');
+    assert.equal(await page.locator('#article iframe:not([src^="https://bandcamp.com/EmbeddedPlayer/"])').count(),0);
     assert.equal(await page.locator('#article .card').count(), 10);
     assert.equal(await page.locator('#article .card a[href$="/releases"]').count(), 0);
     for (const card of await page.locator('#article .card').all()) {

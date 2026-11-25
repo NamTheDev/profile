@@ -75,63 +75,46 @@
     }
     return group;
   }
-  const bandcampHome = "https://namchill235.bandcamp.com/";
-  function safeReleaseUrl(value) {
+  // Only official, release-specific Bandcamp players are allowed.
+  function officialPlayerUrl(value) {
     try {
       const url = new URL(value);
-      return url.origin === new URL(bandcampHome).origin && /^\/(album|track)\/[^/]+\/?$/.test(url.pathname) && !url.username && !url.password ? url.href : null;
+      if (url.origin !== "https://bandcamp.com" || url.username || url.password) return null;
+      const match = url.pathname.match(/^\/EmbeddedPlayer\/(album|track)=(\d+)\//);
+      if (!match || !/^\d{1,15}$/.test(match[2])) return null;
+      // Use Bandcamp's compact 42px player and match the native dark palette.
+      return "https://bandcamp.com/EmbeddedPlayer/" + match[1] + "=" + match[2] + "/size=small/bgcol=333333/linkcol=89b4fa/transparent=true/";
     } catch { return null; }
   }
-  function safeArtwork(value) {
-    try {
-      const url = new URL(value);
-      return url.protocol === "https:" && /^(?:[a-z0-9-]+\.)*bcbits\.com$/i.test(url.hostname) && !url.username && !url.password ? url.href : null;
-    } catch { return null; }
-  }
-  function bandcampReleases(data) {
-    const group = element("section", "my-4");
-    group.setAttribute("aria-label", "Bandcamp releases");
-    const releases = Array.isArray(data?.releases) ? data.releases : [];
+  function bandcampPlayers(data) {
+    const players = Array.isArray(data?.players) ? data.players : [];
     const seen = new Set();
-    const items = releases.filter(r => r && typeof r.title === "string" && r.title.trim() && safeReleaseUrl(r.url))
-      .map(r => ({...r, url:safeReleaseUrl(r.url)}))
-      .sort((a,b) => String(b.released || "").localeCompare(String(a.released || "")))
-      .filter(r => { if(seen.has(r.url)) return false; seen.add(r.url); return true; });
+    const group = element("section", "my-4");
+    group.setAttribute("aria-label", "Bandcamp players");
     group.append(element("p","fw-semibold mb-3","Bandcamp releases"));
     const list = element("div","d-flex flex-column gap-3");
-    for (const release of items) {
-      const row = link(release.url,null,"d-flex align-items-center gap-3 text-decoration-none");
-      const art = safeArtwork(release.artwork);
-      if (art) {
-        const image = element("img","img-fluid rounded-3 flex-shrink-0");
-        image.src = art; image.alt = ""; image.width = 76; image.height = 76; image.loading = "lazy";
-        row.append(image);
-      }
-      const details = element("div","min-w-0 d-flex flex-column gap-1");
-      details.append(element("span","fw-medium text-break",release.title));
-      const type = ["Album","EP","Single"].includes(release.type) ? release.type : "";
-      const date = /^\d{4}-\d{2}-\d{2}$/.test(release.released || "") ? release.released : "";
-      const metadata = [type,date].filter(Boolean).join(" · ");
-      if (metadata) details.append(element("span","fg-3 fs-xs",metadata));
-      row.append(details); list.append(row);
+    for (const item of players) {
+      const src = officialPlayerUrl(item?.src);
+      if (!src || seen.has(src)) continue;
+      seen.add(src);
+      const frame = element("iframe","d-block w-100 border-0");
+      frame.src = src;
+      frame.height = "42";
+      frame.loading = "lazy";
+      frame.title = typeof item.title === "string" && item.title.trim() ? "Bandcamp — " + item.title : "Bandcamp release player";
+      list.append(frame);
     }
-    group.append(list,link(bandcampHome+"music","View all releases on Bandcamp","d-inline-block mt-3 fs-sm"));
+    // Do not publish a redundant heading or placeholder when no releases are configured.
+    if (!seen.size) return null;
+    group.append(list,link("https://namchill235.bandcamp.com/music","View all releases on Bandcamp","d-inline-block mt-3 fs-sm"));
     return group;
   }
   async function readBandcamp() {
-    const read = async (url, options) => {
-      const response = await fetch(url,options);
-      if (!response.ok) throw Error("Bandcamp catalogue "+response.status);
-      const data = await response.json();
-      if (!Array.isArray(data.releases)) throw Error("Invalid Bandcamp catalogue");
-      return data;
-    };
     try {
-      return await read("https://raw.githubusercontent.com/NamTheDev/profile/main/data/bandcamp.json",{cache:"no-cache",signal:AbortSignal.timeout(4000)});
-    } catch {
-      try { return await read("data/bandcamp.json"); }
-      catch { return {releases:[]}; }
-    }
+      const response = await fetch("data/bandcamp.json");
+      if (!response.ok) throw Error("Bandcamp configuration unavailable");
+      return await response.json();
+    } catch { return {players:[]}; }
   }
   async function readCatalogue() {
     const local=await fetch("data/catalogue.json").then(r=>{if(!r.ok)throw Error("Catalogue "+r.status);return r.json()});
@@ -145,7 +128,10 @@
     const marker=document.createComment("project catalogue");
     article.append(marker);
     try {
-      const bandcamp = readBandcamp().then(data => { if (article.contains(marker)) afterSection(article,"music",bandcampReleases(data)); });
+      const bandcamp = readBandcamp().then(data => {
+        const players = bandcampPlayers(data);
+        if (players && article.contains(marker)) afterSection(article,"music",players);
+      });
       const data=await readCatalogue().catch(error => { console.warn("Project catalogue unavailable",error); return {repositories:[],channels:[]}; });
       await bandcamp;
       if (!article.contains(marker)) return;
