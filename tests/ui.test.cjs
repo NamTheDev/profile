@@ -28,6 +28,11 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.route('https://fonts.googleapis.com/**', route => route.abort());
     await page.goto('http://127.0.0.1:' + server.address().port);
     await page.locator('#article h1').waitFor();
+    assert.equal(await page.locator('head meta[name="color-scheme"]').count(),1);
+    assert.equal(await page.locator('head meta[name="color-scheme"]').getAttribute('content'),'dark');
+    assert.equal(await page.locator('html').getAttribute('data-bs-theme'),'dark');
+    assert.equal(await page.locator('html').evaluate(e=>getComputedStyle(e).colorScheme),'dark');
+    assert.equal(await page.locator('meta[name="darkreader-lock"]').count(),0);
     assert.equal(await page.locator('.page-shell').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),3);
     assert.equal(await page.locator('body').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(30, 30, 46)');
     assert.equal(await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color),'rgb(166, 227, 161)');

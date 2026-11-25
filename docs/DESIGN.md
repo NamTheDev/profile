@@ -11,3 +11,5 @@ The service worker precaches the local stylesheets and only clears its own versi
 ## Verification
 
 GitHub Actions runs syntax checks, cache and manifest tests, plus browser verification for desktop and mobile layouts, navigation, native controls and reduced motion.
+
+The fixed dark theme is advertised through the color-scheme meta element, the root CSS color-scheme property and data-bs-theme. Follow the [native theme signaling specification](https://github.com/NamTheDev/util/blob/main/formatting/THEME_SIGNAL.md). Do not disable browser extensions with a lock.
