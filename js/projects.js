@@ -87,7 +87,7 @@
     const list = element("div","d-flex flex-column gap-3");
     for (const track of bandcampTracks) {
       const frame = element("iframe","d-block border-0 max-w-100");
-      frame.src = "https://bandcamp.com/EmbeddedPlayer/track=" + track.id + "/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/";
+      frame.src = "https://bandcamp.com/EmbeddedPlayer/track=" + track.id + "/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/artwork=small/transparent=true/";
       frame.title = track.title + " by Nam — Bandcamp player";
       frame.width = "500";
       frame.height = "120";
