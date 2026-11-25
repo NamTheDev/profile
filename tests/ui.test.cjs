@@ -65,18 +65,37 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await bandcamp.waitFor();
     assert.equal(await bandcamp.locator('iframe').count(),2);
     assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>frame.getAttribute('src'))),[
-      'https://bandcamp.com/EmbeddedPlayer/track=3801929766/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/',
-      'https://bandcamp.com/EmbeddedPlayer/track=4198918332/size=large/bgcol=1e1e2e/linkcol=89b4fa/tracklist=false/artwork=small/transparent=true/'
+      'https://bandcamp.com/EmbeddedPlayer/track=3801929766/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/artwork=small/transparent=true/',
+      'https://bandcamp.com/EmbeddedPlayer/track=4198918332/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/artwork=small/transparent=true/'
     ]);
     assert.deepEqual(await bandcamp.locator('iframe').evaluateAll(frames=>frames.map(frame=>[frame.width,frame.height,frame.loading])),[['500','120','lazy'],['500','120','lazy']]);
     assert.equal(await page.locator('#article iframe:not([src^="https://bandcamp.com/EmbeddedPlayer/"])').count(),0);
     assert.equal(await page.locator('#article a[href="https://namchill235.bandcamp.com"]').count(), 1);
-    assert.equal(await page.locator('#article .card').count(), 10);
+    const catalogue = JSON.parse(await fs.readFile('data/catalogue.json','utf8'));
+    const library = page.locator('.repository-library');
+    assert.equal(await library.count(), 1);
+    assert.equal(await library.locator('input, button, [role="status"]').count(), 0);
+    assert.equal(await library.locator('.repository-card').count(), catalogue.repositories.length);
+    const active = library.locator('section').filter({has: page.locator('h3#active')});
+    const archived = library.locator('section').filter({has: page.locator('h3#archived')});
+    assert.equal(await active.locator('.repository-card').count(), catalogue.repositories.filter(repo=>!repo.archived).length);
+    assert.equal(await archived.locator('.repository-card').count(), catalogue.repositories.filter(repo=>repo.archived).length);
+    assert.equal(await active.locator('.repository-archive-badge').count(), 0);
+    for (const repo of catalogue.repositories) {
+      const card = library.locator('.repository-card[id="' + repo.name.toLowerCase() + '"]');
+      assert.equal(await card.isVisible(), true);
+      assert.equal(await card.locator('.repository-archive-badge').count(), repo.archived ? 1 : 0);
+      if (repo.archived) {
+        const badge = card.locator('.repository-archive-badge');
+        assert.equal(await badge.evaluate(e=>getComputedStyle(e).backgroundColor), 'rgb(243, 139, 168)');
+        assert.equal(await badge.evaluate(e=>getComputedStyle(e).color), 'rgb(30, 30, 46)');
+      }
+    }
     assert.equal(await page.locator('#article .card a[href$="/releases"]').count(), 0);
     for (const card of await page.locator('#article .card').all()) {
-      assert.equal(await card.evaluate(e=>e.classList.contains('w-fit')), true);
+      assert.equal(await card.evaluate(e=>e.classList.contains('repository-card')), true);
       assert.equal(await card.evaluate(e=>getComputedStyle(e).backgroundColor), 'rgb(24, 24, 37)');
-      assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width < e.parentElement.clientWidth), true);
+      assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth + 1), true);
     }
     assert.equal(await page.locator('#article a[href="https://github.com/NamTheDev/keep/stargazers"]').count(), 1);
     const previews = page.locator('#article .card a > img[src^="https://opengraph.githubassets.com/1/NamTheDev/"]');
@@ -87,12 +106,13 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       assert.equal(await image.getAttribute('loading'), 'lazy');
       assert.equal(await image.locator('..').getAttribute('href'), (await image.getAttribute('src')).replace('https://opengraph.githubassets.com/1/', 'https://github.com/'));
     }
-    const catalogue = JSON.parse(await fs.readFile('data/catalogue.json','utf8'));
     for (const channel of catalogue.channels) {
       for (const video of channel.videos) {
         const row = page.locator('#article a[href="https://www.youtube.com/watch?v=' + video.id + '"]');
         assert.ok(await row.count() >= 1);
         assert.equal(await row.first().locator('img').getAttribute('src'), 'https://i.ytimg.com/vi/' + video.id + '/mqdefault.jpg');
+        assert.equal(await row.first().locator('img').getAttribute('width'), '138');
+        assert.equal(await row.first().locator('img').getAttribute('height'), '78');
       }
     }
     assert.equal(await page.locator('#article a[href*="sub_confirmation"]').count(), 0);
@@ -105,9 +125,9 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     }
     await page.locator('#toc > ul > li').first().waitFor();
     const sections = page.locator('#toc > ul > li');
-    assert.equal(await sections.count(), 3);
+    assert.equal(await sections.count(), 2);
     assert.deepEqual(await sections.locator(':scope > details > summary > a').allTextContents(),
-      ['Creative works', 'Software', 'Archived projects']);
+      ['Creative works', 'Repositories']);
     const headingColor = await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color);
     for (const link of await sections.locator(':scope > details > summary > a').all()) {
       assert.equal(await link.evaluate(e=>getComputedStyle(e).color), headingColor);
@@ -115,7 +135,8 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     const software = sections.nth(1).locator('details').first();
     const summary = software.locator(':scope > summary');
     const children = software.locator(':scope > ul');
-    assert.equal(await children.locator(':scope > li').count(), 6);
+    assert.equal(await children.locator(':scope > li').count(), 2);
+    assert.deepEqual(await children.locator(':scope > li > a').allTextContents(), ['Active', 'Archived']);
     assert.equal(await children.isVisible(), true);
     await summary.focus();
     await summary.press('Space');
@@ -123,21 +144,27 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await children.isVisible(), false);
     await summary.press('Space');
     assert.equal(await children.isVisible(), true);
-    await children.getByRole('link', {name:'keep', exact:true}).click();
-    assert.equal(new URL(page.url()).hash, '#keep');
-    assert.equal(await page.locator('#article h3#keep').count(), 1);
+    await children.getByRole('link', {name:'Archived', exact:true}).click();
+    assert.equal(new URL(page.url()).hash, '#archived');
+    assert.equal(await page.locator('#article h3#archived').count(), 1);
+    await page.goto('http://127.0.0.1:' + server.address().port + '/?page=projects#keep');
+    await page.locator('.repository-card#keep').waitFor();
+    assert.equal(await page.locator('.repository-card#keep').isVisible(), true);
     await page.setViewportSize({width:390,height:844});
     for (const frame of await bandcamp.locator('iframe').all()) assert.equal(await frame.evaluate(e=>e.getBoundingClientRect().width<=e.parentElement.clientWidth+1),true);
     for (const card of await page.locator('#article .card').all()) {
       assert.equal(await card.evaluate(e=>e.getBoundingClientRect().width <= e.parentElement.clientWidth + 1), true);
       assert.equal(await card.evaluate(e=>e.scrollWidth <= e.clientWidth + 1), true);
     }
+    for (const grid of await library.locator('.repository-grid').all()) {
+      assert.equal(await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length), 1);
+    }
     const mobileContents = page.locator('.mobile-contents');
     assert.equal(await page.locator('#toc').isVisible(), false);
     await mobileContents.locator(':scope > summary').click();
-    assert.equal(await mobileContents.locator('nav > ul > li').count(), 3);
-    const mobileChildren = mobileContents.locator('#mobile-toc-software');
-    assert.equal(await mobileChildren.locator(':scope > li').count(), 6);
+    assert.equal(await mobileContents.locator('nav > ul > li').count(), 2);
+    const mobileChildren = mobileContents.locator('#mobile-toc-repositories');
+    assert.equal(await mobileChildren.locator(':scope > li').count(), 2);
     const mobileSummary = mobileChildren.locator('..').locator(':scope > summary');
     await mobileSummary.focus();
     await mobileSummary.press('Space');
