@@ -1,35 +1,3 @@
-(function () {
-  const origFetch = window.fetch;
-  window.fetch = async function (...args) {
-    const input = args[0];
-    const url = input instanceof Request ? input.url : String(input);
-    const res = await origFetch.apply(this, args);
-    const ct = (res.headers.get("content-type") || "").toLowerCase();
-    let pathname = url;
-    try { pathname = new URL(url, location.href).pathname; } catch {}
-    const wantsJson = /\.json$/i.test(pathname);
-    const wantsJs = /\.m?js$/i.test(pathname);
-    let expected = null;
-    if (wantsJson && !ct.includes("json")) expected = "JSON";
-    if (wantsJs && ct.includes("html")) expected = "JavaScript";
-    if (expected) {
-      const body = await res.clone().text();
-      console.error(
-        `%c[MIME Mismatch] ${url} → expected ${expected}, got "${ct}" (status ${res.status})`,
-        "color:#ff3333;font-weight:bold"
-      );
-      console.log("Body preview:", body.slice(0, 300));
-    }
-    return res;
-  };
-  window.addEventListener("error", (e) => {
-    if (e.message && e.message.includes("Unexpected token '<'")) {
-      console.error("[Caught] JSON.parse failed with '<' — see MIME Mismatch logs above.");
-    }
-  });
-  console.log("%c[Diagnostic] fetch interceptor installed", "color:#00aaff");
-})();
-
 const state = { pages: [], current: null, text: new Map(), observer: null, loadVersion: 0 };
 const $ = (selector) => document.querySelector(selector);
 const els = {
@@ -144,6 +112,7 @@ function bindLinks() {
   els.article.querySelectorAll('a[href$=".md"], a[href*=".md#"]').forEach((link) => {
     const raw = link.getAttribute("href");
     const [path, hash = ""] = raw.split("#");
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(path)) return;
     const page = resolveMarkdown(path);
     if (!page) return;
     link.href = "?page=" + encodeURIComponent(page.slug) + (hash ? "#" + hash : "");
@@ -230,7 +199,10 @@ async function init() {
     prefetchPages();
   } catch (error) {
     console.error(error);
-    els.article.innerHTML = '<p class="error">Unable to load page index: ' + error.message + "</p>";
+    const message = document.createElement("p");
+    message.className = "error";
+    message.textContent = "Unable to load page index: " + (error?.message || String(error));
+    els.article.replaceChildren(message);
   }
 }
 function wireEvents() {

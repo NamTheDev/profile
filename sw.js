@@ -1,4 +1,5 @@
-const CACHE = "self-documentary-v9";
+const CACHE_PREFIX = "self-documentary-";
+const CACHE = CACHE_PREFIX + "v10";
 const CORE = [
   "./",
   "index.html",
@@ -8,9 +9,6 @@ const CORE = [
   "pages/ABOUT.md",
   "pages/PROJECTS.md"
 ];
-const NETWORK_FIRST = new Set([
-  "index.html", "style.css", "script.js", "manifest.json"
-]);
 
 function isCacheable(request, response) {
   if (!response || !response.ok) return false;
@@ -46,7 +44,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)));
+    await Promise.all(keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE).map((key) => caches.delete(key)));
     await self.clients.claim();
   })());
 });
@@ -66,27 +64,10 @@ async function networkFirst(request) {
   }
 }
 
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE);
-  const cached = await cache.match(request);
-  const fresh = fetch(request)
-    .then(async (response) => {
-      if (isCacheable(request, response)) await cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => cached);
-  return cached || fresh;
-}
-
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-  const file = url.pathname.split("/").pop() || "index.html";
-  if (request.mode === "navigate" || NETWORK_FIRST.has(file) || file.endsWith(".md")) {
-    event.respondWith(networkFirst(request));
-    return;
-  }
-  event.respondWith(staleWhileRevalidate(request));
+  if (url.origin !== self.location.origin || !url.pathname.startsWith(new URL(self.registration.scope).pathname)) return;
+  event.respondWith(networkFirst(request));
 });

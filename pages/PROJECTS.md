@@ -50,7 +50,7 @@ This AI-assisted project should be reviewed and tested before relying on it. The
 
 ## keep
 
-A local-first browser notes application featuring quick notes, checklists, labels, reminders, archives and JSON backup import/export. Notes and preferences are stored in the browser's local storage, without an account, hosted database or synchronization server. Built with TypeScript and Bun tooling, it uses a compact, monochrome Material Design 3-inspired interface.
+A local-first browser notes application featuring quick notes, checklists, labels, reminders, archives and JSON backup import/export. Notes and preferences are stored in the browser's local storage, without an account, hosted database or synchronization server. Built with TypeScript and Bun tooling, it uses a compact Bootstrap 6 interface with Catppuccin Mocha and Lavender accents.
 
 The application is accessible through its [website](https://namthedev.github.io/keep/), with its source code hosted on [GitHub](https://github.com/NamTheDev/keep).
 
@@ -62,7 +62,7 @@ The application is accessible through its [website](https://namthedev.github.io/
 
 ## util
 
-A collection of reusable utilities and design assets, including the canonical Material Design 3-inspired stylesheet used by keep and clipboard. It provides consistent typography, themes, navigation and component styling across both applications.
+A collection of reusable utilities and design assets, including the shared Bootstrap 6 design configuration used by keep and clipboard, and repository formatting standards.
 
 The repository is maintained on [GitHub](https://github.com/NamTheDev/util).
 
