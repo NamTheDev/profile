@@ -3,6 +3,7 @@
   --font-ui: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-size: 1.0625rem;
   --line-height: 1.7;
+  --bs-success-fg: var(--success);
   --bs-link-color: var(--info);
   --bs-link-hover-color: var(--info);
   --bs-link-decoration: none;
@@ -73,43 +74,11 @@ em { color: var(--accent); }
   --bs-control-border-color: var(--surface-1);
   margin-bottom: .65rem;
 }
-.page-link, .toc a { border-left: 2px solid transparent; color: var(--subtext-1); line-height: 1.35; }
+.page-link { border-left: 2px solid transparent; color: var(--subtext-1); line-height: 1.35; }
 .page-link { padding: .5rem .625rem; font-size: .875rem; }
 .page-link:hover, .page-link:focus-visible, .page-link.active { background: var(--mantle); color: var(--text); text-decoration: none; }
-.page-link.active, .toc a.active { border-left-color: var(--accent); color: var(--text); font-weight: 600; }
+.page-link.active { border-left-color: var(--accent); color: var(--text); font-weight: 600; }
 .page-nav-empty { margin: .35rem .45rem; color: var(--subtext-0); font-size: .78rem; }
-/* Nested contents lists use the same visual language on desktop and mobile. */
-:is(.toc, .mobile-contents) .toc-list {
-  list-style: none; margin: 0; padding: 0; max-width: none;
-}
-:is(.toc, .mobile-contents) .toc-list .toc-list {
-  margin-left: .65rem; padding-left: .6rem; border-left: var(--rule);
-}
-:is(.toc, .mobile-contents) .toc-list li { margin: 0; max-width: none; }
-.toc-row { display: flex; align-items: center; gap: .15rem; }
-:is(.toc, .mobile-contents) .toc-row a {
-  display: block; flex: 1; min-width: 0; padding: .3rem .4rem;
-  border-left: 2px solid transparent; color: var(--subtext-1);
-  font-size: .8125rem; line-height: 1.35; overflow-wrap: anywhere;
-}
-:is(.toc, .mobile-contents) .toc-row a:is(:hover, :focus-visible) {
-  color: var(--text); text-decoration: none;
-}
-:is(.toc, .mobile-contents) .toc-row a.active {
-  border-left-color: var(--accent); color: var(--text); font-weight: 600;
-}
-.toc-toggle {
-  display: grid; place-items: center; flex: 0 0 1.35rem; min-height: 1.75rem;
-  color: var(--subtext-1); background: transparent; border: 0;
-}
-.toc-toggle::before {
-  content: ""; width: .42rem; height: .42rem;
-  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: rotate(-45deg);
-}
-.toc-toggle[aria-expanded="true"]::before { transform: rotate(45deg); }
-.toc-toggle:hover { color: var(--text); }
-.toc-list[hidden] { display: none !important; }
 .main { min-width: 0; padding-top: 1.4rem; }
 .article { min-width: 0; overflow-wrap: anywhere; }
 .article > :first-child { margin-top: 0; }
@@ -120,8 +89,8 @@ em { color: var(--accent); }
 .article h4 { margin: 1.5rem 0 .5rem; color: var(--heading-sapphire); font-size: 1.0625rem; }
 .article :is(p,li,dd,blockquote) { max-width: 70ch; }
 .article p { margin: .55rem 0 .85rem; }
-.article :is(ul,ol) { margin: .5rem 0 1rem; padding-left: 1.75rem; }
-.article li { margin-block: .2rem; }
+.article :is(ul,ol):not(.list-unstyled) { margin: .5rem 0 1rem; padding-left: 1.75rem; }
+.article :is(ul,ol):not(.list-unstyled) > li { margin-block: .2rem; }
 .article dl { margin: .7rem 0 1rem; }
 .article dd { margin-left: 1.5rem; }
 .article blockquote { margin: 1rem 0; padding: .55rem .85rem; border-left: 4px solid var(--surface-2); background: var(--mantle); color: var(--subtext-1); }
@@ -138,13 +107,6 @@ em { color: var(--accent); }
 
 /* Preserve the existing responsive thresholds and mobile contents controls. */
 .mobile-contents, .mobile-only { display: none; }
-.mobile-contents summary, .mobile-contents a { display: flex; align-items: center; min-height: 44px; }
-.mobile-contents summary { cursor: pointer; font-size: .82rem; font-weight: 600; }
-.mobile-contents nav { margin-top: .45rem; }
-.mobile-contents .toc-row a {
-  display: flex; align-items: center; padding-block: .5rem; font-size: .875rem;
-}
-.mobile-contents .toc-toggle { flex-basis: 44px; min-height: 44px; }
 .sidebar-backdrop { inset: var(--header-height) 0 0; z-index: 19; background: rgb(0 0 0 / .42); }
 .noscript { padding: 1rem 1.25rem; background: var(--mantle); font-size: .85rem; }
 @media (max-width: 1180px) {

@@ -87,42 +87,37 @@ function tocTree(headings) {
 function setActiveToc(id) {
   document.querySelectorAll(".toc a, .mobile-contents a").forEach((link) => {
     const active = link.getAttribute("href") === "#" + id;
-    link.classList.toggle("active", active);
+    link.classList.toggle("bg-2", active);
     if (active) link.setAttribute("aria-current", "location");
     else link.removeAttribute("aria-current");
   });
 }
-function tocList(nodes, prefix) {
+function tocList(nodes, prefix, nested = false) {
   const list = document.createElement("ul");
-  list.className = "toc-list";
+  list.className = "list-unstyled m-0 fs-sm" +
+    (nested ? " ms-3 ps-3 border-start" : " p-0");
   for (const node of nodes) {
     const item = document.createElement("li");
-    const row = document.createElement("div");
-    row.className = "toc-row";
+    item.className = "m-0";
     const link = document.createElement("a");
     link.href = "#" + node.heading.id;
     link.textContent = node.heading.textContent;
+    link.className = "py-2 px-2 rounded-3 text-decoration-none text-break " +
+      (node.level === 2 ? "fg-success fw-semibold" : "fg-2");
     link.addEventListener("click", () => setActiveToc(node.heading.id));
     if (node.children.length) {
-      const children = tocList(node.children, prefix);
+      const branch = document.createElement("details");
+      branch.open = true;
+      const summary = document.createElement("summary");
+      summary.className = "py-2 " + (node.level === 2 ? "fg-success fw-semibold" : "fg-2");
+      const children = tocList(node.children, prefix, true);
       children.id = prefix + "-" + node.heading.id;
-      const toggle = document.createElement("button");
-      toggle.type = "button";
-      toggle.className = "toc-toggle btn p-0";
-      toggle.setAttribute("aria-controls", children.id);
-      toggle.setAttribute("aria-expanded", "true");
-      toggle.setAttribute("aria-label", "Collapse " + node.heading.textContent);
-      toggle.addEventListener("click", () => {
-        const expanded = toggle.getAttribute("aria-expanded") === "true";
-        children.hidden = expanded;
-        toggle.setAttribute("aria-expanded", String(!expanded));
-        toggle.setAttribute("aria-label", (expanded ? "Expand " : "Collapse ") + node.heading.textContent);
-      });
-      row.append(toggle, link);
-      item.append(row, children);
+      summary.append(link);
+      branch.append(summary, children);
+      item.append(branch);
     } else {
-      row.append(link);
-      item.append(row);
+      link.classList.add("d-block");
+      item.append(link);
     }
     list.append(item);
   }
@@ -138,7 +133,7 @@ function renderToc() {
   els.toc.append(tocList(tree, "desktop-toc"));
   const mobile = document.createElement("details");
   mobile.className = "mobile-contents";
-  mobile.innerHTML = '<summary>Contents</summary><nav aria-label="On this page"></nav>';
+  mobile.innerHTML = '<summary class="fs-sm fw-semibold py-3">Contents</summary><nav class="mt-2" aria-label="On this page"></nav>';
   mobile.querySelector("nav").append(tocList(tree, "mobile-toc"));
   els.article.querySelector("h1")?.insertAdjacentElement("afterend", mobile);
   state.observer = new IntersectionObserver((entries) => {

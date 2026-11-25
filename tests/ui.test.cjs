@@ -43,17 +43,22 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.locator('#article h1').filter({hasText:'Projects'}).waitFor();
     const sections = page.locator('#toc > ul > li');
     assert.equal(await sections.count(), 3);
-    assert.deepEqual(await sections.locator(':scope > .toc-row > a').allTextContents(),
+    assert.deepEqual(await sections.locator(':scope > details > summary > a').allTextContents(),
       ['Creative works', 'Software', 'Archived projects']);
-    const software = sections.nth(1);
-    const toggle = software.getByRole('button', {name:'Collapse Software'});
+    const headingColor = await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color);
+    for (const link of await sections.locator(':scope > details > summary > a').all()) {
+      assert.equal(await link.evaluate(e=>getComputedStyle(e).color), headingColor);
+    }
+    const software = sections.nth(1).locator('details').first();
+    const summary = software.locator(':scope > summary');
     const children = software.locator(':scope > ul');
     assert.equal(await children.locator(':scope > li').count(), 6);
     assert.equal(await children.isVisible(), true);
-    await toggle.click();
-    assert.equal(await software.getByRole('button', {name:'Expand Software'}).getAttribute('aria-expanded'), 'false');
+    await summary.focus();
+    await summary.press('Space');
+    assert.equal(await software.evaluate(e=>e.open), false);
     assert.equal(await children.isVisible(), false);
-    await software.getByRole('button', {name:'Expand Software'}).click();
+    await summary.press('Space');
     assert.equal(await children.isVisible(), true);
     await children.getByRole('link', {name:'keep', exact:true}).click();
     assert.equal(new URL(page.url()).hash, '#keep');
@@ -61,14 +66,16 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     await page.setViewportSize({width:390,height:844});
     const mobileContents = page.locator('.mobile-contents');
     assert.equal(await page.locator('#toc').isVisible(), false);
-    await mobileContents.locator('summary').click();
+    await mobileContents.locator(':scope > summary').click();
     assert.equal(await mobileContents.locator('nav > ul > li').count(), 3);
-    assert.equal(await mobileContents.locator('#mobile-toc-software > li').count(), 6);
-    const mobileToggle = mobileContents.getByRole('button', {name:'Collapse Software'});
-    await mobileToggle.click();
-    assert.equal(await mobileContents.locator('#mobile-toc-software').isVisible(), false);
-    await mobileContents.getByRole('button', {name:'Expand Software'}).click();
-    assert.equal(await mobileContents.locator('#mobile-toc-software').isVisible(), true);
+    const mobileChildren = mobileContents.locator('#mobile-toc-software');
+    assert.equal(await mobileChildren.locator(':scope > li').count(), 6);
+    const mobileSummary = mobileContents.locator('details').filter({has:mobileChildren}).locator(':scope > summary');
+    await mobileSummary.focus();
+    await mobileSummary.press('Space');
+    assert.equal(await mobileChildren.isVisible(), false);
+    await mobileSummary.press('Space');
+    assert.equal(await mobileChildren.isVisible(), true);
     await page.locator('#menu-toggle').click();
     assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');
     await page.locator('#page-nav a').first().click();
