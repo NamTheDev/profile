@@ -16,11 +16,6 @@
 .reading-layout .article h2{font-size:1.5rem}
 .reading-layout .article h3{font-size:1.25rem}
 .reading-layout .article h4{font-size:1.0625rem}
-.app-navigation{padding:8px var(--content-gutter);max-height:35dvh;overflow:auto;flex-shrink:0}
-.app-navigation .nav-link{width:auto;min-height:38px}
-.app-navigation .nav-link.active{color:var(--accent);background:var(--bs-primary-bg-subtle)}
-.app-navigation details>summary{cursor:pointer;white-space:nowrap}
-.app-navigation details[open]{min-width:0}
 :where(a,button,input,textarea,select,summary):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(max-width:1180px){.reading-layout{grid-template-columns:var(--rail-width) minmax(0,1fr)}}
 @media(max-width:760px){:root{--header-height:52px}.reading-layout{grid-template-columns:minmax(0,1fr)}.brand-name{font-size:1rem}.header-inner{gap:.5rem!important}}
