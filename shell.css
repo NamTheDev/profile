@@ -27,3 +27,8 @@
 @media(max-width:760px){:root{--header-height:52px}.reading-layout{grid-template-columns:minmax(0,1fr)}.brand-name{font-size:1rem}.header-inner{gap:.5rem!important}}
 @media(max-width:420px){.brand-name{font-size:.875rem}.header-inner{flex-wrap:wrap;padding-block:6px}.header-links{order:3;flex-basis:100%;min-height:25px}}
 @media(prefers-reduced-motion:reduce){.header-links.marquee-overflow{mask-image:none}}
+
+/* Map the native rounding utilities to the shared shape tokens. */
+.rounded-5{--bs-rounded-size:var(--radius-control)}
+.rounded-6{--bs-rounded-size:var(--radius-card)}
+.rounded-7{--bs-rounded-size:var(--radius-dialog)}
