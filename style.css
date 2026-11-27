@@ -1,18 +1,10 @@
 /* Profile-specific reading layout and identity; load after Bootstrap and config.css. */
 :root {
-  --font-ui: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-size: 1.0625rem;
   --line-height: 1.7;
   --bs-success-fg: var(--success);
-  --bs-link-color: var(--info);
-  --bs-link-hover-color: var(--info);
   --bs-link-decoration: none;
   --bs-border-color: var(--surface-0);
-  --heading-teal: #94e2d5;
-  --heading-sky: #89dceb;
-  --heading-sapphire: #74c7ec;
-  --header-height: 60px;
-  --rail-width: 13.5rem;
   --rule: 1px solid var(--surface-0);
 }
 html { background: var(--base); scroll-padding-top: calc(var(--header-height) + 1rem); }
@@ -26,26 +18,18 @@ em { color: var(--accent); }
 
 /* Sticky header and uninterrupted social/project ticker. */
 .site-header { z-index: 30; min-height: var(--header-height); }
-.header-inner { min-height: var(--header-height); }
 .site-brand { line-height: 1.05; }
-.brand-name { font-size: 1.25rem; letter-spacing: -.02em; }
 .icon-button {
   --bs-btn-border-color: transparent;
   --bs-btn-hover-bg: var(--mantle);
   width: 44px; min-height: 44px; place-items: center;
 }
 .icon-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-/* Only ticker geometry and scrolling behavior require local CSS. */
-.header-links {flex:1 1 0; overscroll-behavior-x:contain; touch-action:pan-x pinch-zoom; scrollbar-width:none; scroll-behavior:auto;}
-.header-links::-webkit-scrollbar {display:none;}
-.marquee-track, .marquee-group {width:max-content;}
-.header-links.marquee-overflow {mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent);}
-
 .quick-links-label { letter-spacing: .04em; }
 
 /* Article with left navigation and a right contents rail. */
 .page-shell {
-  display: grid; grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--rail-width);
+  
   align-items: start;
 }
 .sidebar, .toc-panel {
@@ -57,10 +41,10 @@ em { color: var(--accent); }
 .page-link.active { border-left-color: var(--accent); color: var(--text); font-weight: 600; }
 .article > :first-child { margin-top: 0; }
 .article :is(h1,h2,h3,h4,h5,h6) { line-height: 1.3; font-weight: 600; scroll-margin-top: calc(var(--header-height) + 1rem); }
-.article h1 { margin: 0 0 1.25rem; padding-bottom: .32rem; border-bottom: var(--rule); color: var(--success); font-size: 2rem; letter-spacing: -.025em; }
-.article h2 { margin: 2.25rem 0 .75rem; padding-bottom: .25rem; border-bottom: var(--rule); color: var(--heading-teal); font-size: 1.5rem; letter-spacing: -.015em; }
-.article h3 { margin: 1.75rem 0 .5rem; color: var(--heading-sky); font-size: 1.25rem; }
-.article h4 { margin: 1.5rem 0 .5rem; color: var(--heading-sapphire); font-size: 1.0625rem; }
+.article h1 { margin: 0 0 1.25rem; padding-bottom: .32rem; border-bottom: var(--rule); font-size: 2rem; letter-spacing: -.025em; }
+.article h2 { margin: 2.25rem 0 .75rem; padding-bottom: .25rem; border-bottom: var(--rule); font-size: 1.5rem; letter-spacing: -.015em; }
+.article h3 { margin: 1.75rem 0 .5rem; font-size: 1.25rem; }
+.article h4 { margin: 1.5rem 0 .5rem; font-size: 1.0625rem; }
 .article p { margin: .55rem 0 .85rem; }
 .article :is(ul,ol):not(.list-unstyled) { margin: .5rem 0 1rem; padding-left: 1.75rem; }
 .article :is(ul,ol):not(.list-unstyled) > li { margin-block: .2rem; }
@@ -84,8 +68,7 @@ em { color: var(--accent); }
 @media (max-width: 760px) {
   :root { --header-height: 52px; --font-size: 1rem; }
   .mobile-only { display: inline-grid; }
-  .brand-name { font-size: 1.08rem; }
-  .page-shell { display: block; }
+  .page-shell { display: grid; }
   .sidebar {
     position: fixed; top: var(--header-height); bottom: 0; left: 0; z-index: 20;
     width: min(84vw, 19rem); max-height: none; overflow-y: auto; background: var(--base);
@@ -101,7 +84,6 @@ em { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
-  .header-links.marquee-overflow { mask-image: none; }
 }
 
 /* Repository library: adapt to the article width, not the full viewport. */

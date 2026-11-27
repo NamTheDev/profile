@@ -30,10 +30,10 @@
  */
 :root,:host{
   /* Typography */
-  --font-ui:Roboto,Arial,system-ui,sans-serif;
+  --font-ui:"Source Sans 3",system-ui,sans-serif;
   --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;
-  --font-size:14px;
-  --font-size-title:22px;
+  --font-size:15px;
+  --font-size-title:24px;
   --font-size-heading:16px;
   --font-size-small:12px;
   --line-height:1.55;
@@ -45,9 +45,9 @@
   --card-inset:14px;
   --pane-inset:12px;
   --sidebar-width:224px;
-  --radius-control:8px;
-  --radius-card:10px;
-  --radius-dialog:12px;
+  --radius-control:6px;
+  --radius-card:8px;
+  --radius-dialog:10px;
   --motion-duration:0s;
 
   /* Catppuccin color roles; dark only */

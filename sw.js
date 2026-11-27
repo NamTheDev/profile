@@ -1,11 +1,12 @@
 const CACHE_PREFIX = "self-documentary-";
-const CACHE = CACHE_PREFIX + "v53";
+const CACHE = CACHE_PREFIX + "v54";
 const CORE = [
   "./",
   "index.html",
   "assets/icon.png",
   "bootstrap.min.css",
   "config.css",
+  "shell.css",
   "style.css",
   "script.js",
   "js/projects.js",

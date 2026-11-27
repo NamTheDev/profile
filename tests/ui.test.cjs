@@ -83,7 +83,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await page.locator('#article').evaluate(e=>e.clientWidth>1100),true);
     await page.setViewportSize({width:1440,height:900});
     assert.equal(await page.locator('body').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(30, 30, 46)');
-    assert.equal(await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color),'rgb(166, 227, 161)');
+    assert.equal(await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color),'rgb(205, 214, 244)');
     assert.equal(await page.locator('#page-filter').count(),0);
     assert.equal(await page.locator('.site-brand').evaluate(e=>e.tagName),'DIV');
     assert.equal(await page.locator('.site-brand a, a.site-brand').count(),0);
@@ -215,9 +215,8 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
     assert.equal(await sections.count(), 2);
     const sectionLinks = sections.locator(':scope > details > summary > a, :scope > a');
     assert.deepEqual(await sectionLinks.allTextContents(), ['Creative works', 'GitHub Repositories']);
-    const headingColor = await page.locator('#article h1').evaluate(e=>getComputedStyle(e).color);
     for (const link of await sectionLinks.all()) {
-      assert.equal(await link.evaluate(e=>getComputedStyle(e).color), headingColor);
+      assert.equal(await link.evaluate(e=>getComputedStyle(e).color), 'rgb(166, 227, 161)');
     }
     const repoLink = sections.nth(1).locator(':scope > a');
     assert.equal(await sections.nth(1).locator('details').count(), 0);

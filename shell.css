@@ -1,0 +1,29 @@
+/* Shared minimalist shell — MIT, NamTheDev. Load after config.css. */
+:root{--header-height:60px;--rail-width:13.5rem}
+.site-header{min-width:0;flex-shrink:0}
+.header-inner{min-height:var(--header-height);min-width:0}
+.brand-name{font-size:1.125rem;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+.header-links{flex:1 1 0;min-width:0;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom;scrollbar-width:none;scroll-behavior:auto}
+.header-links::-webkit-scrollbar{display:none}
+.header-links a{color:var(--accent);text-decoration:none}
+.header-links a:hover,.header-links a:focus-visible{text-decoration:underline}
+.marquee-track,.marquee-group{width:max-content}
+.header-links.marquee-overflow{mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
+.marquee-toggle{flex-shrink:0;min-height:36px}
+.reading-layout{display:grid;grid-template-columns:var(--rail-width) minmax(0,1fr) var(--rail-width)}
+.reading-layout>aside,.reading-layout>main{min-width:0;min-height:0;overscroll-behavior:contain}
+.reading-layout .article :is(h1,h2,h3,h4,h5,h6){color:var(--text);font-weight:600;line-height:1.3}
+.reading-layout .article h1{font-size:2rem;letter-spacing:-.025em}
+.reading-layout .article h2{font-size:1.5rem}
+.reading-layout .article h3{font-size:1.25rem}
+.reading-layout .article h4{font-size:1.0625rem}
+.app-navigation{padding:8px var(--content-gutter);max-height:35dvh;overflow:auto;flex-shrink:0}
+.app-navigation .nav-link{width:auto;min-height:38px}
+.app-navigation .nav-link.active{color:var(--accent);background:var(--bs-primary-bg-subtle)}
+.app-navigation details>summary{cursor:pointer;white-space:nowrap}
+.app-navigation details[open]{min-width:0}
+:where(a,button,input,textarea,select,summary):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:1180px){.reading-layout{grid-template-columns:var(--rail-width) minmax(0,1fr)}}
+@media(max-width:760px){:root{--header-height:52px}.reading-layout{grid-template-columns:minmax(0,1fr)}.brand-name{font-size:1rem}.header-inner{gap:.5rem!important}}
+@media(max-width:420px){.brand-name{font-size:.875rem}.header-inner{flex-wrap:wrap;padding-block:6px}.header-links{order:3;flex-basis:100%;min-height:25px}}
+@media(prefers-reduced-motion:reduce){.header-links.marquee-overflow{mask-image:none}}
