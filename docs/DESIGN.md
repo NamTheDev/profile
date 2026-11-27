@@ -1,6 +1,6 @@
 # Profile design and implementation
 
-Profile uses the same locally vendored Bootstrap 6.0.0-alpha.2 CSS and canonical [util design configuration](https://github.com/NamTheDev/util/blob/main/design/config.css) as Keep and Clipboard. Load order is bootstrap.min.css, config.css, shell.css, style.css. Keep config.css identical to util when synchronizing; do not edit the vendor stylesheet. Preserve all license notices.
+Profile uses the same locally vendored Bootstrap 6.0.0-alpha.2 CSS and local design configuration as Keep and Clipboard. Load order is bootstrap.min.css, config.css, shell.css, style.css. Maintain config.css locally; do not edit the vendor stylesheet. Preserve all license notices.
 
 The site intentionally retains its original reading identity: Source Sans 3, larger article typography, Lavender links and neutral text headings, dark Catppuccin Mocha, fluid full-width reading column, left page navigation and right table of contents. These are local exceptions to the generic app defaults. The scrolling header uses the same standalone marquee as Docs. Manual horizontal input wraps infinitely in both directions, including with reduced motion enabled. Native scroll buffers cover physical endpoints, hover and keyboard focus pause automatic movement, and mouse exit resumes from the manual position. Bootstrap utilities handle link spacing, alignment and overflow; local CSS only handles the ticker's sizing, hidden scrollbars and mask.
 
@@ -12,11 +12,11 @@ The service worker precaches the local stylesheets and only clears its own versi
 
 GitHub Actions runs syntax checks, cache and manifest tests, plus browser verification for desktop and mobile layouts, navigation, native controls and reduced motion.
 
-The fixed dark theme is advertised through the color-scheme meta element, the root CSS color-scheme property and data-bs-theme. Follow the [native theme signaling specification](https://github.com/NamTheDev/util/blob/main/formatting/THEME_SIGNAL.md). Do not disable browser extensions with a lock.
+The fixed dark theme is advertised through the color-scheme meta element, the root CSS color-scheme property and data-bs-theme. Do not disable browser extensions with a lock.
 
 ## Bootstrap-first styling
 
-Follow the [minimum-custom-CSS standard in util](https://github.com/NamTheDev/util/blob/main/design/DESIGN_PRINCIPLES.md). The local stylesheet retains only application-specific exceptions: fluid three-column reading geometry, responsive navigation rail and drawer, marquee animation, Markdown article typography and link behavior, and configuration overrides required by Profile's established visual identity. Use existing Bootstrap utilities in markup for generic spacing, sizing, borders and color.
+Minimize custom CSS. The local stylesheet retains only application-specific exceptions: fluid three-column reading geometry, responsive navigation rail and drawer, marquee animation, Markdown article typography and link behavior, and configuration overrides required by Profile's established visual identity. Use existing Bootstrap utilities in markup for generic spacing, sizing, borders and color.
 
 ## Editorial style
 
