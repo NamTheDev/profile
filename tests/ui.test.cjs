@@ -26,6 +26,7 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       await route.fulfill({path:file,contentType:'application/javascript'});
     });
     await page.route('https://fonts.googleapis.com/**', route => route.abort());
+    await page.emulateMedia({reducedMotion:'no-preference'});
     await page.goto('http://127.0.0.1:' + server.address().port);
     await page.locator('#article h1').waitFor();
     assert.equal(await page.locator('head meta[name="color-scheme"]').count(),1);
@@ -113,8 +114,10 @@ test('profile preserves its layout, content and ticker using Bootstrap', async (
       assert.equal(geometry.overflowX,'auto');
       assert.equal(geometry.overflowY,'hidden');
       assert.equal(geometry.scrollbar,'none');
-      const before=await ticker.evaluate(n=>({x:n.scrollLeft,w:n.querySelector('.marquee-group:not([aria-hidden])').getBoundingClientRect().width}));
-      await page.waitForFunction(({x,w})=>((document.querySelector('.header-links').scrollLeft-x)%w+w)%w>12,before,{timeout:4000});
+      for(let sample=0;sample<2;sample++) {
+        const before=await ticker.evaluate(n=>({x:n.scrollLeft,w:n.querySelector('.marquee-group:not([aria-hidden])').getBoundingClientRect().width}));
+        await page.waitForFunction(({x,w})=>{const delta=((document.querySelector('.header-links').scrollLeft-x)%w+w)%w;return delta>=12&&delta<120;},before,{timeout:4000});
+      }
     }
     await page.setViewportSize({width:1440,height:900});
     await ticker.hover();

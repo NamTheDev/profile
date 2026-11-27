@@ -9,10 +9,9 @@
   track.append(group);
   nav.append(track);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const hover = matchMedia("(hover: hover)");
-  let cycle = 0, expected = 0, pauseUntil = 0, pointer = null, last = 0, fraction = 0;
+  let cycle = 0, expected = 0, pauseUntil = 0, pointer = null, last = 0, fraction = 0, hovered = false;
   const pause = () => { pauseUntil = performance.now() + 1500; };
-  const set = x => { nav.scrollLeft = x; expected = nav.scrollLeft; };
+  const set = x => { nav.scrollTo({left:x, behavior:"instant"}); expected = nav.scrollLeft; };
   const wrap = x => cycle + ((x % cycle) + cycle) % cycle;
   const clone = () => {
     const copy = group.cloneNode(true);
@@ -50,7 +49,7 @@
   }, {passive:false});
   nav.addEventListener("scroll", () => {
     if (!cycle || Math.abs(nav.scrollLeft-expected)<.5) return;
-    pause();
+    if (pointer !== null || performance.now() < pauseUntil) pause();
     // Native touch, keyboard and scrollbar input can also cross the physical
     // ends. Recenter only near those ends, not during ordinary momentum.
     const x = nav.scrollLeft, max = nav.scrollWidth-nav.clientWidth;
@@ -60,15 +59,20 @@
   const release = event=>{if(event.pointerId===pointer){pointer=null; pause();}};
   window.addEventListener("pointerup",release);
   window.addEventListener("pointercancel",release);
-  nav.addEventListener("pointerleave",event=>{
-    if (event.pointerType!=="touch" && hover.matches) pauseUntil=0;
+  const trackHover = event => { hovered = event.pointerType === "mouse" || (event.pointerType === "pen" && event.buttons === 0); };
+  nav.addEventListener("pointerenter", trackHover);
+  nav.addEventListener("pointermove", trackHover);
+  nav.addEventListener("pointerleave", event => {
+    hovered = false;
+    if (event.pointerType !== "touch") pauseUntil = 0;
   });
+  window.addEventListener("blur", () => { hovered = false; pointer = null; pauseUntil = 0; });
 
   function advance(now) {
     const elapsed = last ? Math.min(now-last,50) : 0;
     last = now;
     if (!cycle || reduced.matches || pointer!==null || now<pauseUntil ||
-        (hover.matches && nav.matches(":hover")) || nav.querySelector(":focus-visible")) fraction=0;
+        hovered || (nav.contains(document.activeElement) && document.activeElement.matches(":focus-visible"))) fraction=0;
     else {
       const distance = elapsed*.045+fraction, step = Math.floor(distance);
       fraction=distance-step;
