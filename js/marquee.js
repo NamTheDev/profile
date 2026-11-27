@@ -10,13 +10,6 @@
   nav.append(track);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const hover = matchMedia("(hover: hover)");
-  let paused = reduced.matches;
-  const toggle = document.createElement("button");
-  toggle.type = "button";
-  toggle.className = "marquee-toggle btn btn-text theme-secondary btn-sm";
-  const updateToggle = () => { toggle.textContent = paused ? "Play" : "Pause"; toggle.setAttribute("aria-label", paused ? "Resume scrolling links" : "Pause scrolling links"); };
-  toggle.addEventListener("click", () => { paused = !paused; updateToggle(); });
-  nav.after(toggle); updateToggle();
   let cycle = 0, expected = 0, pauseUntil = 0, pointer = null, last = 0, fraction = 0;
   const pause = () => { pauseUntil = performance.now() + 1500; };
   const set = x => { nav.scrollLeft = x; expected = nav.scrollLeft; };
@@ -74,7 +67,7 @@
   function advance(now) {
     const elapsed = last ? Math.min(now-last,50) : 0;
     last = now;
-    if (!cycle || paused || reduced.matches || pointer!==null || now<pauseUntil ||
+    if (!cycle || reduced.matches || pointer!==null || now<pauseUntil ||
         (hover.matches && nav.matches(":hover")) || nav.querySelector(":focus-visible")) fraction=0;
     else {
       const distance = elapsed*.045+fraction, step = Math.floor(distance);
